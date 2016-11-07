@@ -1,6 +1,6 @@
 ﻿namespace Assets
 {
-    internal class Armie
+     public class Armie
     {
     }
 }

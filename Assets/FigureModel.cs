@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Assets
 {
     [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
-    class FigureModel : MonoBehaviour
+    public class FigureModel : MonoBehaviour
     {
         public Figure Parent;
         public Vector3[] Vertices;

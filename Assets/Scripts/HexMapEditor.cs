@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -47,4 +48,5 @@ public class HexMapEditor : MonoBehaviour {
 		cell.Elevation = activeElevation;
 		hexGrid.Refresh();
 	}
+    
 }

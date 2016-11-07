@@ -52,7 +52,7 @@ public class World : MonoBehaviour {
             var figure = new GameObject();
             figure.AddComponent<Figure>();
             var fm = figure.GetComponent<Figure>();
-            fm.FigurePosition = position;
+         //   fm.FigurePosition = position;
             figure.transform.position = pos;
             figure.transform.parent = transform.FindChild("FigureHolder");
             fm.InitializeModel();
