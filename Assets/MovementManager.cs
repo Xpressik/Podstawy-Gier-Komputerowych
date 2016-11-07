@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 
 namespace Assets
@@ -21,6 +22,9 @@ namespace Assets
 
         private bool firstMove = true;
 
+        private int positionX;
+        private int positionY;
+
         // Use this for initialization
         private void Start()
         {
@@ -39,7 +43,7 @@ namespace Assets
                     if (firstMove == true )
                     {
                         firstMove = false;
-                        SpawnFigure(0, selectionX, selectionY);
+                        SpawnFigure(0, selectionX, selectionY, positionX, positionY);
                     }
                     else
                     {
@@ -51,7 +55,7 @@ namespace Assets
                         else
                         {
                             //move figure
-                            MoveFigure(selectionX, selectionY);
+                            MoveFigure(selectionX, selectionY, positionX, positionY);
                         }
                     }
                 }
@@ -68,6 +72,9 @@ namespace Assets
             RaycastHit hit;
             if (Physics.Raycast(inputRay, out hit))
             {
+                positionX = (int)hexGrid.GetCell(hit.point).transform.position.x;
+                positionY = (int)hexGrid.GetCell(hit.point).transform.position.z;
+
                 selectionX = hexGrid.GetCell(hit.point).coordinates.X;
                 selectionY = hexGrid.GetCell(hit.point).coordinates.Z;
             }
@@ -78,18 +85,11 @@ namespace Assets
             }
         }
 
-        private void SpawnFigure(int index, int x, int y)
+        private void SpawnFigure(int index, int x, int y, int positionX, int positionY)
         {
-            int xMovement  = x* 15;
-            int yMovement  = y * 15;
-            if(y == 1 || y == 3 || y == 5 )
-            {
-                xMovement += 10;
-            }
-
-            GameObject go = Instantiate(figuresPrefabs[index], new Vector3(xMovement, 0, yMovement) , orientation) as GameObject;
+            GameObject go = (GameObject)Instantiate(figuresPrefabs[index], new Vector3(positionX, 0, positionY), orientation);
             go.transform.SetParent(transform);
-            Figures[x, y] = go.GetComponent<Figure>();
+            Figures[x, y] = go.GetComponent<Figure>(); 
             Figures[x, y].SetPosition(x, y);
         }
 
@@ -97,16 +97,16 @@ namespace Assets
         {
             if (Figures [x, y] == null)
             {
-                Debug.Log("TAK");
                 return;
             }
             selectedFigure = Figures[x, y];
+            selectedFigure.color = Color.cyan;
         }
 
-        private void MoveFigure(int x, int y)
+        private void MoveFigure(int x, int y, int positionX, int positionY)
         {
             Figures[selectedFigure.CurrentX, selectedFigure.CurrentY] = null;
-            selectedFigure.transform.position = new Vector3(x, y);
+            selectedFigure.transform.position = new Vector3(positionX, 0, positionY);
             Figures[x, y] = selectedFigure; 
             selectedFigure = null;
         }

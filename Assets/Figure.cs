@@ -11,9 +11,9 @@ namespace Assets
         //public Vector2 FigurePosition;
         public int CurrentX { set; get;}
         public int CurrentY { set; get; }
-     //   public FigureModel FigureModel { get; set; }
-     //   public Armie armie;
-
+        //   public FigureModel FigureModel { get; set; }
+        //   public Armie armie;
+        public Color color { get; set; }
         public void SetPosition(int x, int y)
         {
             CurrentX = x;
