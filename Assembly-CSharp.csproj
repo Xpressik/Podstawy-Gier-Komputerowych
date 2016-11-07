@@ -57,6 +57,7 @@
      <Compile Include="Assets\Globals.cs" />
      <Compile Include="Assets\Hex.cs" />
      <Compile Include="Assets\HexModel.cs" />
+     <Compile Include="Assets\MovementManager.cs" />
      <Compile Include="Assets\Player.cs" />
      <Compile Include="Assets\Scripts\EdgeVertices.cs" />
      <Compile Include="Assets\Scripts\HexCell.cs" />
