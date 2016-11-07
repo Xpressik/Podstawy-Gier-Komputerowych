@@ -22,10 +22,10 @@ namespace Assets
 
         private bool firstMove = true;
 
-        private int positionX;
-        private int positionY;
+        private float positionX;
+        private float positionY;
+        private float positionZ;
 
-        // Use this for initialization
         private void Start()
         {
             Figures = new Figure[6, 6];
@@ -43,7 +43,7 @@ namespace Assets
                     if (firstMove == true )
                     {
                         firstMove = false;
-                        SpawnFigure(0, selectionX, selectionY, positionX, positionY);
+                        SpawnFigure(0, selectionX, selectionY, positionX, positionY, positionZ);
                     }
                     else
                     {
@@ -55,7 +55,7 @@ namespace Assets
                         else
                         {
                             //move figure
-                            MoveFigure(selectionX, selectionY, positionX, positionY);
+                            MoveFigure(selectionX, selectionY, positionX, positionY, positionZ);
                         }
                     }
                 }
@@ -72,11 +72,13 @@ namespace Assets
             RaycastHit hit;
             if (Physics.Raycast(inputRay, out hit))
             {
-                positionX = (int)hexGrid.GetCell(hit.point).transform.position.x;
-                positionY = (int)hexGrid.GetCell(hit.point).transform.position.z;
 
-                selectionX = hexGrid.GetCell(hit.point).coordinates.X;
-                selectionY = hexGrid.GetCell(hit.point).coordinates.Z;
+                var tmp = hexGrid.GetCell(hit.point);
+                positionX = tmp.transform.position.x;
+                positionY = Mathf.Abs(tmp.transform.position.y + 5);
+                positionZ = tmp.transform.position.z;
+                selectionX = tmp.coordinates.X;
+                selectionY = tmp.coordinates.Z;
             }
             else
             {
@@ -85,9 +87,9 @@ namespace Assets
             }
         }
 
-        private void SpawnFigure(int index, int x, int y, int positionX, int positionY)
+        private void SpawnFigure(int index, int x, int y, float positionX, float positionY, float positionZ)
         {
-            GameObject go = (GameObject)Instantiate(figuresPrefabs[index], new Vector3(positionX, 0, positionY), orientation);
+            GameObject go = (GameObject)Instantiate(figuresPrefabs[index], new Vector3(positionX, positionY, positionZ), orientation);
             go.transform.SetParent(transform);
             Figures[x, y] = go.GetComponent<Figure>(); 
             Figures[x, y].SetPosition(x, y);
@@ -100,13 +102,12 @@ namespace Assets
                 return;
             }
             selectedFigure = Figures[x, y];
-            selectedFigure.color = Color.cyan;
         }
 
-        private void MoveFigure(int x, int y, int positionX, int positionY)
+        private void MoveFigure(int x, int y, float positionX, float positionY, float positionZ)
         {
             Figures[selectedFigure.CurrentX, selectedFigure.CurrentY] = null;
-            selectedFigure.transform.position = new Vector3(positionX, 0, positionY);
+            selectedFigure.transform.position = new Vector3(positionX, positionY, positionZ);
             Figures[x, y] = selectedFigure; 
             selectedFigure = null;
         }

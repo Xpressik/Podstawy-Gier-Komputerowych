@@ -13,7 +13,6 @@ namespace Assets
         public int CurrentY { set; get; }
         //   public FigureModel FigureModel { get; set; }
         //   public Armie armie;
-        public Color color { get; set; }
         public void SetPosition(int x, int y)
         {
             CurrentX = x;
