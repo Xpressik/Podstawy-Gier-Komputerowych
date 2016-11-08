@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 namespace Assets
 {
@@ -21,10 +21,13 @@ namespace Assets
         private int selectionY = -1;
 
         private bool firstMove = true;
+        private bool isCapsule = true;
 
         private float positionX;
         private float positionY;
         private float positionZ;
+
+        public Text currentPlayer;
 
         private void Start()
         {
@@ -42,8 +45,12 @@ namespace Assets
                     Debug.Log(selectionX  + " " + selectionY);
                     if (firstMove == true )
                     {
-                        firstMove = false;
+                        if (!isCapsule)
+                        {
+                            firstMove = false;
+                        }
                         SpawnFigure(0, selectionX, selectionY, positionX, positionY, positionZ);
+                       
                     }
                     else
                     {
@@ -89,10 +96,26 @@ namespace Assets
 
         private void SpawnFigure(int index, int x, int y, float positionX, float positionY, float positionZ)
         {
-            GameObject go = (GameObject)Instantiate(figuresPrefabs[index], new Vector3(positionX, positionY, positionZ), orientation);
-            go.transform.SetParent(transform);
-            Figures[x, y] = go.GetComponent<Figure>(); 
-            Figures[x, y].SetPosition(x, y);
+            if (isCapsule)
+            {
+                GameObject go = (GameObject)Instantiate(figuresPrefabs[0], new Vector3(positionX, positionY, positionZ), orientation);
+                go.transform.SetParent(transform);
+                Figures[x, y] = go.GetComponent<Figure>();
+                SetColor(x, y, Color.cyan);
+                Figures[x, y].SetPosition(x, y);
+                isCapsule = false;
+                currentPlayer.text = "Player : Cylinder";
+            }
+            else
+            {
+                GameObject go = (GameObject)Instantiate(figuresPrefabs[1], new Vector3(positionX, positionY, positionZ), orientation);
+                go.transform.SetParent(transform);
+                Figures[x, y] = go.GetComponent<Figure>();
+                SetColor(x, y, Color.yellow);
+                Figures[x, y].SetPosition(x, y);
+                isCapsule = true;
+                currentPlayer.text = "Player : Capsule";
+            }
         }
 
         private void SelectFigure(int x, int y)
@@ -101,15 +124,53 @@ namespace Assets
             {
                 return;
             }
+            if (isCapsule)
+            {
+                if (Figures[x, y].name.Equals("Cylinder(Clone)"))
+                {
+                    return;
+                }
+            }
+            else
+            {
+               if (Figures[x, y].name.Equals("Capsule(Clone)"))
+                {
+                    return;
+                }
+            }
             selectedFigure = Figures[x, y];
+            SetColor(x, y, Color.red);
         }
 
         private void MoveFigure(int x, int y, float positionX, float positionY, float positionZ)
         {
+            if(Figures[x, y] != null)
+            {
+                return;
+            }
             Figures[selectedFigure.CurrentX, selectedFigure.CurrentY] = null;
             selectedFigure.transform.position = new Vector3(positionX, positionY, positionZ);
-            Figures[x, y] = selectedFigure; 
+            Figures[x, y] = selectedFigure;
             selectedFigure = null;
+
+            if (Figures[x, y].name.Equals("Capsule(Clone)"))
+            {
+                SetColor(x, y, Color.cyan);
+                currentPlayer.text = "Player : Cylinder";
+                isCapsule = false;
+            }
+            else
+            {
+                SetColor(x, y, Color.yellow);
+                currentPlayer.text = "Player : Capsule";
+                isCapsule = true;
+            }
+        }
+
+        private void SetColor(int x, int y, Color color)
+        {
+            Figures[x, y].GetComponent<Renderer>().material.color = color;
+            
         }
     }
 }
