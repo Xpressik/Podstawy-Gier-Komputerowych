@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class HexMapEditor : MonoBehaviour {
@@ -14,39 +11,155 @@ public class HexMapEditor : MonoBehaviour {
 
 	Color activeColor;
 
-	public void SelectColor (int index) {
-		activeColor = colors[index];
+	int brushSize;
+
+	bool applyColor;
+	bool applyElevation = true;
+
+	enum OptionalToggle
+    {
+		Ignore, Yes, No
 	}
 
-	public void SetElevation (float elevation) {
+	OptionalToggle riverMode;
+
+	bool isDrag;
+	HexDirection dragDirection;
+	HexCell previousCell;
+
+	public void SelectColor (int index)
+    {
+		applyColor = index >= 0;
+		if (applyColor)
+        {
+			activeColor = colors[index];
+		}
+	}
+
+	public void SetApplyElevation (bool toggle)
+    {
+		applyElevation = toggle;
+	}
+
+	public void SetElevation (float elevation)
+    {
 		activeElevation = (int)elevation;
 	}
 
-	void Awake () {
-		SelectColor(3);
+	public void SetBrushSize (float size)
+    {
+		brushSize = (int)size;
 	}
 
-	void Update () {
-		if (
-			Input.GetMouseButton(0) &&
-			!EventSystem.current.IsPointerOverGameObject()
-		) {
+	public void SetRiverMode (int mode)
+    {
+		riverMode = (OptionalToggle)mode;
+	}
+
+	public void ShowUI (bool visible)
+    {
+		hexGrid.ShowUI(visible);
+	}
+
+	void Awake ()
+    {
+		SelectColor(0);
+	}
+
+	void Update ()
+    {
+		if (Input.GetMouseButton(0) && !EventSystem.current.IsPointerOverGameObject())
+        {
 			HandleInput();
 		}
-	}
-
-	void HandleInput () {
-		Ray inputRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-		RaycastHit hit;
-		if (Physics.Raycast(inputRay, out hit)) {
-			EditCell(hexGrid.GetCell(hit.point));
+		else
+        {
+			previousCell = null;
 		}
 	}
 
-	void EditCell (HexCell cell) {
-		cell.color = activeColor;
-		cell.Elevation = activeElevation;
-		hexGrid.Refresh();
+	void HandleInput ()
+    {
+		Ray inputRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+		RaycastHit hit;
+		if (Physics.Raycast(inputRay, out hit))
+        {
+			HexCell currentCell = hexGrid.GetCell(hit.point);
+			if (previousCell && previousCell != currentCell)
+            {
+				ValidateDrag(currentCell);
+			}
+			else
+            {
+				isDrag = false;
+			}
+			EditCells(currentCell);
+			previousCell = currentCell;
+		}
+		else
+        {
+			previousCell = null;
+		}
 	}
-    
+
+	void ValidateDrag (HexCell currentCell)
+    {
+		for (dragDirection = HexDirection.NE; dragDirection <= HexDirection.NW; dragDirection++)
+        {
+			if (previousCell.GetNeighbor(dragDirection) == currentCell)
+            {
+				isDrag = true;
+				return;
+			}
+		}
+		isDrag = false;
+	}
+
+	void EditCells (HexCell center)
+    {
+		int centerX = center.coordinates.X;
+		int centerZ = center.coordinates.Z;
+
+		for (int r = 0, z = centerZ - brushSize; z <= centerZ; z++, r++)
+        {
+			for (int x = centerX - r; x <= centerX + brushSize; x++)
+            {
+				EditCell(hexGrid.GetCell(new HexCoordinates(x, z)));
+			}
+		}
+		for (int r = 0, z = centerZ + brushSize; z > centerZ; z--, r++)
+        {
+			for (int x = centerX - brushSize; x <= centerX + r; x++)
+            {
+				EditCell(hexGrid.GetCell(new HexCoordinates(x, z)));
+			}
+		}
+	}
+
+	void EditCell (HexCell cell)
+    {
+		if (cell)
+        {
+			if (applyColor)
+            {
+				cell.Color = activeColor;
+			}
+			if (applyElevation)
+            {
+				cell.Elevation = activeElevation;
+			}
+			if (riverMode == OptionalToggle.No)
+            {
+				cell.RemoveRiver();
+			}
+			else if (isDrag && riverMode == OptionalToggle.Yes)
+            {
+				HexCell otherCell = cell.GetNeighbor(dragDirection.Opposite());
+				if (otherCell)
+                {
+					otherCell.SetOutgoingRiver(dragDirection);
+				}
+			}
+		}
+	}
 }
