@@ -79,18 +79,22 @@
     <Compile Include="Assets\Player.cs" />
     <Compile Include="Assets\Scripts\EdgeVertices.cs" />
     <Compile Include="Assets\Scripts\HexCell.cs" />
-    <Compile Include="Assets\Scripts\HexCellSerializeData.cs" />
+    <Compile Include="Assets\Scripts\HexCellHighlight.cs" />
     <Compile Include="Assets\Scripts\HexCoordinates.cs" />
     <Compile Include="Assets\Scripts\HexDirection.cs" />
     <Compile Include="Assets\Scripts\HexEdgeType.cs" />
     <Compile Include="Assets\Scripts\HexGrid.cs" />
+    <Compile Include="Assets\Scripts\HexGridChunk.cs" />
+    <Compile Include="Assets\Scripts\HexMapCamera.cs" />
     <Compile Include="Assets\Scripts\HexMapEditor.cs" />
     <Compile Include="Assets\Scripts\HexMesh.cs" />
     <Compile Include="Assets\Scripts\HexMetrics.cs" />
+    <Compile Include="Assets\Scripts\ListPool.cs" />
     <Compile Include="Assets\World.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\HexShader.shader" />
+    <None Include="Assets\Materials\River.shader" />
     <None Include="Assets\Materials\VertexColors.shader" />
     <None Include="Assets\VertexColors.shader" />
   </ItemGroup>

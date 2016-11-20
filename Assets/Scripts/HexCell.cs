@@ -2,13 +2,30 @@
 
 public class HexCell : MonoBehaviour {
 
-	public HexCoordinates coordinates;
+    public HexCoordinates coordinates;
 
-	public RectTransform uiRect;
+    public RectTransform uiRect;
 
-	public HexGridChunk chunk;
+    public HexGridChunk chunk;
 
-	public Color Color
+    public BoxCollider bc;
+
+    void Start()
+    {
+        bc = gameObject.AddComponent<BoxCollider>();
+        bc.size = new Vector3(17, 17);
+    }
+
+    void OnMouseEnter()
+    {
+        this.Color = new Color(1, 1, 140.0f/255.0f);//( 153, 204, 255);
+    }
+    void OnMouseExit()
+    {
+        this.Color = Color.white;
+    }
+
+    public Color Color
     {
 		get
         {
@@ -22,7 +39,7 @@ public class HexCell : MonoBehaviour {
 			}
 			color = value;
 			Refresh();
-		}
+	    	}
 	}
 
 	public int Elevation

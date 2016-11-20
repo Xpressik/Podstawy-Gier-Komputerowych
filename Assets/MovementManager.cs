@@ -104,7 +104,7 @@ namespace Assets
                 SetColor(x, y, Color.cyan);
                 Figures[x, y].SetPosition(x, y);
                 isCapsule = false;
-                currentPlayer.text = "Player : Cylinder";
+             //   currentPlayer.text = "Player : Cylinder";
             }
             else
             {
@@ -114,7 +114,7 @@ namespace Assets
                 SetColor(x, y, Color.yellow);
                 Figures[x, y].SetPosition(x, y);
                 isCapsule = true;
-                currentPlayer.text = "Player : Capsule";
+             //   currentPlayer.text = "Player : Capsule";
             }
         }
 
@@ -156,13 +156,13 @@ namespace Assets
             if (Figures[x, y].name.Equals("Capsule(Clone)"))
             {
                 SetColor(x, y, Color.cyan);
-                currentPlayer.text = "Player : Cylinder";
+            //    currentPlayer.text = "Player : Cylinder";
                 isCapsule = false;
             }
             else
             {
                 SetColor(x, y, Color.yellow);
-                currentPlayer.text = "Player : Capsule";
+             //   currentPlayer.text = "Player : Capsule";
                 isCapsule = true;
             }
         }
