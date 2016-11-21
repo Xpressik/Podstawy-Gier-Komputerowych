@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class HexCell : MonoBehaviour {
 
@@ -10,20 +11,62 @@ public class HexCell : MonoBehaviour {
 
     public BoxCollider bc;
 
+    // DO OKIENKA Z INFORMACJAMI O ZASOBACH NA POLU
+    public string myString;
+    public Text myText;
+    public float fadeTime;
+
     void Start()
     {
         bc = gameObject.AddComponent<BoxCollider>();
         bc.size = new Vector3(17, 17);
+
+        // DO OKIENKA Z INFORMACJAMI O ZASOBACH NA POLU
+        myString = "On Field";
+        fadeTime = 10;
+        var hexGridCanvas = GameObject.Find("Hex Grid Canvas").GetComponent<Canvas>();
+        myText = GameObject.Find("Text").GetComponent<Text>();
+        myText.transform.SetParent(hexGridCanvas.transform, false);
+        myText.supportRichText = false;
+    }
+   
+    void OnMouseOver()
+    {
+        myText.rectTransform.anchoredPosition = uiRect.anchoredPosition;
+        var tmp = transform.position;
+        float offset = 0;
+        if (neighbors[5] != null && neighbors[4] != null)
+        {
+            float fifthNeighborYPosition = neighbors[5].transform.position.y;
+            float fourthNeighborYPosition = neighbors[4].transform.position.y;
+            if (fifthNeighborYPosition > tmp.y || fourthNeighborYPosition > tmp.y)
+            {
+                if (fifthNeighborYPosition > fourthNeighborYPosition)
+                {
+                    offset = fifthNeighborYPosition - tmp.y;
+                }
+                else
+                {
+                    offset = fourthNeighborYPosition - tmp.y;
+                }
+            }
+        }
+        myText.transform.position = new Vector3(tmp.x, tmp.y + 0.5f + offset, tmp.z);
+        myText.text = myString;
+        myText.color = Color.Lerp(myText.color, Color.black, fadeTime * Time.deltaTime);
     }
 
     void OnMouseEnter()
     {
-        this.Color = new Color(1, 1, 140.0f/255.0f);//( 153, 204, 255);
+        this.Color = new Color(1, 1, 140.0f/255.0f);
     }
+
     void OnMouseExit()
     {
         this.Color = Color.white;
+        myText.color = Color.Lerp(myText.color, Color.clear, fadeTime * Time.deltaTime);
     }
+
 
     public Color Color
     {
