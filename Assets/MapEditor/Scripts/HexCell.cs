@@ -18,13 +18,15 @@ public class HexCell : MonoBehaviour {
 
 
 
-    public Canvas fieldEditor;
+ //   public Canvas fieldEditor;
     public Button player1Button;
     public Button player2Button;
     public InputField supplyInput;
     public InputField contrabandInput;
     public Toggle campToggle;
     public Button quitButton;
+
+    Canvas sth;
 
     void Start()
     {
@@ -36,19 +38,49 @@ public class HexCell : MonoBehaviour {
         fadeTime = 10;
         var hexGridCanvas = GameObject.Find("Hex Grid Canvas").GetComponent<Canvas>();
         myText = GameObject.Find("Text").GetComponent<Text>();
-        myText.transform.SetParent(hexGridCanvas.transform, false);
+        myText.transform.SetParent(hexGridCanvas.transform);
         myText.supportRichText = false;
 
-        fieldEditor = fieldEditor.GetComponent<Canvas>();
+         sth = GameObject.Find("FieldEditor").GetComponent<Canvas>();
+        sth.transform.SetParent(hexGridCanvas.transform, false);
+        sth.enabled = false;
+
+        sth.transform.Rotate(new Vector3(-0.15f, 0, 0));
+        sth.transform.localScale = new Vector3(0.2f,0.2f,0.2f);
+        //fieldEditor = gameObject.GetComponentInParent<Canvas>();
+        //fieldEditor = fieldEditor.GetComponent<Canvas>();
         player1Button = player1Button.GetComponent<Button>();
         player2Button = player2Button.GetComponent<Button>();
         supplyInput = supplyInput.GetComponent<InputField>();
         contrabandInput = contrabandInput.GetComponent<InputField>();
         campToggle = campToggle.GetComponent<Toggle>();
         quitButton = quitButton.GetComponent<Button>();
-        fieldEditor.enabled = false;
+      //  fieldEditor.enabled = false;
     }
    
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            sth.enabled = true;
+            HandleInput();
+        }
+    }
+
+    void HandleInput()
+    {
+        Ray inputRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (Physics.Raycast(inputRay, out hit))
+        {
+            sth.transform.position = new Vector3(hit.point.x, hit.point.y + 10, hit.point.z);
+        }
+        else
+        {
+
+        }
+    }
+
     void OnMouseOver()
     {
         myText.rectTransform.anchoredPosition = uiRect.anchoredPosition;
@@ -332,11 +364,11 @@ public class HexCell : MonoBehaviour {
 
     public void QuitFieldEditor()
     {
-        fieldEditor.enabled = false;
+     sth.enabled = false;
     }
 
     public void OpenFieldEditor()
     {
-        fieldEditor.enabled = true;
+       // sth.enabled = true;
     }
 }

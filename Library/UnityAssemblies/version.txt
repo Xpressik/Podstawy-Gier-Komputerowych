@@ -1,29 +1,15 @@
 5.4.1f1:2.3.0.0
 StandaloneWindows
-D:/Michal/Apps/UNITY/Editor/Data/Managed/UnityEngine.dll
-D:/Michal/Apps/UNITY/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll
-D:/Michal/Apps/UNITY/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll
-D:/Michal/Apps/UNITY/Editor/Data/Managed/UnityEditor.dll
-D:/Michal/Apps/UNITY/Editor/Data\Managed/Mono.Cecil.dll
-D:\Michal\Apps\UNITY\Editor\Data\PlaybackEngines\AppleTVSupport\UnityEditor.iOS.Extensions.Common.dll
-D:\Michal\Apps\UNITY\Editor\Data\PlaybackEngines\AppleTVSupport\UnityEditor.iOS.Extensions.Xcode.dll
-D:/Michal/Apps/UNITY/Editor/Data/PlaybackEngines/iOSSupport\UnityEditor.iOS.Extensions.Xcode.dll
-D:/Michal/Apps/UNITY/Editor/Data/PlaybackEngines/iOSSupport\UnityEditor.iOS.Extensions.Common.dll
-D:/Michal/Apps/UNITY/Editor/Data/UnityExtensions/Unity/Advertisements/Editor/UnityEditor.Advertisements.dll
-D:/Michal/Apps/UNITY/Editor/Data/UnityExtensions/Unity/EditorTestsRunner/Editor/nunit.framework.dll
-D:/Michal/Apps/UNITY/Editor/Data/UnityExtensions/Unity/EditorTestsRunner/Editor/UnityEditor.EditorTestsRunner.dll
-D:/Michal/Apps/UNITY/Editor/Data/UnityExtensions/Unity/GUISystem/Editor/UnityEditor.UI.dll
-D:/Michal/Apps/UNITY/Editor/Data/UnityExtensions/Unity/Networking/Editor/UnityEditor.Networking.dll
-D:/Michal/Apps/UNITY/Editor/Data/UnityExtensions/Unity/TreeEditor/Editor/UnityEditor.TreeEditor.dll
-D:/Michal/Apps/UNITY/Editor/Data/Managed/UnityEditor.Graphs.dll
-D:/Michal/Apps/UNITY/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
-D:/Michal/Apps/UNITY/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll
-D:/Michal/Apps/UNITY/Editor/Data/PlaybackEngines/AppleTVSupport/UnityEditor.AppleTV.Extensions.dll
-D:/Michal/Apps/UNITY/Editor/Data/PlaybackEngines/MetroSupport/UnityEditor.Metro.Extensions.dll
-D:/Michal/Apps/UNITY/Editor/Data/PlaybackEngines/TizenPlayer/UnityEditor.Tizen.Extensions.dll
-D:/Michal/Apps/UNITY/Editor/Data/PlaybackEngines/STVPlayer/UnityEditor.SamsungTV.Extensions.dll
-D:/Michal/Apps/UNITY/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
-D:/Michal/Apps/UNITY/Editor/Data/PlaybackEngines/LinuxStandaloneSupport/UnityEditor.LinuxStandalone.Extensions.dll
-D:/Michal/Apps/UNITY/Editor/Data/PlaybackEngines/windowsstandalonesupport/UnityEditor.WindowsStandalone.Extensions.dll
-D:/Michal/Apps/UNITY/Editor/Data/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll
+C:/Program Files/Unity/Editor/Data/Managed/UnityEngine.dll
+C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll
+C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll
+C:/Program Files/Unity/Editor/Data/Managed/UnityEditor.dll
+C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Advertisements/Editor/UnityEditor.Advertisements.dll
+C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/EditorTestsRunner/Editor/nunit.framework.dll
+C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/EditorTestsRunner/Editor/UnityEditor.EditorTestsRunner.dll
+C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/Editor/UnityEditor.UI.dll
+C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/Editor/UnityEditor.Networking.dll
+C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/TreeEditor/Editor/UnityEditor.TreeEditor.dll
+C:/Program Files/Unity/Editor/Data/Managed/UnityEditor.Graphs.dll
+C:/Program Files/Unity/Editor/Data/PlaybackEngines/windowsstandalonesupport/UnityEditor.WindowsStandalone.Extensions.dll
 C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/2015/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll
