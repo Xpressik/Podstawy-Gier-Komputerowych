@@ -16,6 +16,16 @@ public class HexCell : MonoBehaviour {
     public Text myText;
     public float fadeTime;
 
+
+
+    public Canvas fieldEditor;
+    public Button player1Button;
+    public Button player2Button;
+    public InputField supplyInput;
+    public InputField contrabandInput;
+    public Toggle campToggle;
+    public Button quitButton;
+
     void Start()
     {
         bc = gameObject.AddComponent<BoxCollider>();
@@ -28,6 +38,15 @@ public class HexCell : MonoBehaviour {
         myText = GameObject.Find("Text").GetComponent<Text>();
         myText.transform.SetParent(hexGridCanvas.transform, false);
         myText.supportRichText = false;
+
+        fieldEditor = fieldEditor.GetComponent<Canvas>();
+        player1Button = player1Button.GetComponent<Button>();
+        player2Button = player2Button.GetComponent<Button>();
+        supplyInput = supplyInput.GetComponent<InputField>();
+        contrabandInput = contrabandInput.GetComponent<InputField>();
+        campToggle = campToggle.GetComponent<Toggle>();
+        quitButton = quitButton.GetComponent<Button>();
+        fieldEditor.enabled = false;
     }
    
     void OnMouseOver()
@@ -310,4 +329,14 @@ public class HexCell : MonoBehaviour {
     {
 		chunk.Refresh();
 	}
+
+    public void QuitFieldEditor()
+    {
+        fieldEditor.enabled = false;
+    }
+
+    public void OpenFieldEditor()
+    {
+        fieldEditor.enabled = true;
+    }
 }

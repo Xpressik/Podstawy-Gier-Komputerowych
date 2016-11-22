@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/MainMenu/MainMenu.unity
+- path: Assets/MapEditor/Hexagons.unity
   isLoaded: 1
   isActive: 1

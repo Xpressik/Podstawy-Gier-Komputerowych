@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class HexMapEditor : MonoBehaviour {
 
@@ -15,6 +16,16 @@ public class HexMapEditor : MonoBehaviour {
 
 	bool applyColor;
 	bool applyElevation = true;
+
+    //  Editor Window
+
+    //public Canvas fieldEditor;
+    //public Button player1Button;
+    //public Button player2Button;
+    //public InputField supplyInput;
+    //public InputField contrabandInput;
+    //public Toggle campToggle;
+    //public Button quitButton;
 
 	enum OptionalToggle
     {
@@ -66,6 +77,18 @@ public class HexMapEditor : MonoBehaviour {
 		SelectColor(0);
 	}
 
+    void Start()
+    {
+        //fieldEditor = fieldEditor.GetComponent<Canvas>();
+        //player1Button = player1Button.GetComponent<Button>();
+        //player2Button = player2Button.GetComponent<Button>();
+        //supplyInput = supplyInput.GetComponent<InputField>();
+        //contrabandInput = contrabandInput.GetComponent<InputField>();
+        //campToggle = campToggle.GetComponent<Toggle>();
+        //quitButton = quitButton.GetComponent<Button>();
+        //fieldEditor.enabled = false;
+}
+
 	void Update ()
     {
 		if (Input.GetMouseButton(0) && !EventSystem.current.IsPointerOverGameObject())
@@ -76,6 +99,10 @@ public class HexMapEditor : MonoBehaviour {
         {
 			previousCell = null;
 		}
+        if (Input.GetMouseButton(1) && !EventSystem.current.IsPointerOverGameObject())
+        {
+            HandleInput2();
+        }
 	}
 
 	void HandleInput ()
@@ -101,6 +128,11 @@ public class HexMapEditor : MonoBehaviour {
 			previousCell = null;
 		}
 	}
+
+    void HandleInput2()
+    {
+
+    }
 
 	void ValidateDrag (HexCell currentCell)
     {
@@ -162,4 +194,9 @@ public class HexMapEditor : MonoBehaviour {
 			}
 		}
 	}
+
+    //public void QuitFieldEditor()
+    //{
+    //    fieldEditor.enabled = false;
+    //}
 }
