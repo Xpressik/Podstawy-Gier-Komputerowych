@@ -20,6 +20,8 @@ public class ButtonManager : MonoBehaviour {
     public InputField inputField1;
     public InputField inputField2;
 
+    public Game game;
+
     // pomocnicze
 
     string name1;
@@ -68,7 +70,7 @@ public class ButtonManager : MonoBehaviour {
         name1 = inputField1.text.ToString();
         name2 = inputField2.text.ToString();
         Console.Out.WriteLine(name1);
-        Game game = new Game(name1, name2);
+        this.game = new Game(name1, name2);
         SceneManager.LoadScene(mapChoser);
     }
 }

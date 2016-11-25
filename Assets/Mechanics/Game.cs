@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Game : MonoBehaviour {
+public class Game {
 
     // zmienne do zainicjowania
 

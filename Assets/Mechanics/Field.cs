@@ -11,9 +11,10 @@ public class Field : MonoBehaviour {
     //public Army army;
     public Player owner;
     public HexCell hex;
+    public int ownerInt;
 
-    public Field()
+    public Field(HexCell hex)
     {
-
+        this.hex = hex;
     }
 }
