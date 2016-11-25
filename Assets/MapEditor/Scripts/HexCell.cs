@@ -15,9 +15,7 @@ public class HexCell : MonoBehaviour {
     public string myString;
     public Text myText;
     public float fadeTime;
-
-
-
+    
  //   public Canvas fieldEditor;
     public Button player1Button;
     public Button player2Button;
@@ -25,11 +23,15 @@ public class HexCell : MonoBehaviour {
     public InputField contrabandInput;
     public Toggle campToggle;
     public Button quitButton;
-
+    
     Canvas sth;
+
+    bool isGame;
 
     void Start()
     {
+        isGame = GameObject.Find("Hex Grid").GetComponent<HexGrid>().isGame;
+
         bc = gameObject.AddComponent<BoxCollider>();
         bc.size = new Vector3(17, 17);
 
@@ -38,32 +40,37 @@ public class HexCell : MonoBehaviour {
         fadeTime = 10;
         var hexGridCanvas = GameObject.Find("Hex Grid Canvas").GetComponent<Canvas>();
         myText = GameObject.Find("Text").GetComponent<Text>();
-        myText.transform.SetParent(hexGridCanvas.transform);
+        myText.transform.SetParent(hexGridCanvas.transform, false);
         myText.supportRichText = false;
 
-         sth = GameObject.Find("FieldEditor").GetComponent<Canvas>();
-        sth.transform.SetParent(hexGridCanvas.transform, false);
-        sth.enabled = false;
-
-        sth.transform.Rotate(new Vector3(-0.15f, 0, 0));
-        sth.transform.localScale = new Vector3(0.2f,0.2f,0.2f);
-        //fieldEditor = gameObject.GetComponentInParent<Canvas>();
-        //fieldEditor = fieldEditor.GetComponent<Canvas>();
-        player1Button = player1Button.GetComponent<Button>();
-        player2Button = player2Button.GetComponent<Button>();
-        supplyInput = supplyInput.GetComponent<InputField>();
-        contrabandInput = contrabandInput.GetComponent<InputField>();
-        campToggle = campToggle.GetComponent<Toggle>();
-        quitButton = quitButton.GetComponent<Button>();
-      //  fieldEditor.enabled = false;
+        if (!isGame)
+        {
+            sth = GameObject.Find("FieldEditor").GetComponent<Canvas>();
+            sth.transform.SetParent(hexGridCanvas.transform, false);
+            sth.enabled = false;
+            sth.transform.Rotate(new Vector3(-0.15f, 0, 0));
+            sth.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+            //fieldEditor = gameObject.GetComponentInParent<Canvas>();
+            //fieldEditor = fieldEditor.GetComponent<Canvas>();
+            player1Button = player1Button.GetComponent<Button>();
+            player2Button = player2Button.GetComponent<Button>();
+            supplyInput = supplyInput.GetComponent<InputField>();
+            contrabandInput = contrabandInput.GetComponent<InputField>();
+            campToggle = campToggle.GetComponent<Toggle>();
+            quitButton = quitButton.GetComponent<Button>();
+            //  fieldEditor.enabled = false;
+        }
     }
-   
+
     void Update()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (!isGame)
         {
-            sth.enabled = true;
-            HandleInput();
+            if (Input.GetMouseButtonDown(1))
+            {
+                sth.enabled = true;
+                HandleInput();
+            }
         }
     }
 
@@ -103,8 +110,15 @@ public class HexCell : MonoBehaviour {
             }
         }
         myText.transform.position = new Vector3(tmp.x, tmp.y + 0.5f + offset, tmp.z);
-        myText.text = myString;
         myText.color = Color.Lerp(myText.color, Color.black, fadeTime * Time.deltaTime);
+        if (HasRiver)
+        {
+            myText.text = "River!";
+        }
+        else
+        {
+            myText.text = myString;
+        }
     }
 
     void OnMouseEnter()
@@ -364,7 +378,7 @@ public class HexCell : MonoBehaviour {
 
     public void QuitFieldEditor()
     {
-     sth.enabled = false;
+        sth.enabled = false;
     }
 
     public void OpenFieldEditor()

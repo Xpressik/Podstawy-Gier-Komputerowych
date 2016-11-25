@@ -3,6 +3,8 @@ using UnityEngine.UI;
 
 public class HexGrid : MonoBehaviour {
 
+    public bool isGame;
+
 	public int chunkCountX = 4, chunkCountZ = 3;
 
 	public Color defaultColor = Color.white;
@@ -128,12 +130,14 @@ public class HexGrid : MonoBehaviour {
 			}
 		}
 
-		Text label = Instantiate(cellLabelPrefab);
-		label.rectTransform.anchoredPosition = new Vector2(position.x, position.z);
-		label.text = cell.coordinates.ToStringOnSeparateLines();
-		cell.uiRect = label.rectTransform;
-
-		cell.Elevation = 0;
+        Text label = Instantiate(cellLabelPrefab);
+        label.rectTransform.anchoredPosition = new Vector2(position.x, position.z);
+        if (!isGame)
+        {
+            label.text = cell.coordinates.ToStringOnSeparateLines();
+        }
+        cell.uiRect = label.rectTransform;
+        cell.Elevation = 0;
 
 		AddCellToChunk(x, z, cell);
 	}

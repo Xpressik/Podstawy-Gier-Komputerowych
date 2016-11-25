@@ -31,7 +31,7 @@ namespace Assets
 
         private void Start()
         {
-            Figures = new Figure[6, 6];
+            Figures = new Figure[20, 15];
         }
 
         // Update is called once per frame
@@ -42,15 +42,21 @@ namespace Assets
                 UpdateSelection();
                 if (selectionX >= 0 && selectionY >= 0)
                 {
-                    Debug.Log(selectionX  + " " + selectionY);
                     if (firstMove == true )
                     {
                         if (!isCapsule)
                         {
                             firstMove = false;
                         }
-                        SpawnFigure(0, selectionX, selectionY, positionX, positionY, positionZ);
-                       
+                        if (Figures[selectionX, selectionY] != null)
+                        {
+                            firstMove = true;
+                            return;
+                        }
+                        else
+                        {
+                            SpawnFigure(0, selectionX, selectionY, positionX, positionY, positionZ);
+                        }
                     }
                     else
                     {
