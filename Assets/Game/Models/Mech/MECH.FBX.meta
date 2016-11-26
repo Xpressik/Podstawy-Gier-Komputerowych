@@ -1,0 +1,160 @@
+fileFormatVersion: 2
+guid: 711d27ce2c24eb34496f3e03838f2ef8
+timeCreated: 1479061041
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Armature
+    100002: Chest
+    100004: CyberSoldier
+    100006: FirstDistal.L
+    100008: FirstDistal.R
+    100010: FirstMiddle.L
+    100012: FirstMiddle.R
+    100014: FirstProximal.L
+    100016: FirstProximal.R
+    100018: Foot.L
+    100020: Foot.R
+    100022: Hand.L
+    100024: Hand.R
+    100026: Head
+    100028: Hips
+    100030: LowerArm.L
+    100032: LowerArm.R
+    100034: LowerLeg.L
+    100036: LowerLeg.R
+    100038: //RootNode
+    100040: Neck
+    100042: SecondDistal.L
+    100044: SecondDistal.R
+    100046: SecondMiddle.L
+    100048: SecondMiddle.R
+    100050: SecondProximal.L
+    100052: SecondProximal.R
+    100054: Shoulder.L
+    100056: Shoulder.R
+    100058: Spine
+    100060: ThumbDistal.L
+    100062: ThumbDistal.R
+    100064: ThumbMiddle.L
+    100066: ThumbMiddle.R
+    100068: ThumbProximal.L
+    100070: ThumbProximal.R
+    100072: Toe.L
+    100074: Toe.R
+    100076: UpperArm.l
+    100078: UpperArm.r
+    100080: UpperLeg.L
+    100082: UpperLeg.R
+    400000: Armature
+    400002: Chest
+    400004: CyberSoldier
+    400006: FirstDistal.L
+    400008: FirstDistal.R
+    400010: FirstMiddle.L
+    400012: FirstMiddle.R
+    400014: FirstProximal.L
+    400016: FirstProximal.R
+    400018: Foot.L
+    400020: Foot.R
+    400022: Hand.L
+    400024: Hand.R
+    400026: Head
+    400028: Hips
+    400030: LowerArm.L
+    400032: LowerArm.R
+    400034: LowerLeg.L
+    400036: LowerLeg.R
+    400038: //RootNode
+    400040: Neck
+    400042: SecondDistal.L
+    400044: SecondDistal.R
+    400046: SecondMiddle.L
+    400048: SecondMiddle.R
+    400050: SecondProximal.L
+    400052: SecondProximal.R
+    400054: Shoulder.L
+    400056: Shoulder.R
+    400058: Spine
+    400060: ThumbDistal.L
+    400062: ThumbDistal.R
+    400064: ThumbMiddle.L
+    400066: ThumbMiddle.R
+    400068: ThumbProximal.L
+    400070: ThumbProximal.R
+    400072: Toe.L
+    400074: Toe.R
+    400076: UpperArm.l
+    400078: UpperArm.r
+    400080: UpperLeg.L
+    400082: UpperLeg.R
+    2300000: CyberSoldier
+    3300000: CyberSoldier
+    4300000: CyberSoldier
+    7400000: Take 001
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 2
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

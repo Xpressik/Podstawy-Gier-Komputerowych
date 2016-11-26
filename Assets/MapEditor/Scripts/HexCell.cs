@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class HexCell : MonoBehaviour {
@@ -25,6 +27,9 @@ public class HexCell : MonoBehaviour {
     public Button quitButton;
     
     Canvas sth;
+    public Field field;
+    public int tmp;
+    public Boolean camp;
 
     bool isGame;
 
@@ -52,14 +57,24 @@ public class HexCell : MonoBehaviour {
             sth.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
             //fieldEditor = gameObject.GetComponentInParent<Canvas>();
             //fieldEditor = fieldEditor.GetComponent<Canvas>();
-            player1Button = player1Button.GetComponent<Button>();
-            player2Button = player2Button.GetComponent<Button>();
-            supplyInput = supplyInput.GetComponent<InputField>();
-            contrabandInput = contrabandInput.GetComponent<InputField>();
-            campToggle = campToggle.GetComponent<Toggle>();
-            quitButton = quitButton.GetComponent<Button>();
+            player1Button = GameObject.Find("Player1Button").GetComponent<Button>();
+            player2Button = GameObject.Find("Player2Button").GetComponent<Button>();
+            supplyInput = GameObject.Find("SupplyInput").GetComponent<InputField>();
+            contrabandInput = GameObject.Find("ContrabandInput").GetComponent<InputField>();
+            //campToggle = GameObject.Find("CampToggle").
+            //Console.WriteLine(GameObject.Find("CampToggle").ToString());
+            //Debug.Log(GameObject.Find("CampToggle").ToString());
+            //campToggle.transform.SetParent(sth.transform, false);
+            //campToggle = campToggle.GetComponent<Toggle>();
+            quitButton = GameObject.Find("QuitButton").GetComponent<Button>();
             //  fieldEditor.enabled = false;
+
+
+            supplyInput.ActivateInputField();
+            contrabandInput.ActivateInputField();
         }
+        this.field = new Field(this);
+        this.camp = false;    
     }
 
     void Update()
@@ -71,7 +86,14 @@ public class HexCell : MonoBehaviour {
                 sth.enabled = true;
                 HandleInput();
             }
+            DisableObjects();
+            sth.enabled = true;
         }
+
+        //if (campToggle.isOn)
+        //{
+        //    this.camp = true;
+        //}
     }
 
     void HandleInput()
@@ -110,7 +132,7 @@ public class HexCell : MonoBehaviour {
             }
         }
         myText.transform.position = new Vector3(tmp.x, tmp.y + 0.5f + offset, tmp.z);
-        myText.color = Color.Lerp(myText.color, Color.black, fadeTime * Time.deltaTime);
+        myText.color = Color.black; // Color.Lerp(myText.color, Color.black, fadeTime * Time.deltaTime);
         if (HasRiver)
         {
             myText.text = "River!";
@@ -129,7 +151,7 @@ public class HexCell : MonoBehaviour {
     void OnMouseExit()
     {
         this.Color = Color.white;
-        myText.color = Color.Lerp(myText.color, Color.clear, fadeTime * Time.deltaTime);
+        myText.color = Color.clear;//Color.Lerp(myText.color, Color.clear, fadeTime * Time.deltaTime);
     }
 
 
@@ -381,8 +403,56 @@ public class HexCell : MonoBehaviour {
         sth.enabled = false;
     }
 
-    public void OpenFieldEditor()
+    public void SaveFieldInfo()
     {
-       // sth.enabled = true;
+        this.field.supply = Int32.Parse(supplyInput.ToString());
+        this.field.contraband = Int32.Parse(contrabandInput.ToString());
+        this.field.ownerInt = this.tmp;
+        EnableObjects();
+    }
+
+    public void Player1ButtonClicked()
+    {
+        this.tmp = 1;
+    }
+
+    public void Player2ButtonClicked()
+    {
+        this.tmp = 2;
+    }
+
+    public void ToggleChanged()
+    {
+        if (this.camp == false)
+        {
+            this.camp = true;
+        }
+        if (this.camp == true)
+        {
+            this.camp = false;
+        }
+
+    }
+    
+    public void DisableObjects()
+    {
+        HexGrid[] objects = FindObjectsOfType<HexGrid>();
+        List<HexGrid> objectsToDisable = new List<HexGrid>(objects);
+
+        foreach (HexGrid a in objectsToDisable)
+        {
+            a.enabled = false;
+        }
+    }
+
+    public void EnableObjects()
+    {
+        HexGrid[] objects = FindObjectsOfType<HexGrid>();
+        List<HexGrid> objectsToDisable = new List<HexGrid>(objects);
+
+        foreach (HexGrid a in objectsToDisable)
+        {
+            a.enabled = true;
+        }
     }
 }
