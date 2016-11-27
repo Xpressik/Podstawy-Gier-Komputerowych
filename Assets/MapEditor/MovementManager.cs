@@ -27,6 +27,8 @@ namespace Assets
 
         public Text currentPlayer;
 
+        private HexMapCamera camera;
+
         private void Start()
         {
             Figures = new Figure[20, 15];
@@ -34,6 +36,7 @@ namespace Assets
             var cellPosition = hexGrid.GetCell(new Vector3(155.8846f, -0.4045f, 30.0f)).transform.position;
             SpawnFigure(2, 8, 2, 155.8846f, -0.4045f, 30.0f);
             SpawnFigure(3, 2, 13, 147.2243f, 0.8379046f, 195.0f);
+            camera = GameObject.Find("Hex Map Camera").GetComponent<HexMapCamera>();
         }
 
         // Update is called once per frame
@@ -181,13 +184,16 @@ namespace Assets
                 //SetColor(x, y, Color.cyan);
             //    currentPlayer.text = "Player : Cylinder";
                 isCapsule = false;
+                camera.SecondPlayerMovePositon();
             }
             else
             {
                 //SetColor(x, y, Color.yellow);
              //   currentPlayer.text = "Player : Capsule";
                 isCapsule = true;
+                camera.FirstPlayerMovePosition();
             }
+            // camera.AdjustZoom(-200f); oddalenie kamery do fazy ruchu
         }
 
         private void SetColor(int x, int y, Color color)
