@@ -1,7 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexagons.CSharp.Plugins", "Hexagons.CSharp.Plugins.csproj", "{A4A56DCA-98CC-393D-9CFA-9F0113CB92F4}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexagons.CSharp", "Hexagons.CSharp.csproj", "{5A874DC9-4D68-D8FC-8452-E21FF16C1DDB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexagons.CSharp.Editor.Plugins", "Hexagons.CSharp.Editor.Plugins.csproj", "{B8B648EB-88AC-8C29-5472-F2E3411B0DF7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexagons.CSharp.Editor", "Hexagons.CSharp.Editor.csproj", "{FB887365-5D2D-AB21-5112-0F06C933BA59}"
 EndProject
@@ -11,10 +15,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A4A56DCA-98CC-393D-9CFA-9F0113CB92F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4A56DCA-98CC-393D-9CFA-9F0113CB92F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4A56DCA-98CC-393D-9CFA-9F0113CB92F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4A56DCA-98CC-393D-9CFA-9F0113CB92F4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5A874DC9-4D68-D8FC-8452-E21FF16C1DDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5A874DC9-4D68-D8FC-8452-E21FF16C1DDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5A874DC9-4D68-D8FC-8452-E21FF16C1DDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5A874DC9-4D68-D8FC-8452-E21FF16C1DDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8B648EB-88AC-8C29-5472-F2E3411B0DF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8B648EB-88AC-8C29-5472-F2E3411B0DF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8B648EB-88AC-8C29-5472-F2E3411B0DF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8B648EB-88AC-8C29-5472-F2E3411B0DF7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FB887365-5D2D-AB21-5112-0F06C933BA59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FB887365-5D2D-AB21-5112-0F06C933BA59}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB887365-5D2D-AB21-5112-0F06C933BA59}.Release|Any CPU.ActiveCfg = Release|Any CPU

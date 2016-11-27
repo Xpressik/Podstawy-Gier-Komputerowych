@@ -23,13 +23,13 @@ public class HexCell : MonoBehaviour {
 
         // DO OKIENKA Z INFORMACJAMI O ZASOBACH NA POLU
         myString = "On Field";
-        fadeTime = 10;
+        fadeTime = 1;
         var hexGridCanvas = GameObject.Find("Hex Grid Canvas").GetComponent<Canvas>();
         myText = GameObject.Find("Text").GetComponent<Text>();
         myText.transform.SetParent(hexGridCanvas.transform, false);
         myText.supportRichText = false;
     }
-   
+
     void OnMouseOver()
     {
         myText.rectTransform.anchoredPosition = uiRect.anchoredPosition;
@@ -52,8 +52,16 @@ public class HexCell : MonoBehaviour {
             }
         }
         myText.transform.position = new Vector3(tmp.x, tmp.y + 0.5f + offset, tmp.z);
-        myText.text = myString;
         myText.color = Color.Lerp(myText.color, Color.black, fadeTime * Time.deltaTime);
+        if (HasRiver)
+        {
+            myText.text = "River!";
+        }
+        else 
+        {
+            myText.text = myString;
+        }
+        
     }
 
     void OnMouseEnter()
