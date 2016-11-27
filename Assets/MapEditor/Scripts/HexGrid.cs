@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class HexGrid : MonoBehaviour {
@@ -29,7 +32,50 @@ public class HexGrid : MonoBehaviour {
 
 		CreateChunks();
 		CreateCells();
+
+        if(File.Exists(Application.dataPath + "/savedCells.gd"))
+        {
+            List<HexCellInfo> cellsInfo = new List<HexCellInfo>();
+
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Open(Application.dataPath + "/savedCells.gd", FileMode.Open);
+            cellsInfo = (List<HexCellInfo>)bf.Deserialize(file);
+            file.Close();
+
+            for(int i = 0; i < cellCountZ * cellCountX; i++)
+            {
+                cells[i].color.r = cellsInfo[i]._myColor[0];
+                cells[i].color.g = cellsInfo[i]._myColor[1];
+                cells[i].color.b = cellsInfo[i]._myColor[2];
+                cells[i].color.a = cellsInfo[i]._myColor[3];
+                cells[i].Elevation = cellsInfo[i].elevation;
+                cells[i].hasIncomingRiver = cellsInfo[i].hasIncomingRiver;
+                cells[i].hasOutgoingRiver = cellsInfo[i].hasOutgoingRiver;
+                cells[i].incomingRiver = cellsInfo[i].incomingRiver;
+                cells[i].outgoingRiver = cellsInfo[i].outgoingRiver;
+            }
+            
+        }
+        
 	}
+
+    public void SaveCells()
+    {
+        List<HexCellInfo> cellsInfo = new List<HexCellInfo>();
+        for(int i = 0; i < cellCountZ * cellCountX; i++)
+        {
+            cells[i].SaveInfo();
+            cellsInfo.Add(cells[i].info);
+        }
+        BinaryFormatter bf = new BinaryFormatter();
+        if(File.Exists(Application.dataPath + "/savedCells.gd"))
+        {
+            File.Delete(Application.dataPath + "/savedCells.gd");
+        }
+        FileStream file = File.Create(Application.dataPath + "/savedCells.gd");
+        bf.Serialize(file, cellsInfo);
+        file.Close();
+    }
 
 	void CreateChunks ()
     {

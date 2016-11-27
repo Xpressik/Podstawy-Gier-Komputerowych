@@ -6,7 +6,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{21E51588-EABC-596C-AF06-F1E8AB52FF6A}</ProjectGuid>
+    <ProjectGuid>{0C2A3A70-CCF0-F317-9083-3CCAD3D33575}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp-Editor</AssemblyName>
@@ -45,11 +45,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\Editor\HexCoordinatesDrawer.cs" />
-     <None Include="Assets\Materials\River.shader" />
-     <None Include="Assets\Materials\VertexColors.shader" />
-     <None Include="Assets\HexShader.shader" />
-     <None Include="Assets\VertexColors.shader" />
+     <Compile Include="Assets\MapEditor\Scripts\Editor\HexCoordinatesDrawer.cs" />
+     <None Include="Assets\MapEditor\Materials\River.shader" />
+     <None Include="Assets\MapEditor\Materials\VertexColors.shader" />
+     <None Include="Assets\MapEditor\HexShader.shader" />
+     <None Include="Assets\MapEditor\VertexColors.shader" />
  <Reference Include="UnityEditor.Advertisements">
  <HintPath>F:/Unity/Editor/Data/UnityExtensions/Unity/Advertisements/Editor/UnityEditor.Advertisements.dll</HintPath>
  </Reference>
@@ -83,7 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp.csproj">
-      <Project>{B93AF412-5454-4958-FDBF-6AAC5AF04DDA}</Project>      <Name>Assembly-CSharp</Name>    </ProjectReference>
+      <Project>{B0018CB9-2241-4EFD-0B68-92551AE5DB9D}</Project>      <Name>Assembly-CSharp</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

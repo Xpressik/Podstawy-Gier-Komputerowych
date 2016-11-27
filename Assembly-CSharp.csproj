@@ -6,7 +6,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{B93AF412-5454-4958-FDBF-6AAC5AF04DDA}</ProjectGuid>
+    <ProjectGuid>{B0018CB9-2241-4EFD-0B68-92551AE5DB9D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -45,37 +45,34 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Armie.cs" />
-     <Compile Include="Assets\CameraMovement.cs" />
-     <Compile Include="Assets\Castle.cs" />
-     <Compile Include="Assets\Destroyer.cs" />
-     <Compile Include="Assets\Field.cs" />
-     <Compile Include="Assets\Figure.cs" />
-     <Compile Include="Assets\FigureModel.cs" />
-     <Compile Include="Assets\Functions.cs" />
-     <Compile Include="Assets\Game.cs" />
-     <Compile Include="Assets\Globals.cs" />
-     <Compile Include="Assets\Hex.cs" />
-     <Compile Include="Assets\HexModel.cs" />
-     <Compile Include="Assets\MovementManager.cs" />
-     <Compile Include="Assets\Player.cs" />
-     <Compile Include="Assets\Scripts\EdgeVertices.cs" />
-     <Compile Include="Assets\Scripts\HexCell.cs" />
-     <Compile Include="Assets\Scripts\HexCoordinates.cs" />
-     <Compile Include="Assets\Scripts\HexDirection.cs" />
-     <Compile Include="Assets\Scripts\HexEdgeType.cs" />
-     <Compile Include="Assets\Scripts\HexGrid.cs" />
-     <Compile Include="Assets\Scripts\HexGridChunk.cs" />
-     <Compile Include="Assets\Scripts\HexMapCamera.cs" />
-     <Compile Include="Assets\Scripts\HexMapEditor.cs" />
-     <Compile Include="Assets\Scripts\HexMesh.cs" />
-     <Compile Include="Assets\Scripts\HexMetrics.cs" />
-     <Compile Include="Assets\Scripts\ListPool.cs" />
-     <Compile Include="Assets\World.cs" />
-     <None Include="Assets\Materials\River.shader" />
-     <None Include="Assets\Materials\VertexColors.shader" />
-     <None Include="Assets\HexShader.shader" />
-     <None Include="Assets\VertexColors.shader" />
+     <Compile Include="Assets\GameWindow\GameBox.cs" />
+     <Compile Include="Assets\MainMenu\ButtonManager.cs" />
+     <Compile Include="Assets\MapEditor\CameraMovement.cs" />
+     <Compile Include="Assets\MapEditor\Destroyer.cs" />
+     <Compile Include="Assets\MapEditor\Figure.cs" />
+     <Compile Include="Assets\MapEditor\FigureModel.cs" />
+     <Compile Include="Assets\MapEditor\MovementManager.cs" />
+     <Compile Include="Assets\MapEditor\Scripts\EdgeVertices.cs" />
+     <Compile Include="Assets\MapEditor\Scripts\HexCell.cs" />
+     <Compile Include="Assets\MapEditor\Scripts\HexCellHighlight.cs" />
+     <Compile Include="Assets\MapEditor\Scripts\HexCellInfo.cs" />
+     <Compile Include="Assets\MapEditor\Scripts\HexCoordinates.cs" />
+     <Compile Include="Assets\MapEditor\Scripts\HexDirection.cs" />
+     <Compile Include="Assets\MapEditor\Scripts\HexEdgeType.cs" />
+     <Compile Include="Assets\MapEditor\Scripts\HexGrid.cs" />
+     <Compile Include="Assets\MapEditor\Scripts\HexGridChunk.cs" />
+     <Compile Include="Assets\MapEditor\Scripts\HexMapCamera.cs" />
+     <Compile Include="Assets\MapEditor\Scripts\HexMapEditor.cs" />
+     <Compile Include="Assets\MapEditor\Scripts\HexMesh.cs" />
+     <Compile Include="Assets\MapEditor\Scripts\HexMetrics.cs" />
+     <Compile Include="Assets\MapEditor\Scripts\ListPool.cs" />
+     <Compile Include="Assets\Mechanics\Field.cs" />
+     <Compile Include="Assets\Mechanics\Game.cs" />
+     <Compile Include="Assets\Mechanics\Player.cs" />
+     <None Include="Assets\MapEditor\Materials\River.shader" />
+     <None Include="Assets\MapEditor\Materials\VertexColors.shader" />
+     <None Include="Assets\MapEditor\HexShader.shader" />
+     <None Include="Assets\MapEditor\VertexColors.shader" />
  <Reference Include="UnityEngine.UI">
  <HintPath>F:/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

@@ -13,6 +13,8 @@ public class HexCell : MonoBehaviour {
 
     public BoxCollider bc;
 
+    public HexCellInfo info;
+
     // DO OKIENKA Z INFORMACJAMI O ZASOBACH NA POLU
     public string myString;
     public Text myText;
@@ -32,6 +34,17 @@ public class HexCell : MonoBehaviour {
     public Boolean camp;
 
     bool isGame;
+
+    public void SaveInfo()
+    {
+        this.info.cellColor = this.color;
+        this.info.TransformColor();
+        this.info.elevation = this.elevation;
+        this.info.hasIncomingRiver = hasIncomingRiver;
+        this.info.hasOutgoingRiver = hasOutgoingRiver;
+        this.info.incomingRiver = incomingRiver;
+        this.info.outgoingRiver = outgoingRiver;
+    }
 
     void Start()
     {
@@ -279,12 +292,12 @@ public class HexCell : MonoBehaviour {
 		}
 	}
 
-	Color color;
+	public Color color;
 
 	int elevation = int.MinValue;
 
-	bool hasIncomingRiver, hasOutgoingRiver;
-	HexDirection incomingRiver, outgoingRiver;
+	public bool hasIncomingRiver, hasOutgoingRiver;
+	public HexDirection incomingRiver, outgoingRiver;
 
 	[SerializeField]
 	HexCell[] neighbors;
@@ -377,7 +390,7 @@ public class HexCell : MonoBehaviour {
 		neighbor.RefreshSelfOnly();
 	}
 
-	void Refresh ()
+	public void Refresh ()
     {
 		if (chunk)
         {
