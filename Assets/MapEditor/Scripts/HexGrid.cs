@@ -176,14 +176,6 @@ public class HexGrid : MonoBehaviour {
 			}
 		}
 
-<<<<<<< HEAD:Assets/Scripts/HexGrid.cs
-		Text label = Instantiate(cellLabelPrefab);
-		label.rectTransform.anchoredPosition = new Vector2(position.x, position.z);
-	//	label.text = cell.coordinates.ToStringOnSeparateLines();
-		cell.uiRect = label.rectTransform;
-
-		cell.Elevation = 0;
-=======
         Text label = Instantiate(cellLabelPrefab);
         label.rectTransform.anchoredPosition = new Vector2(position.x, position.z);
         if (!isGame)
@@ -192,7 +184,6 @@ public class HexGrid : MonoBehaviour {
         }
         cell.uiRect = label.rectTransform;
         cell.Elevation = 0;
->>>>>>> 4e13900906cfb4af9d8fe8eb40b22aae9fb0f71f:Assets/MapEditor/Scripts/HexGrid.cs
 
 		AddCellToChunk(x, z, cell);
 	}

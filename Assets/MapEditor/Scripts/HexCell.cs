@@ -109,8 +109,6 @@ public class HexCell : MonoBehaviour {
         //}
     }
 
-<<<<<<< HEAD:Assets/Scripts/HexCell.cs
-=======
     void HandleInput()
     {
         Ray inputRay = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -125,7 +123,6 @@ public class HexCell : MonoBehaviour {
         }
     }
 
->>>>>>> 4e13900906cfb4af9d8fe8eb40b22aae9fb0f71f:Assets/MapEditor/Scripts/HexCell.cs
     void OnMouseOver()
     {
         myText.rectTransform.anchoredPosition = uiRect.anchoredPosition;
@@ -147,28 +144,17 @@ public class HexCell : MonoBehaviour {
                 }
             }
         }
+        myText.transform.rotation = Camera.main.transform.rotation;
         myText.transform.position = new Vector3(tmp.x, tmp.y + 0.5f + offset, tmp.z);
-<<<<<<< HEAD:Assets/Scripts/HexCell.cs
-        myText.color = Color.Lerp(myText.color, Color.black, fadeTime * Time.deltaTime);
-=======
         myText.color = Color.black; // Color.Lerp(myText.color, Color.black, fadeTime * Time.deltaTime);
->>>>>>> 4e13900906cfb4af9d8fe8eb40b22aae9fb0f71f:Assets/MapEditor/Scripts/HexCell.cs
         if (HasRiver)
         {
             myText.text = "River!";
         }
-<<<<<<< HEAD:Assets/Scripts/HexCell.cs
         else 
         {
             myText.text = myString;
         }
-        
-=======
-        else
-        {
-            myText.text = myString;
-        }
->>>>>>> 4e13900906cfb4af9d8fe8eb40b22aae9fb0f71f:Assets/MapEditor/Scripts/HexCell.cs
     }
 
     void OnMouseEnter()
