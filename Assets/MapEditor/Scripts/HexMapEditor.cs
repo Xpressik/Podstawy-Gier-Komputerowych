@@ -38,7 +38,10 @@ public class HexMapEditor : MonoBehaviour {
 	HexDirection dragDirection;
 	HexCell previousCell;
 
-	public void SelectColor (int index)
+    int activeUrbanLevel;
+    bool applyUrbanLevel = true;
+
+    public void SelectColor (int index)
     {
 		applyColor = index >= 0;
 		if (applyColor)
@@ -72,7 +75,17 @@ public class HexMapEditor : MonoBehaviour {
 		hexGrid.ShowUI(visible);
 	}
 
-	void Awake ()
+    public void SetApplyUrbanLevel(bool toggle)
+    {
+        applyUrbanLevel = toggle;
+    }
+
+    public void SetUrbanLevel(float level)
+    {
+        activeUrbanLevel = (int)level;
+    }
+
+    void Awake ()
     {
 		SelectColor(0);
 	}
@@ -168,7 +181,7 @@ public class HexMapEditor : MonoBehaviour {
 		}
 	}
 
-	void EditCell (HexCell cell)
+    void EditCell (HexCell cell)
     {
 		if (cell)
         {
@@ -180,6 +193,10 @@ public class HexMapEditor : MonoBehaviour {
             {
 				cell.Elevation = activeElevation;
 			}
+            if (applyUrbanLevel)
+            {
+                cell.UrbanLevel = activeUrbanLevel;
+            }
 			if (riverMode == OptionalToggle.No)
             {
 				cell.RemoveRiver();
@@ -194,7 +211,6 @@ public class HexMapEditor : MonoBehaviour {
 			}
 		}
 	}
-
     //public void QuitFieldEditor()
     //{
     //    fieldEditor.enabled = false;

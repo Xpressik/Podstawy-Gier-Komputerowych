@@ -471,4 +471,22 @@ public class HexCell : MonoBehaviour {
             a.enabled = true;
         }
     }
+
+    int urbanLevel;
+
+    public int UrbanLevel
+    {
+        get
+        {
+            return urbanLevel;
+        }
+        set
+        {
+            if (urbanLevel != value)
+            {
+                urbanLevel = value;
+                RefreshSelfOnly();
+            }
+        }
+    }
 }
