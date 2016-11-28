@@ -12,18 +12,26 @@ public class GameBox : MonoBehaviour
     public Text round;
     public Text player;
     public Game game;
+    public Text stage;
+    public bool ready;
 
     // Use this for initialization
     void Start()
     {
+        panel = panel.GetComponent<GameObject>();
         canvas.enabled = true;
-        panel.active = true;
+        //panel.active = true;
+        round = round.GetComponent<Text>();
+        player = player.GetComponent<Text>();
+        stage = stage.GetComponent<Text>();
+        stage.text = "gg";
+        stage.enabled = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        this.stage.text = "";
     }
 
     public void setRound(int number)
@@ -46,6 +54,11 @@ public class GameBox : MonoBehaviour
         player = player.GetComponent<Text>();
         setRound(0);
         this.player.text = "test";
+    }
+
+    public void ReadyButtonPress()
+    {
+        this.game.ready = true;
     }
 }
 
