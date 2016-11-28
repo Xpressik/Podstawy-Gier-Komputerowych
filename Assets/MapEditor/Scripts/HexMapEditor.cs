@@ -77,13 +77,11 @@ public class HexMapEditor : MonoBehaviour {
 
     public void SetApplyUrbanLevel(bool toggle)
     {
-        Debug.Log(toggle.ToString());
         applyUrbanLevel = toggle;
     }
 
     public void SetUrbanLevel(float level)
     {
-        Debug.Log(level);
         activeUrbanLevel = (int)level;
     }
 
