@@ -34,6 +34,7 @@ public class HexCell : MonoBehaviour {
     public Boolean camp;
 
     bool isGame;
+    private Color cellColor;
 
     public void SaveInfo()
     {
@@ -99,8 +100,8 @@ public class HexCell : MonoBehaviour {
                 sth.enabled = true;
                 HandleInput();
             }
-            DisableObjects();
-            sth.enabled = true;
+         //   DisableObjects();
+         //   sth.enabled = true;
         }
 
         //if (campToggle.isOn)
@@ -159,12 +160,13 @@ public class HexCell : MonoBehaviour {
 
     void OnMouseEnter()
     {
+        cellColor = Color;
         this.Color = new Color(1, 1, 140.0f/255.0f);
     }
 
     void OnMouseExit()
     {
-        this.Color = Color.white;
+        this.Color = cellColor;
         myText.color = Color.clear;//Color.Lerp(myText.color, Color.clear, fadeTime * Time.deltaTime);
     }
 

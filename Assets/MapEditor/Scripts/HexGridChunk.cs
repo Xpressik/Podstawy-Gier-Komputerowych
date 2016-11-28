@@ -5,6 +5,8 @@ public class HexGridChunk : MonoBehaviour {
 
 	public HexMesh terrain, rivers;
 
+    public HexFeatureManager features;
+
 	HexCell[] cells;
 
 	Canvas gridCanvas;
@@ -45,21 +47,27 @@ public class HexGridChunk : MonoBehaviour {
     {
 		terrain.Clear();
 		rivers.Clear();
+        features.Clear();
 		for (int i = 0; i < cells.Length; i++)
         {
 			Triangulate(cells[i]);
 		}
 		terrain.Apply();
 		rivers.Apply();
+        features.Apply();
 	}
 
-	void Triangulate (HexCell cell)
+    void Triangulate(HexCell cell)
     {
-		for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
+        for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
         {
-			Triangulate(d, cell);
-		}
-	}
+            Triangulate(d, cell);
+        }
+        if (!cell.HasRiver)
+        {
+            features.AddFeature(cell.Position);
+        }
+    }
 
 	void Triangulate (HexDirection direction, HexCell cell)
     {
@@ -91,6 +99,7 @@ public class HexGridChunk : MonoBehaviour {
 		else
         {
 			TriangulateEdgeFan(center, e, cell.Color);
+            features.AddFeature((center + e.v1 + e.v5) * (1f / 3f));
 		}
 
 		if (direction <= HexDirection.SE)
@@ -116,6 +125,8 @@ public class HexGridChunk : MonoBehaviour {
         {
 			center += HexMetrics.GetSecondSolidCorner(direction) * 0.25f;
 		}
+
+        features.AddFeature((center + e.v1 + e.v5) * (1f / 3f));
 
 		EdgeVertices m = new EdgeVertices(Vector3.Lerp(center, e.v1, 0.5f), Vector3.Lerp(center, e.v5, 0.5f));
 

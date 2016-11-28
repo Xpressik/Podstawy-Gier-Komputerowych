@@ -23,17 +23,20 @@ public class HexGrid : MonoBehaviour {
 
 	int cellCountX, cellCountZ;
 
+    public int seed;
+
 	void Awake ()
     {
-		HexMetrics.noiseSource = noiseSource;
+        HexMetrics.noiseSource = noiseSource;
+        HexMetrics.InitializeHashGrid(seed);
 
-		cellCountX = chunkCountX * HexMetrics.chunkSizeX;
-		cellCountZ = chunkCountZ * HexMetrics.chunkSizeZ;
+        cellCountX = chunkCountX * HexMetrics.chunkSizeX;
+        cellCountZ = chunkCountZ * HexMetrics.chunkSizeZ;
 
-		CreateChunks();
-		CreateCells();
+        CreateChunks();
+        CreateCells();
 
-        if(File.Exists(Application.dataPath + "/savedCells.gd"))
+        if (File.Exists(Application.dataPath + "/savedCells.gd"))
         {
             List<HexCellInfo> cellsInfo = new List<HexCellInfo>();
 
@@ -42,7 +45,7 @@ public class HexGrid : MonoBehaviour {
             cellsInfo = (List<HexCellInfo>)bf.Deserialize(file);
             file.Close();
 
-            for(int i = 0; i < cellCountZ * cellCountX; i++)
+            for (int i = 0; i < cellCountZ * cellCountX; i++)
             {
                 cells[i].color.r = cellsInfo[i]._myColor[0];
                 cells[i].color.g = cellsInfo[i]._myColor[1];
@@ -54,10 +57,10 @@ public class HexGrid : MonoBehaviour {
                 cells[i].incomingRiver = cellsInfo[i].incomingRiver;
                 cells[i].outgoingRiver = cellsInfo[i].outgoingRiver;
             }
-            
+
         }
-        
-	}
+
+    }
 
     public void SaveCells()
     {
@@ -106,7 +109,11 @@ public class HexGrid : MonoBehaviour {
 
 	void OnEnable ()
     {
-		HexMetrics.noiseSource = noiseSource;
+        if (HexMetrics.noiseSource)
+        {
+            HexMetrics.noiseSource = noiseSource;
+            HexMetrics.InitializeHashGrid(seed);
+        }
 	}
 
 	public HexCell GetCell (Vector3 position)
