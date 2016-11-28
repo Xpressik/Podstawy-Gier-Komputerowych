@@ -23,6 +23,7 @@ public class HexCell : MonoBehaviour {
  //   public Canvas fieldEditor;
     public Button player1Button;
     public Button player2Button;
+    public Button player0Button;
     public InputField supplyInput;
     public InputField contrabandInput;
     public Button S0;
@@ -38,7 +39,7 @@ public class HexCell : MonoBehaviour {
     
     Canvas sth;
     public Field field;
-    public int tmp;
+    public int owner;
     public Boolean camp;
     public int supply;
     public int contraband;
@@ -83,6 +84,7 @@ public class HexCell : MonoBehaviour {
             //fieldEditor = fieldEditor.GetComponent<Canvas>();
             player1Button = GameObject.Find("Player1Button").GetComponent<Button>();
             player2Button = GameObject.Find("Player2Button").GetComponent<Button>();
+            player0Button = GameObject.Find("Player0Button").GetComponent<Button>();
             //supplyInput = GameObject.Find("SupplyInput").GetComponent<InputField>();
             //contrabandInput = GameObject.Find("ContrabandInput").GetComponent<InputField>();
             S0 = GameObject.Find("S0").GetComponent<Button>();
@@ -112,7 +114,11 @@ public class HexCell : MonoBehaviour {
             //contrabandInput.ActivateInputField();
         }
         this.field = new Field(this);
-        this.camp = false;    
+        this.field.camp = false;
+        this.field.supply = 2;
+        this.field.contraband = 0;
+        this.field.garrison = 0;
+        this.field.playerInt = 0;    
     }
 
     void Update()
@@ -123,6 +129,72 @@ public class HexCell : MonoBehaviour {
             {
                 sth.enabled = true;
                 HandleInput();
+                if (this.field.contraband == 0)
+                {
+                    this.C0.image.color = Color.red;
+                    this.C1.image.color = Color.white;
+                    this.C2.image.color = Color.white;
+                }
+                else if (this.field.contraband == 1)
+                {
+                    this.C0.image.color = Color.white;
+                    this.C1.image.color = Color.red;
+                    this.C0.image.color = Color.white;
+                }
+                else if (this.field.contraband == 2)
+                {
+                    this.C0.image.color = Color.white;
+                    this.C2.image.color = Color.white;
+                    this.C0.image.color = Color.red;
+                }
+
+                if (this.field.supply == 0)
+                {
+                    this.S0.image.color = Color.red;
+                    this.S1.image.color = Color.white;
+                    this.S2.image.color = Color.white;
+                }
+                else if (this.field.supply == 1)
+                {
+                    this.S0.image.color = Color.white;
+                    this.S1.image.color = Color.red;
+                    this.S2.image.color = Color.white;
+                }
+                else if (this.field.supply == 2)
+                {
+                    this.S0.image.color = Color.white;
+                    this.S1.image.color = Color.white;
+                    this.S2.image.color = Color.red;
+                }
+
+                if (this.field.playerInt == 0)
+                {
+                    this.player0Button.image.color = Color.red;
+                    this.player1Button.image.color = Color.white;
+                    this.player2Button.image.color = Color.white;
+                }
+                else if (this.field.playerInt == 1)
+                {
+                    this.player0Button.image.color = Color.white;
+                    this.player1Button.image.color = Color.red;
+                    this.player2Button.image.color = Color.white;
+                }
+                else if (this.field.playerInt == 2)
+                {
+                    this.player0Button.image.color = Color.white;
+                    this.player1Button.image.color = Color.red;
+                    this.player2Button.image.color = Color.white;
+                }
+
+                //if (this.field.camp == true)
+                //{
+                //    this.campToggle.isOn = true;
+                //}
+                //else if (this.field.camp == false)
+                //{
+                //    this.campToggle.isOn = true;
+                //}
+
             }
         }
     }
@@ -143,7 +215,7 @@ public class HexCell : MonoBehaviour {
 
     void OnMouseOver()
     {
-        myText.rectTransform.anchoredPosition = uiRect.anchoredPosition;
+        //myText.rectTransform.anchoredPosition = uiRect.anchoredPosition;
         var tmp = transform.position;
         float offset = 0;
         if (neighbors[5] != null && neighbors[4] != null)
@@ -433,6 +505,7 @@ public class HexCell : MonoBehaviour {
 
     public void QuitFieldEditor()
     {
+        //SaveFieldInfo();
         sth.enabled = false;
     }
 
@@ -440,22 +513,32 @@ public class HexCell : MonoBehaviour {
     {
         this.field.supply = supply;
         this.field.contraband = contraband;
-        this.field.ownerInt = this.tmp;
+        this.field.ownerInt = this.owner;
         this.field.camp = this.camp;
     }
 
     public void Player1ButtonClicked()
     {
-        this.tmp = 1;
+        this.field.playerInt = 1;
         player1Button.image.color = Color.red;
         player2Button.image.color = Color.white;
+        player0Button.image.color = Color.white;
     }
 
     public void Player2ButtonClicked()
     {
-        this.tmp = 2;
+        this.field.playerInt = 2;
         player2Button.image.color = Color.red;
         player1Button.image.color = Color.white;
+        player0Button.image.color = Color.white;
+    }
+
+    public void Player0ButtonClicked()
+    {
+        this.field.playerInt = 0;
+        player2Button.image.color = Color.white;
+        player1Button.image.color = Color.white;
+        player0Button.image.color = Color.red;
     }
 
     public void ToggleChanged()
@@ -473,7 +556,7 @@ public class HexCell : MonoBehaviour {
 
     public void S0Press()
     {
-        this.supply = 0;
+        this.field.supply = 0;
         S0.image.color = Color.red;
         S1.image.color = Color.white;
         S2.image.color = Color.white;
@@ -481,7 +564,7 @@ public class HexCell : MonoBehaviour {
 
     public void S1Press()
     {
-        this.supply = 1;
+        this.field.supply = 1;
         S0.image.color = Color.white;
         S1.image.color = Color.red;
         S2.image.color = Color.white;
@@ -489,7 +572,7 @@ public class HexCell : MonoBehaviour {
 
     public void S2Press()
     {
-        this.supply = 2;
+        this.field.supply = 2;
         S0.image.color = Color.white;
         S1.image.color = Color.white;
         S2.image.color = Color.red;
@@ -497,7 +580,7 @@ public class HexCell : MonoBehaviour {
 
     public void C0Press()
     {
-        this.contraband = 0;
+        this.field.contraband = 0;
         C0.image.color = Color.red;
         C1.image.color = Color.white;
         C2.image.color = Color.white;
@@ -505,7 +588,7 @@ public class HexCell : MonoBehaviour {
 
     public void C1Press()
     {
-        this.contraband = 1;
+        this.field.contraband = 1;
         C0.image.color = Color.white;
         C1.image.color = Color.red;
         C2.image.color = Color.white;
@@ -513,7 +596,7 @@ public class HexCell : MonoBehaviour {
 
     public void C2Press()
     {
-        this.contraband = 2;
+        this.field.contraband = 2;
         C0.image.color = Color.white;
         C1.image.color = Color.white;
         C2.image.color = Color.red;
