@@ -44,6 +44,11 @@ public class HexCell : MonoBehaviour {
     public int supply;
     public int contraband;
 
+    public Canvas fieldInfo;
+    public Text supplyOutput;
+
+    //public FieldInfoScript fieldInfo;
+
     bool isGame;
     private Color cellColor;
 
@@ -96,7 +101,7 @@ public class HexCell : MonoBehaviour {
             C1 = GameObject.Find("C1").GetComponent<Button>();
             //C1.image.color = Color.red;
             C2 = GameObject.Find("C2").GetComponent<Button>();
-            //campToggle = GameObject.Find("CampToggle").
+            campToggle = GameObject.Find("CampToggle").GetComponent<Toggle>();
             //Console.WriteLine(GameObject.Find("CampToggle").ToString());
             //Debug.Log(GameObject.Find("CampToggle").ToString());
             //campToggle.transform.SetParent(sth.transform, false);
@@ -112,13 +117,18 @@ public class HexCell : MonoBehaviour {
 
             //supplyInput.ActivateInputField();
             //contrabandInput.ActivateInputField();
+            fieldInfo = GameObject.Find("FieldInfo").GetComponent<Canvas>();
+            fieldInfo = fieldInfo.GetComponent<Canvas>();
+            supplyOutput = supplyOutput.GetComponent<Text>();
+            supplyOutput.text = "test";
+            fieldInfo.enabled = false;
         }
         this.field = new Field(this);
         this.field.camp = false;
         this.field.supply = 2;
-        this.field.contraband = 0;
+        this.field.contraband = 1;
         this.field.garrison = 0;
-        this.field.playerInt = 0;    
+        this.field.playerInt = 2;    
     }
 
     void Update()
@@ -182,19 +192,28 @@ public class HexCell : MonoBehaviour {
                 else if (this.field.playerInt == 2)
                 {
                     this.player0Button.image.color = Color.white;
-                    this.player1Button.image.color = Color.red;
-                    this.player2Button.image.color = Color.white;
+                    this.player1Button.image.color = Color.white;
+                    this.player2Button.image.color = Color.red;
                 }
 
-                //if (this.field.camp == true)
-                //{
-                //    this.campToggle.isOn = true;
-                //}
-                //else if (this.field.camp == false)
-                //{
-                //    this.campToggle.isOn = true;
-                //}
+                if (this.field.camp == true)
+                {
+                    this.campToggle.isOn = true;
+                }
+                else if (this.field.camp == false)
+                {
+                    this.campToggle.isOn = false;
+                }
 
+            }
+        }
+
+        
+            if (isGame)
+        {
+            if (Input.GetMouseButtonDown(1))
+            {
+                this.fieldInfo.enabled = true;
             }
         }
     }
@@ -245,6 +264,7 @@ public class HexCell : MonoBehaviour {
         {
             myText.text = myString;
         }
+
     }
 
     void OnMouseEnter()
@@ -543,15 +563,14 @@ public class HexCell : MonoBehaviour {
 
     public void ToggleChanged()
     {
-        if (this.camp == false)
+        if (campToggle.IsActive())
         {
-            this.camp = true;
+            this.field.camp = true;
         }
-        if (this.camp == true)
+        else
         {
-            this.camp = false;
+            this.field.camp = false;
         }
-
     }
 
     public void S0Press()

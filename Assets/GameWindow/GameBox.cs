@@ -30,8 +30,8 @@ public class GameBox : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
-        setRound(game.runda);
-        setStage(game.faza);
+        //setRound(game.runda);
+        //setStage(game.faza);
     }
 
     public void setRound(int number)
