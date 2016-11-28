@@ -36,29 +36,29 @@ public class HexGrid : MonoBehaviour {
         CreateChunks();
         CreateCells();
 
-        if (File.Exists(Application.dataPath + "/savedCells.gd"))
-        {
-            List<HexCellInfo> cellsInfo = new List<HexCellInfo>();
+        //if (File.Exists(Application.dataPath + "/savedCells.gd"))
+        //{
+        //    List<HexCellInfo> cellsInfo = new List<HexCellInfo>();
 
-            BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(Application.dataPath + "/savedCells.gd", FileMode.Open);
-            cellsInfo = (List<HexCellInfo>)bf.Deserialize(file);
-            file.Close();
+        //    BinaryFormatter bf = new BinaryFormatter();
+        //    FileStream file = File.Open(Application.dataPath + "/savedCells.gd", FileMode.Open);
+        //    cellsInfo = (List<HexCellInfo>)bf.Deserialize(file);
+        //    file.Close();
 
-            for (int i = 0; i < cellCountZ * cellCountX; i++)
-            {
-                cells[i].color.r = cellsInfo[i]._myColor[0];
-                cells[i].color.g = cellsInfo[i]._myColor[1];
-                cells[i].color.b = cellsInfo[i]._myColor[2];
-                cells[i].color.a = cellsInfo[i]._myColor[3];
-                cells[i].Elevation = cellsInfo[i].elevation;
-                cells[i].hasIncomingRiver = cellsInfo[i].hasIncomingRiver;
-                cells[i].hasOutgoingRiver = cellsInfo[i].hasOutgoingRiver;
-                cells[i].incomingRiver = cellsInfo[i].incomingRiver;
-                cells[i].outgoingRiver = cellsInfo[i].outgoingRiver;
-            }
+        //    for (int i = 0; i < cellCountZ * cellCountX; i++)
+        //    {
+        //        cells[i].color.r = cellsInfo[i]._myColor[0];
+        //        cells[i].color.g = cellsInfo[i]._myColor[1];
+        //        cells[i].color.b = cellsInfo[i]._myColor[2];
+        //        cells[i].color.a = cellsInfo[i]._myColor[3];
+        //        cells[i].Elevation = cellsInfo[i].elevation;
+        //        cells[i].hasIncomingRiver = cellsInfo[i].hasIncomingRiver;
+        //        cells[i].hasOutgoingRiver = cellsInfo[i].hasOutgoingRiver;
+        //        cells[i].incomingRiver = cellsInfo[i].incomingRiver;
+        //        cells[i].outgoingRiver = cellsInfo[i].outgoingRiver;
+        //    }
 
-        }
+        //}
 
     }
 
