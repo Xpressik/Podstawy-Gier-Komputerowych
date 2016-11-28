@@ -99,7 +99,7 @@ public class HexGridChunk : MonoBehaviour {
 		else
         {
 			TriangulateEdgeFan(center, e, cell.Color);
-            features.AddFeature(cell,(center + e.v1 + e.v5) * (1f / 3f));
+            features.AddFeature(cell, (center + e.v1 + e.v5) * (1f / 3f));
 		}
 
 		if (direction <= HexDirection.SE)
