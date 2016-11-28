@@ -24,19 +24,29 @@ public class GameBox : MonoBehaviour
         round = round.GetComponent<Text>();
         player = player.GetComponent<Text>();
         stage = stage.GetComponent<Text>();
-        stage.text = "gg";
         stage.enabled = true;
     }
 
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
-        this.stage.text = "";
+        setRound(game.runda);
+        setStage(game.faza);
     }
 
     public void setRound(int number)
     {
         round.text = number.ToString();
+    }
+
+    public void setStage(string stage)
+    {
+        this.stage.text = stage;
+    }
+
+    public void setActivePlayer(Player player)
+    {
+        this.player.text = player.getName();
     }
 
     public void SetActivePLayer(int i)
