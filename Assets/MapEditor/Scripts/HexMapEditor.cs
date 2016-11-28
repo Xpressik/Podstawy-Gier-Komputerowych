@@ -38,8 +38,8 @@ public class HexMapEditor : MonoBehaviour {
 	HexDirection dragDirection;
 	HexCell previousCell;
 
-    int activeUrbanLevel;
-    bool applyUrbanLevel = true;
+    int activeUrbanLevel, activeFarmLevel, activePlantLevel;
+    bool applyUrbanLevel, applyFarmLevel, applyPlantLevel;
 
     public void SelectColor (int index)
     {
@@ -77,12 +77,34 @@ public class HexMapEditor : MonoBehaviour {
 
     public void SetApplyUrbanLevel(bool toggle)
     {
+        Debug.Log(toggle.ToString());
         applyUrbanLevel = toggle;
     }
 
     public void SetUrbanLevel(float level)
     {
+        Debug.Log(level);
         activeUrbanLevel = (int)level;
+    }
+
+    public void SetApplyFarmLevel(bool toggle)
+    {
+        applyFarmLevel = toggle;
+    }
+
+    public void SetFarmLevel(float level)
+    {
+        activeFarmLevel = (int)level;
+    }
+
+    public void SetApplyPlantLevel(bool toggle)
+    {
+        applyPlantLevel = toggle;
+    }
+
+    public void SetPlantLevel(float level)
+    {
+        activePlantLevel = (int)level;
     }
 
     void Awake ()
@@ -197,7 +219,15 @@ public class HexMapEditor : MonoBehaviour {
             {
                 cell.UrbanLevel = activeUrbanLevel;
             }
-			if (riverMode == OptionalToggle.No)
+            if (applyFarmLevel)
+            {
+                cell.FarmLevel = activeFarmLevel;
+            }
+            if (applyPlantLevel)
+            {
+                cell.PlantLevel = activePlantLevel;
+            }
+            if (riverMode == OptionalToggle.No)
             {
 				cell.RemoveRiver();
 			}

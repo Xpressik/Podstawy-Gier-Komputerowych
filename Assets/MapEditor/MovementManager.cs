@@ -27,7 +27,7 @@ namespace Assets
 
         public Text currentPlayer;
 
-        private HexMapCamera camera;
+        private new HexMapCamera camera;  // kazał mi dodać new  nie sprawdzałem czy to coś ZMIENIA <-----------------------
 
         private void Start()
         {
