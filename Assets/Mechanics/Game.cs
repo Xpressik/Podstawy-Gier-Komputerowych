@@ -11,9 +11,13 @@ public class Game : MonoBehaviour{
     public GameBox gameBox;
     public int numberOfTours = 10;
     public bool ready = false;
+    public string faza;
+    public int runda;
+    public Player activePlayer;
+    
     void Start()
     {
-        gameBox.stage.text = "Action Stage";
+ 
     }
 
     void Update()
@@ -43,7 +47,7 @@ public class Game : MonoBehaviour{
     {
         for (int i = 0; i < numberOfTours; i++)
         {
-            gameBox.round.text = i.ToString();
+            runda += runda;
             Stage1();
             Stage2();
             Stage3();
@@ -52,9 +56,10 @@ public class Game : MonoBehaviour{
 
     public bool Stage1()
     {
-        gameBox.stage.text = "Planning Stage";
+        faza = "Planning Stage";
         for (int i = 0; i < listOfPlayers.Count; i++)
         {
+            activePlayer = listOfPlayers[i];
             Planning(listOfPlayers[i]);
             if (ready == true)
             {
@@ -66,12 +71,12 @@ public class Game : MonoBehaviour{
 
     public void Stage2()
     {
-        gameBox.stage.text = "Action Stage";
+        faza = "Action Stage";
     }
 
     public void Stage3()
     {
-        gameBox.stage.text = "Random Stage";
+        faza = "Random Stage";
     }
 
     public void Planning(Player player)
