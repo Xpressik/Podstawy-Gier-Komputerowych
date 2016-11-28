@@ -2,16 +2,24 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Game {
+public class Game : MonoBehaviour{
 
     // zmienne do zainicjowania
 
     public List<Player> listOfPlayers;
     //public List<Army> listOfArmies;
+    public GameBox gameBox;
+    void Start()
+    {
 
-    public Game(string name1, string name2)
+    }
+    public void Initialize(string name1, string name2)
     {
         InitializePlayers(name1, name2);
+        gameBox = gameBox.GetComponent<GameBox>();
+        gameBox.enabled = true;
+        this.gameBox.setGame(this);
+        this.gameBox.Initialize();
     }
 
     public void InitializePlayers(string name1, string name2)

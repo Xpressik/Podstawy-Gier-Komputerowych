@@ -5,6 +5,9 @@ using System;
 
 public class GameBox : MonoBehaviour
 {
+    public Canvas canvas;
+    public GameObject panel;
+    public Button readyButton;
 
     public Text round;
     public Text player;
@@ -13,11 +16,8 @@ public class GameBox : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        round = round.GetComponent<Text>();
-        player = player.GetComponent<Text>();
-        setRound(0);
-        this.player.text = "test";
-        //this.game = GameObject.Find("MainMenu").GetComponent<Canvas>().game;
+        canvas.enabled = true;
+        panel.active = true;
     }
 
     // Update is called once per frame
@@ -34,6 +34,18 @@ public class GameBox : MonoBehaviour
     public void SetActivePLayer(int i)
     {
         this.player.text = game.listOfPlayers[i].getName();
+    }
+
+    public void setGame(Game game)
+    {
+        this.game = game;
+    }
+    public void Initialize()
+    {
+        round = round.GetComponent<Text>();
+        player = player.GetComponent<Text>();
+        setRound(0);
+        this.player.text = "test";
     }
 }
 

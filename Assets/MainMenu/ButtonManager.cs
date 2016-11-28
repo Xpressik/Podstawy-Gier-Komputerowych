@@ -70,7 +70,13 @@ public class ButtonManager : MonoBehaviour {
         name1 = inputField1.text.ToString();
         name2 = inputField2.text.ToString();
         Console.Out.WriteLine(name1);
-        this.game = new Game(name1, name2);
+        this.game = new Game();
+        this.game.Initialize(name1, name2);
         SceneManager.LoadScene(mapChoser);
+    }
+
+    public Game getGame()
+    {
+        return this.game;
     }
 }
