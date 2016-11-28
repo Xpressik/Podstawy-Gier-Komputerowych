@@ -25,6 +25,14 @@ public class HexCell : MonoBehaviour {
     public Button player2Button;
     public InputField supplyInput;
     public InputField contrabandInput;
+    public Button S0;
+    public Button S1;
+    public Button S2;
+
+    public Button C0;
+    public Button C1;
+    public Button C2;
+
     public Toggle campToggle;
     public Button quitButton;
     
@@ -32,6 +40,8 @@ public class HexCell : MonoBehaviour {
     public Field field;
     public int tmp;
     public Boolean camp;
+    public int supply;
+    public int contraband;
 
     bool isGame;
     private Color cellColor;
@@ -73,8 +83,17 @@ public class HexCell : MonoBehaviour {
             //fieldEditor = fieldEditor.GetComponent<Canvas>();
             player1Button = GameObject.Find("Player1Button").GetComponent<Button>();
             player2Button = GameObject.Find("Player2Button").GetComponent<Button>();
-            supplyInput = GameObject.Find("SupplyInput").GetComponent<InputField>();
-            contrabandInput = GameObject.Find("ContrabandInput").GetComponent<InputField>();
+            //supplyInput = GameObject.Find("SupplyInput").GetComponent<InputField>();
+            //contrabandInput = GameObject.Find("ContrabandInput").GetComponent<InputField>();
+            S0 = GameObject.Find("S0").GetComponent<Button>();
+            //S0.image.color = Color.red;
+            S1 = GameObject.Find("S1").GetComponent<Button>();
+            S2 = GameObject.Find("S2").GetComponent<Button>();
+
+            C0 = GameObject.Find("C0").GetComponent<Button>();
+            C1 = GameObject.Find("C1").GetComponent<Button>();
+            //C1.image.color = Color.red;
+            C2 = GameObject.Find("C2").GetComponent<Button>();
             //campToggle = GameObject.Find("CampToggle").
             //Console.WriteLine(GameObject.Find("CampToggle").ToString());
             //Debug.Log(GameObject.Find("CampToggle").ToString());
@@ -83,9 +102,14 @@ public class HexCell : MonoBehaviour {
             quitButton = GameObject.Find("QuitButton").GetComponent<Button>();
             //  fieldEditor.enabled = false;
 
+            //Transform caretGO = supplyInput.transform.FindChild(supplyInput.transform.name + " Input Caret");
+            //caretGO.GetComponent<CanvasRenderer>().SetMaterial(Graphic.defaultGraphicMaterial, Texture2D.whiteTexture);
+            //caretGO = contrabandInput.transform.FindChild(supplyInput.transform.name + " Input Caret");
+            //caretGO.GetComponent<CanvasRenderer>().SetMaterial(Graphic.defaultGraphicMaterial, Texture2D.whiteTexture);
 
-            supplyInput.ActivateInputField();
-            contrabandInput.ActivateInputField();
+
+            //supplyInput.ActivateInputField();
+            //contrabandInput.ActivateInputField();
         }
         this.field = new Field(this);
         this.camp = false;    
@@ -100,14 +124,7 @@ public class HexCell : MonoBehaviour {
                 sth.enabled = true;
                 HandleInput();
             }
-         //   DisableObjects();
-         //   sth.enabled = true;
         }
-
-        //if (campToggle.isOn)
-        //{
-        //    this.camp = true;
-        //}
     }
 
     void HandleInput()
@@ -421,20 +438,24 @@ public class HexCell : MonoBehaviour {
 
     public void SaveFieldInfo()
     {
-        this.field.supply = Int32.Parse(supplyInput.ToString());
-        this.field.contraband = Int32.Parse(contrabandInput.ToString());
+        this.field.supply = supply;
+        this.field.contraband = contraband;
         this.field.ownerInt = this.tmp;
-        EnableObjects();
+        this.field.camp = this.camp;
     }
 
     public void Player1ButtonClicked()
     {
         this.tmp = 1;
+        player1Button.image.color = Color.red;
+        player2Button.image.color = Color.white;
     }
 
     public void Player2ButtonClicked()
     {
         this.tmp = 2;
+        player2Button.image.color = Color.red;
+        player1Button.image.color = Color.white;
     }
 
     public void ToggleChanged()
@@ -449,27 +470,53 @@ public class HexCell : MonoBehaviour {
         }
 
     }
-    
-    public void DisableObjects()
-    {
-        HexGrid[] objects = FindObjectsOfType<HexGrid>();
-        List<HexGrid> objectsToDisable = new List<HexGrid>(objects);
 
-        foreach (HexGrid a in objectsToDisable)
-        {
-            a.enabled = false;
-        }
+    public void S0Press()
+    {
+        this.supply = 0;
+        S0.image.color = Color.red;
+        S1.image.color = Color.white;
+        S2.image.color = Color.white;
     }
 
-    public void EnableObjects()
+    public void S1Press()
     {
-        HexGrid[] objects = FindObjectsOfType<HexGrid>();
-        List<HexGrid> objectsToDisable = new List<HexGrid>(objects);
+        this.supply = 1;
+        S0.image.color = Color.white;
+        S1.image.color = Color.red;
+        S2.image.color = Color.white;
+    }
 
-        foreach (HexGrid a in objectsToDisable)
-        {
-            a.enabled = true;
-        }
+    public void S2Press()
+    {
+        this.supply = 2;
+        S0.image.color = Color.white;
+        S1.image.color = Color.white;
+        S2.image.color = Color.red;
+    }
+
+    public void C0Press()
+    {
+        this.contraband = 0;
+        C0.image.color = Color.red;
+        C1.image.color = Color.white;
+        C2.image.color = Color.white;
+    }
+
+    public void C1Press()
+    {
+        this.contraband = 1;
+        C0.image.color = Color.white;
+        C1.image.color = Color.red;
+        C2.image.color = Color.white;
+    }
+
+    public void C2Press()
+    {
+        this.contraband = 2;
+        C0.image.color = Color.white;
+        C1.image.color = Color.white;
+        C2.image.color = Color.red;
     }
 
     int urbanLevel;

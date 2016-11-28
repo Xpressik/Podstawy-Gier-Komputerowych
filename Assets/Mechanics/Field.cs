@@ -12,6 +12,7 @@ public class Field {
     public Player owner;
     public HexCell hex;
     public int ownerInt;
+    public bool camp;
 
     public Field(HexCell hex)
     {
