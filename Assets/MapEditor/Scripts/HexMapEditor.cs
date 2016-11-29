@@ -32,7 +32,7 @@ public class HexMapEditor : MonoBehaviour {
 		Ignore, Yes, No
 	}
 
-	OptionalToggle riverMode;
+	OptionalToggle riverMode, walledMode;
 
 	bool isDrag;
 	HexDirection dragDirection;
@@ -103,6 +103,11 @@ public class HexMapEditor : MonoBehaviour {
     public void SetPlantLevel(float level)
     {
         activePlantLevel = (int)level;
+    }
+
+    public void SetWalledMode(int mode)
+    {
+        walledMode = (OptionalToggle)mode;
     }
 
     void Awake ()
@@ -229,7 +234,11 @@ public class HexMapEditor : MonoBehaviour {
             {
 				cell.RemoveRiver();
 			}
-			else if (isDrag && riverMode == OptionalToggle.Yes)
+            if (walledMode != OptionalToggle.Ignore)
+            {
+                cell.Walled = walledMode == OptionalToggle.Yes;
+            }
+            else if (isDrag && riverMode == OptionalToggle.Yes)
             {
 				HexCell otherCell = cell.GetNeighbor(dragDirection.Opposite());
 				if (otherCell)
