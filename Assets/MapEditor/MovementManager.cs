@@ -123,22 +123,22 @@ namespace Assets
             Quaternion southOrientation = Quaternion.Euler(0, 180, 0);
             if (isCapsule)
             {
-                //GameObject go = (GameObject)Instantiate(figuresPrefabs[index], new Vector3(positionX, positionY, positionZ), northOrietation);
-                //go.transform.SetParent(transform);
-                //go.AddComponent<MeshRenderer>();
-                //Figures[x, y] = go.GetComponent<Figure>();
-               // SetColor(x, y, Color.cyan);
-                //Figures[x, y].SetPosition(x, y);
+                GameObject go = (GameObject)Instantiate(figuresPrefabs[index], new Vector3(positionX, positionY, positionZ), northOrietation);
+                go.transform.SetParent(transform);
+                go.AddComponent<MeshRenderer>();
+                Figures[x, y] = go.GetComponent<Figure>();
+             //   SetColor(x, y, Color.cyan);
+                Figures[x, y].SetPosition(x, y);
                 isCapsule = false;
             //   currentPlayer.text = "Player : Cylinder";
              }
              else
              {
-                //GameObject go = (GameObject)Instantiate(figuresPrefabs[index], new Vector3(positionX, positionY, positionZ), southOrientation);
-                //go.transform.SetParent(transform);
-                //Figures[x, y] = go.GetComponent<Figure>();
-                //SetColor(x, y, Color.yellow);
-                //Figures[x, y].SetPosition(x, y);
+                GameObject go = (GameObject)Instantiate(figuresPrefabs[index], new Vector3(positionX, positionY, positionZ), southOrientation);
+                go.transform.SetParent(transform);
+                Figures[x, y] = go.GetComponent<Figure>();
+               // SetColor(x, y, Color.yellow);
+                Figures[x, y].SetPosition(x, y);
                 isCapsule = true;
              //   currentPlayer.text = "Player : Capsule";
             }
@@ -193,7 +193,6 @@ namespace Assets
                 isCapsule = true;
                 camera.FirstPlayerMovePosition();
             }
-            // camera.AdjustZoom(-200f); oddalenie kamery do fazy ruchu
         }
 
         private void SetColor(int x, int y, Color color)
