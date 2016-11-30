@@ -232,6 +232,8 @@ public class HexGridChunk : MonoBehaviour {
 			TriangulateEdgeStrip(e1, cell.Color, e2, neighbor.Color);
 		}
 
+        features.AddWall(e1, cell, e2, neighbor);
+
 		HexCell nextNeighbor = cell.GetNeighbor(direction.Next());
 		if (direction <= HexDirection.E && nextNeighbor != null)
         {
