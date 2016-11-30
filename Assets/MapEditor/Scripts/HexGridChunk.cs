@@ -309,9 +309,10 @@ public class HexGridChunk : MonoBehaviour {
 			terrain.AddTriangle(bottom, left, right);
 			terrain.AddTriangleColor(bottomCell.Color, leftCell.Color, rightCell.Color);
 		}
-	}
+        features.AddWall(bottom, bottomCell, left, leftCell, right, rightCell);
+    }
 
-	void TriangulateEdgeTerraces (EdgeVertices begin, HexCell beginCell, EdgeVertices end, HexCell endCell)
+    void TriangulateEdgeTerraces (EdgeVertices begin, HexCell beginCell, EdgeVertices end, HexCell endCell)
     {
 		EdgeVertices e2 = EdgeVertices.TerraceLerp(begin, end, 1);
 		Color c2 = HexMetrics.TerraceLerp(beginCell.Color, endCell.Color, 1);
