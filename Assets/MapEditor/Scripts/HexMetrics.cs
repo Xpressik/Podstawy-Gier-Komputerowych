@@ -46,6 +46,10 @@ public static class HexMetrics {
 
     public const float waterElevationOffset = -0.5f;
 
+    public const float waterFactor = 0.6f;
+
+    public const float waterBlendFactor = 1f - waterFactor;
+
     static HexHash[] hashGrid;
 
     public const float wallElevationOffset = verticalTerraceStepSize;
@@ -192,5 +196,21 @@ public static class HexMetrics {
             near.y < far.y ? wallElevationOffset : (1f - wallElevationOffset);
         near.y += (far.y - near.y) * v;
         return near;
+    }
+
+    public static Vector3 GetFirstWaterCorner(HexDirection direction)
+    {
+        return corners[(int)direction] * waterFactor;
+    }
+
+    public static Vector3 GetSecondWaterCorner(HexDirection direction)
+    {
+        return corners[(int)direction + 1] * waterFactor;
+    }
+
+    public static Vector3 GetWaterBridge(HexDirection direction)
+    {
+        return (corners[(int)direction] + corners[(int)direction + 1]) *
+            waterBlendFactor;
     }
 }
