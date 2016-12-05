@@ -43,7 +43,7 @@
 
 			float water = lerp(shoreWater, river, IN.uv_MainTex.x);
 
-			fixed4 c = saturate(_Color + water);
+			fixed4 c = saturate(_Color + river);
 			o.Albedo = c.rgb;
 			o.Metallic = _Metallic;
 			o.Smoothness = _Glossiness;
