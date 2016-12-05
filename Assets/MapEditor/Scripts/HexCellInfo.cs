@@ -20,6 +20,8 @@ public class HexCellInfo
 
     public bool isWalled;
 
+    public int urbanLevel, plantLevel, farmLevel;
+
     public void TransformColor()
     {
         _myColor[0] = cellColor.r;

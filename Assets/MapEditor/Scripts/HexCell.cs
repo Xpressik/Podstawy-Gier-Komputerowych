@@ -63,6 +63,9 @@ public class HexCell : MonoBehaviour {
         this.info.outgoingRiver = outgoingRiver;
         info.waterLevel = waterLevel;
         info.isWalled = walled;
+        info.farmLevel = farmLevel;
+        info.plantLevel = plantLevel;
+        info.urbanLevel = urbanLevel;
     }
 
     void Start()
