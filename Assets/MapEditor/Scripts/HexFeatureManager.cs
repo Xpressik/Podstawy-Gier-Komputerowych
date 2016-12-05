@@ -85,7 +85,7 @@ public class HexFeatureManager : MonoBehaviour
     public void AddWall(EdgeVertices near, HexCell nearCell,
                         EdgeVertices far, HexCell farCell, bool hasRiver)
     {
-        if (nearCell.Walled != farCell.Walled && nearCell.GetEdgeType(farCell) != HexEdgeType.Cliff)
+        if (nearCell.Walled != farCell.Walled && !nearCell.IsUnderwater && !farCell.IsUnderwater && nearCell.GetEdgeType(farCell) != HexEdgeType.Cliff)
         {
             AddWallSegment(near.v1, far.v1, near.v2, far.v2);
             if (hasRiver)
@@ -185,8 +185,13 @@ public class HexFeatureManager : MonoBehaviour
         Vector3 left, HexCell leftCell,
         Vector3 right, HexCell rightCell)
     {
-        bool hasLeftWall = pivotCell.GetEdgeType(leftCell) != HexEdgeType.Cliff;
-        bool hasRighWall = pivotCell.GetEdgeType(rightCell) != HexEdgeType.Cliff;
+        if (pivotCell.IsUnderwater)
+        {
+            return;
+        }
+
+        bool hasLeftWall = !leftCell.IsUnderwater && pivotCell.GetEdgeType(leftCell) != HexEdgeType.Cliff;
+        bool hasRighWall = !rightCell.IsUnderwater && pivotCell.GetEdgeType(rightCell) != HexEdgeType.Cliff;
         if (hasLeftWall)
         {
             if (hasRighWall)

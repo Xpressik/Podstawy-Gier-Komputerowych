@@ -70,7 +70,7 @@ public class HexGridChunk : MonoBehaviour
         {
             Triangulate(d, cell);
         }
-        if (!cell.HasRiver)
+        if (!cell.HasRiver && !cell.IsUnderwater)
         {
             features.AddFeature(cell, cell.Position);
         }
@@ -106,7 +106,10 @@ public class HexGridChunk : MonoBehaviour
         else
         {
             TriangulateEdgeFan(center, e, cell.Color);
-            features.AddFeature(cell, (center + e.v1 + e.v5) * (1f / 3f));
+            if (!cell.IsUnderwater)
+            {
+                features.AddFeature(cell, (center + e.v1 + e.v5) * (1f / 3f));
+            }
         }
 
         if (direction <= HexDirection.SE)
@@ -139,8 +142,10 @@ public class HexGridChunk : MonoBehaviour
         {
             center += HexMetrics.GetSecondSolidCorner(direction) * 0.25f;
         }
-
-        features.AddFeature(cell, (center + e.v1 + e.v5) * (1f / 3f));
+        if (!cell.IsUnderwater)
+        {
+            features.AddFeature(cell, (center + e.v1 + e.v5) * (1f / 3f));
+        }
 
         EdgeVertices m = new EdgeVertices(Vector3.Lerp(center, e.v1, 0.5f), Vector3.Lerp(center, e.v5, 0.5f));
 
