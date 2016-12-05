@@ -15,6 +15,9 @@ public class HexCellInfo
     public bool hasIncomingRiver, hasOutgoingRiver;
     public HexDirection incomingRiver, outgoingRiver;
 
+    public int waterLevel;
+    public bool isUnderWater; // usunąc - niepotrzebne
+
     public void TransformColor()
     {
         _myColor[0] = cellColor.r;

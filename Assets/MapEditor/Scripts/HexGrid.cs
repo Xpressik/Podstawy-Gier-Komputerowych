@@ -52,6 +52,7 @@ public class HexGrid : MonoBehaviour {
                 cells[i].color.b = cellsInfo[i]._myColor[2];
                 cells[i].color.a = cellsInfo[i]._myColor[3];
                 cells[i].Elevation = cellsInfo[i].elevation;
+                cells[i].WaterLevel = cellsInfo[i].waterLevel;
                 cells[i].hasIncomingRiver = cellsInfo[i].hasIncomingRiver;
                 cells[i].hasOutgoingRiver = cellsInfo[i].hasOutgoingRiver;
                 cells[i].incomingRiver = cellsInfo[i].incomingRiver;

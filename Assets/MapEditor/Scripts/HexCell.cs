@@ -61,6 +61,7 @@ public class HexCell : MonoBehaviour {
         this.info.hasOutgoingRiver = hasOutgoingRiver;
         this.info.incomingRiver = incomingRiver;
         this.info.outgoingRiver = outgoingRiver;
+        info.waterLevel = waterLevel;
     }
 
     void Start()
