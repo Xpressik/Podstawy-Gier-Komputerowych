@@ -44,6 +44,8 @@ public static class HexMetrics {
 
     public const float wallThickness = 0.75f;
 
+    public const float waterElevationOffset = -0.5f;
+
     static HexHash[] hashGrid;
 
     public const float wallElevationOffset = verticalTerraceStepSize;
