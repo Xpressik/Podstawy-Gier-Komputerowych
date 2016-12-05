@@ -18,6 +18,8 @@ public class HexCellInfo
     public int waterLevel;
     public bool isUnderWater; // usunąc - niepotrzebne
 
+    public bool isWalled;
+
     public void TransformColor()
     {
         _myColor[0] = cellColor.r;

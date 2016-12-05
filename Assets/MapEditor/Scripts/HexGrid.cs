@@ -57,6 +57,7 @@ public class HexGrid : MonoBehaviour {
                 cells[i].hasOutgoingRiver = cellsInfo[i].hasOutgoingRiver;
                 cells[i].incomingRiver = cellsInfo[i].incomingRiver;
                 cells[i].outgoingRiver = cellsInfo[i].outgoingRiver;
+                cells[i].Walled = cellsInfo[i].isWalled;  
             }
 
         }
