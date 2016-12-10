@@ -25,7 +25,17 @@ public class HexGrid : MonoBehaviour {
 
     public int seed;
 
-	void Awake ()
+    public void ChangeWallsColor()
+    {
+        GameObject[] walls = GameObject.FindGameObjectsWithTag("Walls");
+        foreach (var obj in walls)
+        {
+            Renderer rend = obj.GetComponent<Renderer>();
+            rend.material.SetColor("_Color", Color.cyan);
+        }
+    }
+
+    void Awake ()
     {
         HexMetrics.noiseSource = noiseSource;
         HexMetrics.InitializeHashGrid(seed);

@@ -257,5 +257,4 @@ public class HexFeatureManager : MonoBehaviour
         walls.AddQuadUnperturbed(point, v2, pointTop, v4);
         walls.AddTriangleUnperturbed(pointTop, v3, v4);
     }
-
 }
