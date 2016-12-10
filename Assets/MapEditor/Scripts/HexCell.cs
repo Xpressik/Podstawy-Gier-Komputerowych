@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum WallOwner
+{
+    capsule, nonCapsule
+}
+
 public class HexCell : MonoBehaviour {
 
     public HexCoordinates coordinates;
@@ -51,6 +56,10 @@ public class HexCell : MonoBehaviour {
 
     bool isGame;
     private Color cellColor;
+
+    public bool isWallCapsule = false;
+
+    public bool isWallNonCapsule = false;
 
     public void SaveInfo()
     {
@@ -122,11 +131,11 @@ public class HexCell : MonoBehaviour {
 
             //supplyInput.ActivateInputField();
             //contrabandInput.ActivateInputField();
-            fieldInfo = GameObject.Find("FieldInfo").GetComponent<Canvas>();
-            fieldInfo = fieldInfo.GetComponent<Canvas>();
-            supplyOutput = supplyOutput.GetComponent<Text>();
-            supplyOutput.text = "test";
-            fieldInfo.enabled = false;
+            //fieldInfo = GameObject.Find("FieldInfo").GetComponent<Canvas>();
+            //fieldInfo = fieldInfo.GetComponent<Canvas>();
+            //supplyOutput = supplyOutput.GetComponent<Text>();
+            //supplyOutput.text = "test";
+            //fieldInfo.enabled = false;
         }
         this.field = new Field(this);
         this.field.camp = false;
@@ -410,7 +419,7 @@ public class HexCell : MonoBehaviour {
 	public HexDirection incomingRiver, outgoingRiver;
 
 	[SerializeField]
-	HexCell[] neighbors;
+	public HexCell[] neighbors;
 
 	public HexCell GetNeighbor (HexDirection direction)
     {
@@ -686,6 +695,24 @@ public class HexCell : MonoBehaviour {
     }
 
     bool walled;
+
+    public HexMesh Wall
+    {
+        get
+        {
+            return wall;
+        }
+        set
+        {
+            if(wall != value)
+            {
+                wall = value;
+                RefreshSelfOnly();
+            }
+        }
+    }
+
+    HexMesh wall;
 
     public int WaterLevel
     {

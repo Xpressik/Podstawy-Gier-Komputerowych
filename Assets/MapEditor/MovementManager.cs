@@ -27,7 +27,7 @@ namespace Assets
 
         public Text currentPlayer;
 
-        private new HexMapCamera camera;  // kazał mi dodać new  nie sprawdzałem czy to coś ZMIENIA <-----------------------
+        private new HexMapCamera camera;  // kazał mi dodać new  nie sprawdzałem czy to coś ZMIENIA <-----------------------        
 
         private void Start()
         {
@@ -35,7 +35,11 @@ namespace Assets
 
             var cellPosition = hexGrid.GetCell(new Vector3(155.8846f, -0.4045f, 30.0f)).transform.position;
             SpawnFigure(2, 8, 2, 155.8846f, -0.4045f, 30.0f);
+            hexGrid.GetCell(new Vector3(155.8846f, -0.4045f, 30.0f)).Walled = true;
+            hexGrid.GetCell(new Vector3(155.8846f, -0.4045f, 30.0f)).isWallCapsule = true;
             SpawnFigure(3, 2, 13, 147.2243f, 0.8379046f, 195.0f);
+            hexGrid.GetCell(new Vector3(147.2243f, 0.8379046f, 195.0f)).Walled = true;
+            hexGrid.GetCell(new Vector3(147.2243f, 0.8379046f, 195.0f)).isWallNonCapsule = true;
             camera = GameObject.Find("Hex Map Camera").GetComponent<HexMapCamera>();
         }
 
@@ -170,12 +174,101 @@ namespace Assets
 
         private void MoveFigure(int x, int y, float positionX, float positionY, float positionZ)
         {
+            HexMesh prefab1 = hexGrid.chunkPrefab.features.walls;
+            prefab1.GetComponent<Renderer>().sharedMaterial.color = Color.red;
+            
+            //prefab1.AddQuadColor(Color.red);
+
+            HexMesh prefab2 = hexGrid.chunkPrefab.features.walls;
+            prefab2.GetComponent<Renderer>().sharedMaterial.color = Color.blue;
+           // prefab2.AddQuadColor(Color.blue);
+
             if (Figures[x, y] != null)
             {
                 return;
             }
             Figures[selectedFigure.CurrentX, selectedFigure.CurrentY] = null;
-            selectedFigure.transform.position = new Vector3(positionX, positionY, positionZ);            
+
+            HexCell currentCell = hexGrid.GetCell(new Vector3(positionX, positionY, positionZ));
+
+            bool haveNeigborWalls = false;
+
+            foreach(HexCell cell in currentCell.neighbors)
+            {
+                if(cell.Walled == true)
+                {
+                    haveNeigborWalls = true;
+                    break;
+                }
+            }
+            //|| Mathf.Abs(selectedFigure.transform.position.y - positionY) > 0 || Mathf.Abs(selectedFigure.transform.position.z - positionZ) > 0
+            Debug.Log(Mathf.Abs(hexGrid.GetCell(selectedFigure.transform.position).Position.x));
+
+            if(selectedFigure.name.Equals("Mech(Clone"))
+            {
+                if(currentCell.HasRiver)
+                {
+                    return;
+                }
+                else if(currentCell.isWallNonCapsule)
+                {
+                    return;
+                }
+                else if (currentCell.isWallCapsule)
+                {
+                    selectedFigure.transform.position = new Vector3(positionX, positionY, positionZ);
+                }
+                else if (!currentCell.Wall)
+                {
+                    selectedFigure.transform.position = new Vector3(positionX, positionY, positionZ);
+                    hexGrid.GetCell(selectedFigure.transform.position).Walled = true;
+                    hexGrid.GetCell(selectedFigure.transform.position).isWallCapsule = true;
+                }
+            }
+            else
+            {
+                if (currentCell.HasRiver)
+                {
+                    return;
+                }
+                else if (currentCell.isWallCapsule)
+                {
+                    return;
+                }
+                else if(currentCell.isWallNonCapsule)
+                {
+                    selectedFigure.transform.position = new Vector3(positionX, positionY, positionZ);
+                }
+                else if (!currentCell.Wall)
+                {
+                    selectedFigure.transform.position = new Vector3(positionX, positionY, positionZ);
+                    hexGrid.GetCell(selectedFigure.transform.position).Walled = true;
+                    hexGrid.GetCell(selectedFigure.transform.position).isWallNonCapsule = true;
+                }
+            }
+
+            //if(hexGrid.GetCell(new Vector3(positionX, positionY, positionZ)).HasRiver == true)
+            //{
+            //    return;
+            //}
+            //else if (haveNeigborWalls)
+            //{
+            //    return;
+            //}
+            //else
+            //{
+            //    selectedFigure.transform.position = new Vector3(positionX, positionY, positionZ);         
+            //    if (selectedFigure.name.Equals("MECH(Clone)"))
+            //    {                 
+            //        hexGrid.GetCell(selectedFigure.transform.position).Walled = true;                    
+            //    }
+            //    else
+            //    {
+            //        hexGrid.GetCell(selectedFigure.transform.position).Walled = true;
+            //    }
+                
+            //}
+
             Figures[x, y] = selectedFigure;
             selectedFigure = null;
 
