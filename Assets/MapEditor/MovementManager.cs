@@ -25,6 +25,8 @@ namespace Assets
         private float positionY;
         private float positionZ;
 
+        public Player player;
+
         public Text currentPlayer;
 
         private new HexMapCamera camera;  // kazał mi dodać new  nie sprawdzałem czy to coś ZMIENIA <-----------------------        
@@ -69,16 +71,16 @@ namespace Assets
                     //}
                     //else
                     //{
-                        if (selectedFigure == null)
-                        {
-                            // select the figure
-                            SelectFigure(selectionX, selectionY);
-                        }
-                        else
-                        {
-                            //move figure
-                            MoveFigure(selectionX, selectionY, positionX, positionY, positionZ);
-                        }
+                    if (selectedFigure == null)
+                    {
+                        // select the figure
+                        SelectFigure(selectionX, selectionY);
+                    }
+                    else
+                    {
+                        //move figure
+                        MoveFigure(selectionX, selectionY, positionX, positionY, positionZ);
+                    }
                     //}
                 }
             }
@@ -86,7 +88,7 @@ namespace Assets
             {
                 HandleInput(true);
             }
-        }       
+        }
         private void HandleInput(bool stickToMouse)
         {
             if (!Camera.main)
@@ -131,20 +133,20 @@ namespace Assets
                 go.transform.SetParent(transform);
                 go.AddComponent<MeshRenderer>();
                 Figures[x, y] = go.GetComponent<Figure>();
-             //   SetColor(x, y, Color.cyan);
+                //   SetColor(x, y, Color.cyan);
                 Figures[x, y].SetPosition(x, y);
                 isCapsule = false;
-            //   currentPlayer.text = "Player : Cylinder";
-             }
-             else
-             {
+                //   currentPlayer.text = "Player : Cylinder";
+            }
+            else
+            {
                 GameObject go = (GameObject)Instantiate(figuresPrefabs[index], new Vector3(positionX, positionY, positionZ), southOrientation);
                 go.transform.SetParent(transform);
                 Figures[x, y] = go.GetComponent<Figure>();
-               // SetColor(x, y, Color.yellow);
+                // SetColor(x, y, Color.yellow);
                 Figures[x, y].SetPosition(x, y);
                 isCapsule = true;
-             //   currentPlayer.text = "Player : Capsule";
+                //   currentPlayer.text = "Player : Capsule";
             }
         }
 
@@ -169,19 +171,19 @@ namespace Assets
                 }
             }
             selectedFigure = Figures[x, y];
-          //  SetColor(x, y, Color.red);
+            //  SetColor(x, y, Color.red);
         }
 
         private void MoveFigure(int x, int y, float positionX, float positionY, float positionZ)
         {
             HexMesh prefab1 = hexGrid.chunkPrefab.features.walls;
             prefab1.GetComponent<Renderer>().sharedMaterial.color = Color.red;
-            
+
             //prefab1.AddQuadColor(Color.red);
 
             HexMesh prefab2 = hexGrid.chunkPrefab.features.walls;
             prefab2.GetComponent<Renderer>().sharedMaterial.color = Color.blue;
-           // prefab2.AddQuadColor(Color.blue);
+            // prefab2.AddQuadColor(Color.blue);
 
             if (Figures[x, y] != null)
             {
@@ -193,24 +195,29 @@ namespace Assets
 
             bool haveNeigborWalls = false;
 
-            foreach(HexCell cell in currentCell.neighbors)
+            foreach (HexCell cell in currentCell.neighbors)
             {
-                if(cell.Walled == true)
+                if (cell.Walled == true)
                 {
                     haveNeigborWalls = true;
                     break;
                 }
             }
+
             //|| Mathf.Abs(selectedFigure.transform.position.y - positionY) > 0 || Mathf.Abs(selectedFigure.transform.position.z - positionZ) > 0
             Debug.Log(Mathf.Abs(hexGrid.GetCell(selectedFigure.transform.position).Position.x));
 
-            if(selectedFigure.name.Equals("Mech(Clone"))
+            if (selectedFigure.name.Equals("Mech(Clone"))
             {
-                if(currentCell.HasRiver)
+                if (hexGrid.GetCell(new Vector3(positionX, positionY, positionZ)).isWallNonCapsule)
                 {
                     return;
                 }
-                else if(currentCell.isWallNonCapsule)
+                if (currentCell.HasRiver)
+                {
+                    return;
+                }
+                else if (currentCell.isWallNonCapsule)
                 {
                     return;
                 }
@@ -227,6 +234,10 @@ namespace Assets
             }
             else
             {
+                if (hexGrid.GetCell(new Vector3(positionX, positionY, positionZ)).isWallCapsule)
+                {
+                    return;
+                }
                 if (currentCell.HasRiver)
                 {
                     return;
@@ -235,7 +246,7 @@ namespace Assets
                 {
                     return;
                 }
-                else if(currentCell.isWallNonCapsule)
+                else if (currentCell.isWallNonCapsule)
                 {
                     selectedFigure.transform.position = new Vector3(positionX, positionY, positionZ);
                 }
@@ -266,7 +277,7 @@ namespace Assets
             //    {
             //        hexGrid.GetCell(selectedFigure.transform.position).Walled = true;
             //    }
-                
+
             //}
 
             Figures[x, y] = selectedFigure;
@@ -275,14 +286,14 @@ namespace Assets
             if (Figures[x, y].name.Equals("MECH(Clone)"))
             {
                 //SetColor(x, y, Color.cyan);
-            //    currentPlayer.text = "Player : Cylinder";
+                //    currentPlayer.text = "Player : Cylinder";
                 isCapsule = false;
                 camera.SecondPlayerMovePositon();
             }
             else
             {
                 //SetColor(x, y, Color.yellow);
-             //   currentPlayer.text = "Player : Capsule";
+                //   currentPlayer.text = "Player : Capsule";
                 isCapsule = true;
                 camera.FirstPlayerMovePosition();
             }
@@ -290,7 +301,7 @@ namespace Assets
 
         private void SetColor(int x, int y, Color color)
         {
-            Figures[x, y].GetComponent<Renderer>().material.color = color;   
+            Figures[x, y].GetComponent<Renderer>().material.color = color;
         }
     }
 }

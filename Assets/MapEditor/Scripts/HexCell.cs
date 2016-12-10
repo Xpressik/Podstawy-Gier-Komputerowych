@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public enum WallOwner
 {
-    capsule, nonCapsule
+    first, second
 }
 
 public class HexCell : MonoBehaviour {
@@ -19,7 +19,7 @@ public class HexCell : MonoBehaviour {
     public BoxCollider bc;
 
     public HexCellInfo info;
-
+    
     // DO OKIENKA Z INFORMACJAMI O ZASOBACH NA POLU
     public string myString;
     public Text myText;
