@@ -104,7 +104,7 @@ namespace Assets
 
                 if (stickToMouse)
                 {
-                    selectedFigure.transform.position = new Vector3(hit.point.x, hit.point.y, hit.point.z);
+                    //selectedFigure.transform.position = new Vector3(hit.point.x, hit.point.y, hit.point.z);
                 }
                 else
                 {
@@ -192,70 +192,77 @@ namespace Assets
             Figures[selectedFigure.CurrentX, selectedFigure.CurrentY] = null;
 
             HexCell currentCell = hexGrid.GetCell(new Vector3(positionX, positionY, positionZ));
+            
+            //|| Mathf.Abs(selectedFigure.transform.position.y - positionY) > 0 || Mathf.Abs(selectedFigure.transform.position.z - positionZ) > 0
+            //Debug.Log(Mathf.Abs(hexGrid.GetCell(selectedFigure.transform.position).coordinates.X));
 
-            bool haveNeigborWalls = false;
-
-            foreach (HexCell cell in currentCell.neighbors)
+            if (Mathf.Abs(hexGrid.GetCell(selectedFigure.transform.position).coordinates.X - currentCell.coordinates.X) > 1 
+                || Mathf.Abs(hexGrid.GetCell(selectedFigure.transform.position).coordinates.Y - currentCell.coordinates.Y) > 1 
+                || Mathf.Abs(hexGrid.GetCell(selectedFigure.transform.position).coordinates.Z - currentCell.coordinates.Z) > 1
+                || Mathf.Abs(hexGrid.GetCell(selectedFigure.transform.position).Elevation - currentCell.Elevation) > 1)
             {
-                if (cell.Walled == true)
-                {
-                    haveNeigborWalls = true;
-                    break;
-                }
+                return;
             }
 
-            //|| Mathf.Abs(selectedFigure.transform.position.y - positionY) > 0 || Mathf.Abs(selectedFigure.transform.position.z - positionZ) > 0
-            Debug.Log(Mathf.Abs(hexGrid.GetCell(selectedFigure.transform.position).Position.x));
-
-            if (selectedFigure.name.Equals("Mech(Clone"))
+            if (selectedFigure.name.Equals("MECH(Clone)"))
             {
                 if (hexGrid.GetCell(new Vector3(positionX, positionY, positionZ)).isWallNonCapsule)
                 {
+                    Debug.Log("1");
                     return;
                 }
                 if (currentCell.HasRiver)
                 {
+                    Debug.Log("2");
                     return;
                 }
                 else if (currentCell.isWallNonCapsule)
                 {
+                    Debug.Log("3");
                     return;
                 }
                 else if (currentCell.isWallCapsule)
                 {
+                    Debug.Log("4");
                     selectedFigure.transform.position = new Vector3(positionX, positionY, positionZ);
                 }
-                else if (!currentCell.Wall)
-                {
-                    selectedFigure.transform.position = new Vector3(positionX, positionY, positionZ);
-                    hexGrid.GetCell(selectedFigure.transform.position).Walled = true;
-                    hexGrid.GetCell(selectedFigure.transform.position).isWallCapsule = true;
-                }
+                //else if (!currentCell.Wall)
+                //{
+                Debug.Log("5");
+                selectedFigure.transform.position = new Vector3(positionX, positionY, positionZ);
+                hexGrid.GetCell(selectedFigure.transform.position).Walled = true;
+                hexGrid.GetCell(selectedFigure.transform.position).isWallCapsule = true;
+                //}
             }
             else
             {
                 if (hexGrid.GetCell(new Vector3(positionX, positionY, positionZ)).isWallCapsule)
                 {
+                    Debug.Log("6");
                     return;
                 }
                 if (currentCell.HasRiver)
                 {
+                    Debug.Log("7");
                     return;
                 }
                 else if (currentCell.isWallCapsule)
                 {
+                    Debug.Log("8");
                     return;
                 }
                 else if (currentCell.isWallNonCapsule)
                 {
+                    Debug.Log("9");
                     selectedFigure.transform.position = new Vector3(positionX, positionY, positionZ);
                 }
-                else if (!currentCell.Wall)
-                {
-                    selectedFigure.transform.position = new Vector3(positionX, positionY, positionZ);
-                    hexGrid.GetCell(selectedFigure.transform.position).Walled = true;
-                    hexGrid.GetCell(selectedFigure.transform.position).isWallNonCapsule = true;
-                }
+                //else if (!currentCell.Wall)
+                //{
+                Debug.Log("10");
+                selectedFigure.transform.position = new Vector3(positionX, positionY, positionZ);
+                hexGrid.GetCell(selectedFigure.transform.position).Walled = true;
+                hexGrid.GetCell(selectedFigure.transform.position).isWallNonCapsule = true;
+                //}
             }
 
             //if(hexGrid.GetCell(new Vector3(positionX, positionY, positionZ)).HasRiver == true)
