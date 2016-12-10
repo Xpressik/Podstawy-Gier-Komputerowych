@@ -205,6 +205,12 @@ namespace Assets
                 return;
             }
 
+            if (hexGrid.GetCell(selectedFigure.transform.position).coordinates.X == currentCell.coordinates.X
+                && hexGrid.GetCell(selectedFigure.transform.position).coordinates.Y == currentCell.coordinates.Y)
+            {
+                return;
+            }
+
             if (selectedFigure.name.Equals("MECH(Clone)"))
             {
                 if (hexGrid.GetCell(new Vector3(positionX, positionY, positionZ)).isWallNonCapsule)
