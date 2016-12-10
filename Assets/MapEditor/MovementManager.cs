@@ -185,10 +185,11 @@ namespace Assets
             prefab2.GetComponent<Renderer>().sharedMaterial.color = Color.blue;
             // prefab2.AddQuadColor(Color.blue);
 
-            if (Figures[x, y] != null)
-            {
-                return;
-            }
+            //if (Figures[x, y] != null)
+            //{
+            //    Debug.Log("CZYTOTUTAJ?");
+            //    return;
+            //}
             Figures[selectedFigure.CurrentX, selectedFigure.CurrentY] = null;
 
             HexCell currentCell = hexGrid.GetCell(new Vector3(positionX, positionY, positionZ));
