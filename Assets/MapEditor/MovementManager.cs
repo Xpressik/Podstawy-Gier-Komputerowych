@@ -277,14 +277,14 @@ namespace Assets
                 //SetColor(x, y, Color.cyan);
             //    currentPlayer.text = "Player : Cylinder";
                 isCapsule = false;
-                camera.SecondPlayerMovePositon();
+
             }
             else
             {
                 //SetColor(x, y, Color.yellow);
              //   currentPlayer.text = "Player : Capsule";
                 isCapsule = true;
-                camera.FirstPlayerMovePosition();
+
             }
         }
 
