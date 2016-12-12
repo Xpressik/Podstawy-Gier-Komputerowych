@@ -246,40 +246,40 @@ public class HexCell : MonoBehaviour {
         }
     }
 
-    void OnMouseOver()
-    {
-        //myText.rectTransform.anchoredPosition = uiRect.anchoredPosition;
-        var tmp = transform.position;
-        float offset = 0;
-        if (neighbors[5] != null && neighbors[4] != null)
-        {
-            float fifthNeighborYPosition = neighbors[5].transform.position.y;
-            float fourthNeighborYPosition = neighbors[4].transform.position.y;
-            if (fifthNeighborYPosition > tmp.y || fourthNeighborYPosition > tmp.y)
-            {
-                if (fifthNeighborYPosition > fourthNeighborYPosition)
-                {
-                    offset = fifthNeighborYPosition - tmp.y;
-                }
-                else
-                {
-                    offset = fourthNeighborYPosition - tmp.y;
-                }
-            }
-        }
-        myText.transform.rotation = Camera.main.transform.rotation;
-        myText.transform.position = new Vector3(tmp.x, tmp.y + 0.5f + offset, tmp.z);
-        myText.color = Color.black; // Color.Lerp(myText.color, Color.black, fadeTime * Time.deltaTime);
-        if (HasRiver)
-        {
-            myText.text = "River!";
-        }
-        else 
-        {
-            myText.text = myString;
-        }
+    //void OnMouseOver()
+    //{
+    //    //myText.rectTransform.anchoredPosition = uiRect.anchoredPosition;
+    //    var tmp = transform.position;
+    //    float offset = 0;
+    //    if (neighbors[5] != null && neighbors[4] != null)
+    //    {
+    //        float fifthNeighborYPosition = neighbors[5].transform.position.y;
+    //        float fourthNeighborYPosition = neighbors[4].transform.position.y;
+    //        if (fifthNeighborYPosition > tmp.y || fourthNeighborYPosition > tmp.y)
+    //        {
+    //            if (fifthNeighborYPosition > fourthNeighborYPosition)
+    //            {
+    //                offset = fifthNeighborYPosition - tmp.y;
+    //            }
+    //            else
+    //            {
+    //                offset = fourthNeighborYPosition - tmp.y;
+    //            }
+    //        }
+    //    }
+    //    myText.transform.rotation = Camera.main.transform.rotation;
+    //    myText.transform.position = new Vector3(tmp.x, tmp.y + 0.5f + offset, tmp.z);
+    //    myText.color = Color.black; // Color.Lerp(myText.color, Color.black, fadeTime * Time.deltaTime);
+    //    if (HasRiver)
+    //    {
+    //        myText.text = "River!";
+    //    }
+    //    else 
+    //    {
+    //        myText.text = myString;
+    //    }
 
-    }
+    //}
 
     void OnMouseEnter()
     {

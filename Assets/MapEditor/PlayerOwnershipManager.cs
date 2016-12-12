@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using ProgressBar;
+
 namespace Assets
 {
     public class PlayerOwnershipManager : MonoBehaviour
@@ -9,24 +11,16 @@ namespace Assets
         public Text text;
         public HexGrid grid;
 
-        //public int WalledCounter
-        //{
-        //    get
-        //    {
-        //        return walledCounter;
-        //    }
-        //}
-
-        //public int PlantCounter
-        //{
-        //    get
-        //    {
-        //        return plantCounter;
-        //    }
-        //}
+        private ProgressBarBehaviour progressBar;
 
         int walledCounter = 0;
         int plantCounter = 0;
+
+        void Start()
+        {
+            progressBar = GameObject.Find("ProgressBarLabelInside").GetComponent<ProgressBarBehaviour>();
+            progressBar.Value = 50;
+        }
 
         private void countFieldsPossession()
         {
@@ -53,8 +47,8 @@ namespace Assets
             {
                 walledOwnershipPercentage++;
             }
-            text.text = ("Walls: (" + walledCounter + ") " + walledOwnershipPercentage + " : " +
-                         plantOwnershipPercentage + " (" + plantCounter + ") :Plant");
+            text.text = ("Walls: (" + walledCounter + ") " + walledOwnershipPercentage + " : " + plantOwnershipPercentage + " (" + plantCounter + ") :Plant");
+            progressBar.Value = walledOwnershipPercentage;
         }
 
         public void UpdateStatus()
