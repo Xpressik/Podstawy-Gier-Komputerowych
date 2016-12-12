@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using ProgressBar;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -42,6 +43,9 @@ namespace Assets
         public bool firstPlayerEnableMove = true;
         public bool secondPlayerEnableMove = true;
 
+        private ProgressBarBehaviour firstPlayerTimerbar;
+        private ProgressBarBehaviour secondPlayerTimerbar;
+
         private void Start()
         {
             Figures = new Figure[20, 15];
@@ -59,6 +63,11 @@ namespace Assets
             secondPlayerCounter = 60.0f;
 
             playerOwnershipManager = hexGrid.GetComponent<PlayerOwnershipManager>();
+
+            firstPlayerTimerbar = GameObject.Find("First Player Timer Bar").GetComponent<ProgressBarBehaviour>();
+            secondPlayerTimerbar = GameObject.Find("Second Player Timer Bar").GetComponent<ProgressBarBehaviour>();
+            firstPlayerTimerbar.Value = 100;
+            secondPlayerTimerbar.Value = 100;
         }
 
         // Update is called once per frame
@@ -88,12 +97,12 @@ namespace Assets
             if (isCapsule && firstTimerEnabled)
             {
                 firstPlayerCounter -= Time.deltaTime;
-                Debug.Log("First player: " + firstPlayerCounter);
+               // Debug.Log("First player: " + firstPlayerCounter);
             }
             if (!isCapsule && secondTimerEnabled)
             {
                 secondPlayerCounter -= Time.deltaTime;
-                Debug.Log("Second player: " + secondPlayerCounter);
+               // Debug.Log("Second player: " + secondPlayerCounter);
             }
             if (firstPlayerCounter <= 0.0f)
             {
@@ -109,6 +118,13 @@ namespace Assets
             {
                 
             }
+            UpdateTimerBars();
+        }
+
+        private void UpdateTimerBars()
+        {
+            firstPlayerTimerbar.Value = (int)(firstPlayerCounter * 100 / 60);
+            secondPlayerTimerbar.Value = (int)(secondPlayerCounter * 100 / 60);
         }
         private void HandleInput()
         {
@@ -270,7 +286,7 @@ namespace Assets
             {
                 //   currentPlayer.text = "Player : Capsule";
                 isCapsule = true;
-
+           
             }
 
             if (!firstPlayerEnableMove)
@@ -288,10 +304,6 @@ namespace Assets
         private void SetColor(int x, int y, Color color)
         {
             Figures[x, y].GetComponent<Renderer>().material.color = color;
-        }
-        private void SetOwnershipStatus()
-        {
-            // wrzucic to wszystko do osobnego kontrolera i wrzucic referencje do tego textu.. 
         }
     }
 }
