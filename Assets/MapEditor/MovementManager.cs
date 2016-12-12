@@ -40,7 +40,7 @@ namespace Assets
             hexGrid.GetCell(new Vector3(155.8846f, -0.4045f, 30.0f)).Walled = true;
             hexGrid.GetCell(new Vector3(155.8846f, -0.4045f, 30.0f)).isWallCapsule = true;
             SpawnFigure(3, 2, 13, 147.2243f, 0.8379046f, 195.0f);
-            hexGrid.GetCell(new Vector3(147.2243f, 0.8379046f, 195.0f)).Walled = true;
+            hexGrid.GetCell(new Vector3(147.2243f, 0.8379046f, 195.0f)).PlantLevel = 3;
             hexGrid.GetCell(new Vector3(147.2243f, 0.8379046f, 195.0f)).isWallNonCapsule = true;
             camera = GameObject.Find("Hex Map Camera").GetComponent<HexMapCamera>();
         }
@@ -50,27 +50,9 @@ namespace Assets
         {
             if (Input.GetMouseButtonDown(0))
             {
-                HandleInput(false);
+                HandleInput();
                 if (selectionX >= 0 && selectionY >= 0)
                 {
-                    //if (firstMove == true )
-                    //{
-                    //    if (!isCapsule)
-                    //    {
-                    //        firstMove = false;
-                    //    }
-                    //    if (Figures[selectionX, selectionY] != null)
-                    //    {
-                    //        firstMove = true;
-                    //        return;
-                    //    }
-                    //    else
-                    //    {
-                    //        SpawnFigure(0, selectionX, selectionY, positionX, positionY, positionZ);
-                    //    }
-                    //}
-                    //else
-                    //{
                     if (selectedFigure == null)
                     {
                         // select the figure
@@ -81,15 +63,14 @@ namespace Assets
                         //move figure
                         MoveFigure(selectionX, selectionY, positionX, positionY, positionZ);
                     }
-                    //}
                 }
             }
             if (selectedFigure != null)
             {
-                HandleInput(true);
+                HandleInput();
             }
         }
-        private void HandleInput(bool stickToMouse)
+        private void HandleInput()
         {
             if (!Camera.main)
             {
@@ -101,20 +82,12 @@ namespace Assets
 
             if (Physics.Raycast(inputRay, out hit))
             {
-
-                if (stickToMouse)
-                {
-                    //selectedFigure.transform.position = new Vector3(hit.point.x, hit.point.y, hit.point.z);
-                }
-                else
-                {
-                    var tmp = hexGrid.GetCell(hit.point);
-                    positionX = tmp.transform.position.x;
-                    positionY = Mathf.Abs(tmp.transform.position.y);
-                    positionZ = tmp.transform.position.z;
-                    selectionX = tmp.coordinates.X;
-                    selectionY = tmp.coordinates.Z;
-                }
+                var tmp = hexGrid.GetCell(hit.point);
+                positionX = tmp.transform.position.x;
+                positionY = Mathf.Abs(tmp.transform.position.y);
+                positionZ = tmp.transform.position.z;
+                selectionX = tmp.coordinates.X;
+                selectionY = tmp.coordinates.Z;
             }
             else
             {
@@ -133,7 +106,6 @@ namespace Assets
                 go.transform.SetParent(transform);
                 go.AddComponent<MeshRenderer>();
                 Figures[x, y] = go.GetComponent<Figure>();
-                //   SetColor(x, y, Color.cyan);
                 Figures[x, y].SetPosition(x, y);
                 isCapsule = false;
                 //   currentPlayer.text = "Player : Cylinder";
@@ -143,7 +115,6 @@ namespace Assets
                 GameObject go = (GameObject)Instantiate(figuresPrefabs[index], new Vector3(positionX, positionY, positionZ), southOrientation);
                 go.transform.SetParent(transform);
                 Figures[x, y] = go.GetComponent<Figure>();
-                // SetColor(x, y, Color.yellow);
                 Figures[x, y].SetPosition(x, y);
                 isCapsule = true;
                 //   currentPlayer.text = "Player : Capsule";
@@ -171,32 +142,14 @@ namespace Assets
                 }
             }
             selectedFigure = Figures[x, y];
-            //  SetColor(x, y, Color.red);
         }
 
         private void MoveFigure(int x, int y, float positionX, float positionY, float positionZ)
         {
-            HexMesh prefab1 = hexGrid.chunkPrefab.features.walls;
-            prefab1.GetComponent<Renderer>().sharedMaterial.color = Color.red;
-
-            //prefab1.AddQuadColor(Color.red);
-
-            HexMesh prefab2 = hexGrid.chunkPrefab.features.walls;
-            prefab2.GetComponent<Renderer>().sharedMaterial.color = Color.blue;
-            // prefab2.AddQuadColor(Color.blue);
-
-            //if (Figures[x, y] != null)
-            //{
-            //    Debug.Log("CZYTOTUTAJ?");
-            //    return;
-            //}
             Figures[selectedFigure.CurrentX, selectedFigure.CurrentY] = null;
 
             HexCell currentCell = hexGrid.GetCell(new Vector3(positionX, positionY, positionZ));
             
-            //|| Mathf.Abs(selectedFigure.transform.position.y - positionY) > 0 || Mathf.Abs(selectedFigure.transform.position.z - positionZ) > 0
-            //Debug.Log(Mathf.Abs(hexGrid.GetCell(selectedFigure.transform.position).coordinates.X));
-
             if (Mathf.Abs(hexGrid.GetCell(selectedFigure.transform.position).coordinates.X - currentCell.coordinates.X) > 1 
                 || Mathf.Abs(hexGrid.GetCell(selectedFigure.transform.position).coordinates.Y - currentCell.coordinates.Y) > 1 
                 || Mathf.Abs(hexGrid.GetCell(selectedFigure.transform.position).coordinates.Z - currentCell.coordinates.Z) > 1
@@ -215,98 +168,59 @@ namespace Assets
             {
                 if (hexGrid.GetCell(new Vector3(positionX, positionY, positionZ)).isWallNonCapsule)
                 {
-                    Debug.Log("1");
                     return;
                 }
                 if (currentCell.HasRiver)
                 {
-                    Debug.Log("2");
                     return;
                 }
                 else if (currentCell.isWallNonCapsule)
                 {
-                    Debug.Log("3");
                     return;
                 }
                 else if (currentCell.isWallCapsule)
                 {
-                    Debug.Log("4");
                     selectedFigure.transform.position = new Vector3(positionX, positionY, positionZ);
                 }
-                //else if (!currentCell.Wall)
-                //{
-                Debug.Log("5");
                 selectedFigure.transform.position = new Vector3(positionX, positionY, positionZ);
                 hexGrid.GetCell(selectedFigure.transform.position).Walled = true;
                 hexGrid.GetCell(selectedFigure.transform.position).isWallCapsule = true;
-                //}
             }
             else
             {
                 if (hexGrid.GetCell(new Vector3(positionX, positionY, positionZ)).isWallCapsule)
                 {
-                    Debug.Log("6");
                     return;
                 }
                 if (currentCell.HasRiver)
                 {
-                    Debug.Log("7");
                     return;
                 }
                 else if (currentCell.isWallCapsule)
                 {
-                    Debug.Log("8");
                     return;
                 }
                 else if (currentCell.isWallNonCapsule)
                 {
-                    Debug.Log("9");
                     selectedFigure.transform.position = new Vector3(positionX, positionY, positionZ);
                 }
-                //else if (!currentCell.Wall)
-                //{
-                Debug.Log("10");
                 selectedFigure.transform.position = new Vector3(positionX, positionY, positionZ);
-                hexGrid.GetCell(selectedFigure.transform.position).Walled = true;
+                hexGrid.GetCell(selectedFigure.transform.position).PlantLevel = 3;
                 hexGrid.GetCell(selectedFigure.transform.position).isWallNonCapsule = true;
-                //}
             }
 
-            //if(hexGrid.GetCell(new Vector3(positionX, positionY, positionZ)).HasRiver == true)
-            //{
-            //    return;
-            //}
-            //else if (haveNeigborWalls)
-            //{
-            //    return;
-            //}
-            //else
-            //{
-            //    selectedFigure.transform.position = new Vector3(positionX, positionY, positionZ);         
-            //    if (selectedFigure.name.Equals("MECH(Clone)"))
-            //    {                 
-            //        hexGrid.GetCell(selectedFigure.transform.position).Walled = true;                    
-            //    }
-            //    else
-            //    {
-            //        hexGrid.GetCell(selectedFigure.transform.position).Walled = true;
-            //    }
-
-            //}
 
             Figures[x, y] = selectedFigure;
             selectedFigure = null;
 
             if (Figures[x, y].name.Equals("MECH(Clone)"))
             {
-                //SetColor(x, y, Color.cyan);
                 //    currentPlayer.text = "Player : Cylinder";
                 isCapsule = false;
 
             }
             else
             {
-                //SetColor(x, y, Color.yellow);
                 //   currentPlayer.text = "Player : Capsule";
                 isCapsule = true;
 
