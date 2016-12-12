@@ -21,6 +21,20 @@ public class HexGrid : MonoBehaviour {
 	HexGridChunk[] chunks;
 	HexCell[] cells;
 
+    public HexCell[] Cells
+    {
+        get { return cells; }
+    }
+
+    public int CellCountX
+    {
+        get { return cellCountX; }
+    }
+    
+    public int CellCountZ
+    {
+        get { return cellCountZ;  }
+    }
 	int cellCountX, cellCountZ;
 
     public int seed;
@@ -202,7 +216,7 @@ public class HexGrid : MonoBehaviour {
         label.rectTransform.anchoredPosition = new Vector2(position.x, position.z);
    //     if (!isGame)
  //       {
-            label.text = cell.coordinates.ToStringOnSeparateLines();
+            //label.text = cell.coordinates.ToStringOnSeparateLines();
 //        }
         cell.uiRect = label.rectTransform;
         cell.Elevation = 0;

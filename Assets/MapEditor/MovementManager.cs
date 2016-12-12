@@ -29,6 +29,8 @@ namespace Assets
 
         public Text currentPlayer;
 
+        private PlayerOwnershipManager playerOwnershipManager;
+
         private new HexMapCamera camera;  // kazał mi dodać new  nie sprawdzałem czy to coś ZMIENIA <-----------------------        
 
         private void Start()
@@ -43,6 +45,8 @@ namespace Assets
             hexGrid.GetCell(new Vector3(147.2243f, 0.8379046f, 195.0f)).PlantLevel = 3;
             hexGrid.GetCell(new Vector3(147.2243f, 0.8379046f, 195.0f)).isWallNonCapsule = true;
             camera = GameObject.Find("Hex Map Camera").GetComponent<HexMapCamera>();
+
+            playerOwnershipManager = hexGrid.GetComponent<PlayerOwnershipManager>();
         }
 
         // Update is called once per frame
@@ -225,11 +229,17 @@ namespace Assets
                 isCapsule = true;
 
             }
+
+            playerOwnershipManager.UpdateStatus();
         }
 
         private void SetColor(int x, int y, Color color)
         {
             Figures[x, y].GetComponent<Renderer>().material.color = color;
+        }
+        private void SetOwnershipStatus()
+        {
+            // wrzucic to wszystko do osobnego kontrolera i wrzucic referencje do tego textu.. 
         }
     }
 }
