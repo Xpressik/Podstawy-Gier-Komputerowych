@@ -53,7 +53,8 @@ namespace Assets
             {
                 walledOwnershipPercentage++;
             }
-            text.text = ("Walls: (" + walledCounter + ") " + walledOwnershipPercentage + " : " + plantOwnershipPercentage + " (" + plantCounter + ") :Plant");        
+            text.text = ("Walls: (" + walledCounter + ") " + walledOwnershipPercentage + " : " +
+                         plantOwnershipPercentage + " (" + plantCounter + ") :Plant");
         }
 
         public void UpdateStatus()

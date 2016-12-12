@@ -33,6 +33,15 @@ namespace Assets
 
         private new HexMapCamera camera;  // kazał mi dodać new  nie sprawdzałem czy to coś ZMIENIA <-----------------------        
 
+        public float firstPlayerCounter;
+        public float secondPlayerCounter;
+
+        public bool firstTimerEnabled = true;
+        public bool secondTimerEnabled = true;
+
+        public bool firstPlayerEnableMove = true;
+        public bool secondPlayerEnableMove = true;
+
         private void Start()
         {
             Figures = new Figure[20, 15];
@@ -45,6 +54,9 @@ namespace Assets
             hexGrid.GetCell(new Vector3(147.2243f, 0.8379046f, 195.0f)).PlantLevel = 3;
             hexGrid.GetCell(new Vector3(147.2243f, 0.8379046f, 195.0f)).isWallNonCapsule = true;
             camera = GameObject.Find("Hex Map Camera").GetComponent<HexMapCamera>();
+
+            firstPlayerCounter = 60.0f;
+            secondPlayerCounter = 60.0f;
 
             playerOwnershipManager = hexGrid.GetComponent<PlayerOwnershipManager>();
         }
@@ -72,6 +84,30 @@ namespace Assets
             if (selectedFigure != null)
             {
                 HandleInput();
+            }
+            if (isCapsule && firstTimerEnabled)
+            {
+                firstPlayerCounter -= Time.deltaTime;
+                Debug.Log("First player: " + firstPlayerCounter);
+            }
+            if (!isCapsule && secondTimerEnabled)
+            {
+                secondPlayerCounter -= Time.deltaTime;
+                Debug.Log("Second player: " + secondPlayerCounter);
+            }
+            if (firstPlayerCounter <= 0.0f)
+            {
+                firstPlayerEnableMove = false;
+                firstTimerEnabled = false;
+            }
+            if (secondPlayerCounter <= 0.0f)
+            {
+                secondPlayerEnableMove = false;
+                secondTimerEnabled = false;
+            }
+            if (!firstPlayerEnableMove && !secondPlayerEnableMove)
+            {
+                
             }
         }
         private void HandleInput()
@@ -168,7 +204,7 @@ namespace Assets
                 return;
             }
 
-            if (selectedFigure.name.Equals("MECH(Clone)"))
+            if (selectedFigure.name.Equals("MECH(Clone)") && firstPlayerEnableMove)
             {
                 if (hexGrid.GetCell(new Vector3(positionX, positionY, positionZ)).isWallNonCapsule)
                 {
@@ -186,11 +222,14 @@ namespace Assets
                 {
                     selectedFigure.transform.position = new Vector3(positionX, positionY, positionZ);
                 }
-                selectedFigure.transform.position = new Vector3(positionX, positionY, positionZ);
-                hexGrid.GetCell(selectedFigure.transform.position).Walled = true;
-                hexGrid.GetCell(selectedFigure.transform.position).isWallCapsule = true;
+                else
+                {
+                    selectedFigure.transform.position = new Vector3(positionX, positionY, positionZ);
+                    hexGrid.GetCell(selectedFigure.transform.position).Walled = true;
+                    hexGrid.GetCell(selectedFigure.transform.position).isWallCapsule = true;
+                }                
             }
-            else
+            else if(selectedFigure.name.Equals("Trooper(Clone)") && secondPlayerEnableMove)
             {
                 if (hexGrid.GetCell(new Vector3(positionX, positionY, positionZ)).isWallCapsule)
                 {
@@ -208,9 +247,13 @@ namespace Assets
                 {
                     selectedFigure.transform.position = new Vector3(positionX, positionY, positionZ);
                 }
-                selectedFigure.transform.position = new Vector3(positionX, positionY, positionZ);
-                hexGrid.GetCell(selectedFigure.transform.position).PlantLevel = 3;
-                hexGrid.GetCell(selectedFigure.transform.position).isWallNonCapsule = true;
+                else
+                {
+                    selectedFigure.transform.position = new Vector3(positionX, positionY, positionZ);
+                    hexGrid.GetCell(selectedFigure.transform.position).PlantLevel = 3;
+                    hexGrid.GetCell(selectedFigure.transform.position).isWallNonCapsule = true;
+                }
+                
             }
 
 
@@ -228,6 +271,15 @@ namespace Assets
                 //   currentPlayer.text = "Player : Capsule";
                 isCapsule = true;
 
+            }
+
+            if (!firstPlayerEnableMove)
+            {
+                isCapsule = false;
+            }
+            if (!secondPlayerEnableMove)
+            {
+                isCapsule = true;
             }
 
             playerOwnershipManager.UpdateStatus();
