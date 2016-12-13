@@ -46,6 +46,9 @@ namespace Assets
         private ProgressBarBehaviour firstPlayerTimerbar;
         private ProgressBarBehaviour secondPlayerTimerbar;
 
+        private HexCell selectedCell;
+        private Color selectedCellColor;
+
         private void Start()
         {
             Figures = new Figure[20, 15];
@@ -198,6 +201,10 @@ namespace Assets
                 }
             }
             selectedFigure = Figures[x, y];
+
+            selectedCell = hexGrid.GetCell(selectedFigure.transform.position);
+            selectedCellColor  =  selectedCell.Color;
+            selectedCell.Color = Color.red;   
         }
 
         private void MoveFigure(int x, int y, float positionX, float positionY, float positionZ)
@@ -274,6 +281,7 @@ namespace Assets
 
 
             Figures[x, y] = selectedFigure;
+            selectedCell.Color = selectedCellColor;
             selectedFigure = null;
 
             if (Figures[x, y].name.Equals("MECH(Clone)"))
