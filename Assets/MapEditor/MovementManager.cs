@@ -49,6 +49,8 @@ namespace Assets
         private HexCell selectedCell;
         private Color selectedCellColor;
 
+        public float speed = 18;
+
         private void Start()
         {
             Figures = new Figure[20, 15];

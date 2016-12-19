@@ -94,7 +94,7 @@ public class HexCell : MonoBehaviour {
 
         if (!isGame)
         {
-            sth = GameObject.Find("FieldEditor").GetComponent<Canvas>();
+            //sth = GameObject.Find("FieldEditor").GetComponent<Canvas>();
             sth.transform.SetParent(hexGridCanvas.transform, false);
             sth.enabled = false;
             sth.transform.Rotate(new Vector3(-0.15f, 0, 0));
@@ -292,7 +292,6 @@ public class HexCell : MonoBehaviour {
         this.Color = cellColor;
         myText.color = Color.clear;//Color.Lerp(myText.color, Color.clear, fadeTime * Time.deltaTime);
     }
-
 
     public Color Color
     {
