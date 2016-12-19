@@ -44,6 +44,17 @@ public class SecondPlayerTargetingManager : MonoBehaviour
         }
     }
 
+    public void Wait(float seconds, Action action)
+    {
+        StartCoroutine(_wait(seconds, action));
+    }
+
+    IEnumerator _wait(float time, Action callback)
+    {
+        yield return new WaitForSeconds(time);
+        callback();
+    }
+
     private void MoveFigure(HexCell selectedCell)
     {
         if (Mathf.Abs(hexGrid.GetCell(selectedFigure.transform.position).coordinates.X - selectedCell.coordinates.X) > 1
@@ -73,13 +84,17 @@ public class SecondPlayerTargetingManager : MonoBehaviour
         }
         else if (selectedCell.isWallNonCapsule)
         {
-            selectedFigure.transform.position = selectedCell.transform.position;
+            Wait(1, () => { selectedFigure.transform.position = selectedCell.transform.position; });
+            
         }
         else
         {
-            selectedFigure.transform.position = selectedCell.transform.position;
-            hexGrid.GetCell(selectedFigure.transform.position).PlantLevel = 3;
-            hexGrid.GetCell(selectedFigure.transform.position).isWallNonCapsule = true;
+            Wait(1, () => {
+                selectedFigure.transform.position = selectedCell.transform.position;
+                hexGrid.GetCell(selectedFigure.transform.position).PlantLevel = 3;
+                hexGrid.GetCell(selectedFigure.transform.position).isWallNonCapsule = true;
+            });
+            
         }
     }
 }

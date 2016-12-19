@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 using Assets;
 using UnityEditor;
@@ -48,6 +49,17 @@ public class FirstPlayerTargetingManager : MonoBehaviour
         selectedCell.Color = selectedCellColor;
     }
 
+    public void Wait(float seconds, Action action)
+    {
+        StartCoroutine(_wait(seconds, action));
+    }
+
+    IEnumerator _wait(float time, Action callback)
+    {
+        yield return new WaitForSeconds(time);
+        callback();
+    }
+
     private void MoveFigure(HexCell selectedCell)
     {
         if (Mathf.Abs(hexGrid.GetCell(selectedFigure.transform.position).coordinates.X - selectedCell.coordinates.X) > 1
@@ -77,13 +89,15 @@ public class FirstPlayerTargetingManager : MonoBehaviour
         }
         else if (selectedCell.isWallCapsule)
         {
-            selectedFigure.transform.position = selectedCell.transform.position;
+            Wait(1, () => { selectedFigure.transform.position = selectedCell.transform.position; });            
         }
         else
         {
-            selectedFigure.transform.position = selectedCell.transform.position;
-            hexGrid.GetCell(selectedFigure.transform.position).Walled = true;
-            hexGrid.GetCell(selectedFigure.transform.position).isWallCapsule = true;
+            Wait(1, () => {
+                selectedFigure.transform.position = selectedCell.transform.position;
+                hexGrid.GetCell(selectedFigure.transform.position).Walled = true;
+                hexGrid.GetCell(selectedFigure.transform.position).isWallCapsule = true;
+            });            
         }
     }
 }
