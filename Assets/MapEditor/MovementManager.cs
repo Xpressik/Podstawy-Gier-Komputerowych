@@ -26,9 +26,7 @@ namespace Assets
         private float positionY;
         private float positionZ;
 
-        public Player player;
-
-        public Text currentPlayer;
+        private Player[] players;
 
         private PlayerOwnershipManager playerOwnershipManager;
 
@@ -71,6 +69,8 @@ namespace Assets
             secondPlayerTimerbar = GameObject.Find("Second Player Timer Bar").GetComponent<ProgressBarBehaviour>();
             firstPlayerTimerbar.Value = 100;
             secondPlayerTimerbar.Value = 100;
+
+            players = new Player[2] { new Player("first", BuildingType.WALLS), new Player("second", BuildingType.PLANTS) };
         }
 
         // Update is called once per frame
@@ -167,7 +167,6 @@ namespace Assets
                 Figures[x, y] = go.GetComponent<Figure>();
                 Figures[x, y].SetPosition(x, y);
                 isCapsule = false;
-                //   currentPlayer.text = "Player : Cylinder";
             }
             else
             {
@@ -176,7 +175,6 @@ namespace Assets
                 Figures[x, y] = go.GetComponent<Figure>();
                 Figures[x, y].SetPosition(x, y);
                 isCapsule = true;
-                //   currentPlayer.text = "Player : Capsule";
             }
         }
 
