@@ -57,9 +57,10 @@ public class HexCell : MonoBehaviour {
     bool isGame;
     private Color cellColor;
 
-    public bool isWallCapsule = false;
+    public bool isWallCapsule;
+    public bool isWallNonCapsule;
 
-    public bool isWallNonCapsule = false;
+    public Player ownerPlayer;
 
     public void SaveInfo()
     {

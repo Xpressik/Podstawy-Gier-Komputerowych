@@ -3,19 +3,20 @@ using System.Collections;
 
 public enum BuildingType
 {
-    WALLS, PLANTS
+    WALLS, PLANTS, NONE
 }
 
 
-public class Player : MonoBehaviour {
+public class Player {
 
     private BuildingType type;
+    private string playerName;
 
-    public string Name { get { return name; } set { name = value;  } }
+    public string Name { get { return playerName; } set { playerName = value;  } }
 
     public Player (string name, BuildingType type)
     {
-        this.name = name;
+        this.playerName = name;
         this.type = type;
     }
 

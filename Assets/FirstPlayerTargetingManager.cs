@@ -17,12 +17,14 @@ public class FirstPlayerTargetingManager : MonoBehaviour
 
     private float movementTime = 10f;
 
+    private Player player;
+
     // Use this for initialization
     void Start ()
 	{
         this.transform.position = new Vector3(155.8846f, 30f, 30.0f);
 	    rg = GetComponent<Rigidbody>();
- 
+        player = new Player("First", BuildingType.WALLS);
 	}
 	
 	// Update is called once per frame
@@ -75,29 +77,37 @@ public class FirstPlayerTargetingManager : MonoBehaviour
         {
             return;
         }
-        if (hexGrid.GetCell(this.transform.position).isWallNonCapsule)
+        if (hexGrid.GetCell(transform.position).ownerPlayer != null)
         {
-            return;
-        }
-        if (selectedCell.HasRiver)
-        {
-            return;
-        }
-        else if (selectedCell.isWallNonCapsule)
-        {
-            return;
-        }
-        else if (selectedCell.isWallCapsule)
-        {
-            Wait(1, () => { selectedFigure.transform.position = selectedCell.transform.position; });            
+            if (hexGrid.GetCell(this.transform.position).ownerPlayer.Type == BuildingType.PLANTS)
+            {
+                return;
+            }
+            if (selectedCell.HasRiver)
+            {
+                return;
+            }
+            else if (selectedCell.ownerPlayer.Type == BuildingType.PLANTS)
+            {
+                return;
+            }
+            else if (selectedCell.ownerPlayer.Type == BuildingType.WALLS)
+            {
+                Wait(1, () => { selectedFigure.transform.position = selectedCell.transform.position; });
+            }
+            else
+            {
+                Wait(1, () =>
+                {
+                    selectedFigure.transform.position = selectedCell.transform.position;
+                    hexGrid.GetCell(selectedFigure.transform.position).Walled = true;
+                    hexGrid.GetCell(selectedFigure.transform.position).ownerPlayer = player;
+                });
+            }
         }
         else
         {
-            Wait(1, () => {
-                selectedFigure.transform.position = selectedCell.transform.position;
-                hexGrid.GetCell(selectedFigure.transform.position).Walled = true;
-                hexGrid.GetCell(selectedFigure.transform.position).isWallCapsule = true;
-            });            
+            return;
         }
     }
 }

@@ -17,12 +17,14 @@ public class SecondPlayerTargetingManager : MonoBehaviour
 
     private float movementTime = 10f;
 
+    private Player player;
+
     // Use this for initialization
     void Start ()
     {
         this.transform.position = new Vector3(147.2243f, 30f, 195.0f);
         rg = GetComponent<Rigidbody>();
-
+        player = new Player("second", BuildingType.PLANTS);
     }
 	
 	// Update is called once per frame
@@ -70,7 +72,7 @@ public class SecondPlayerTargetingManager : MonoBehaviour
         {
             return;
         }
-        if (hexGrid.GetCell(this.transform.position).isWallCapsule)
+        if (hexGrid.GetCell(this.transform.position).ownerPlayer.Type == BuildingType.WALLS)
         {
             return;
         }
@@ -78,11 +80,11 @@ public class SecondPlayerTargetingManager : MonoBehaviour
         {
             return;
         }
-        else if (selectedCell.isWallCapsule)
+        else if (selectedCell.ownerPlayer.Type == BuildingType.WALLS)
         {
             return;
         }
-        else if (selectedCell.isWallNonCapsule)
+        else if (selectedCell.ownerPlayer.Type == BuildingType.PLANTS)
         {
             Wait(1, () => { selectedFigure.transform.position = selectedCell.transform.position; });
             
@@ -92,7 +94,7 @@ public class SecondPlayerTargetingManager : MonoBehaviour
             Wait(1, () => {
                 selectedFigure.transform.position = selectedCell.transform.position;
                 hexGrid.GetCell(selectedFigure.transform.position).PlantLevel = 3;
-                hexGrid.GetCell(selectedFigure.transform.position).isWallNonCapsule = true;
+                hexGrid.GetCell(selectedFigure.transform.position).ownerPlayer = player;
             });
             
         }
