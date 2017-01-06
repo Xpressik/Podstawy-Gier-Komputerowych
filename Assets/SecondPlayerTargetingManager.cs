@@ -22,7 +22,6 @@ public class SecondPlayerTargetingManager : MonoBehaviour
     {
         this.transform.position = new Vector3(147.2243f, 30f, 195.0f);
         rg = GetComponent<Rigidbody>();
-
     }
 	
 	// Update is called once per frame
