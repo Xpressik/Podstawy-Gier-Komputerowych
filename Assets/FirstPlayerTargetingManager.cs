@@ -168,19 +168,24 @@ public class FirstPlayerTargetingManager : MonoBehaviour
         }
         else if (selectedCell.isWallCapsule)
         {
+            Debug.Log(selectedCell.FarmLevel);
             selectedFigure.transform.position = selectedCell.transform.position;
             currentCell = selectedCell;
             playerOwnershipManager.UpdateStatus();
             player.Supplies--;
+            
         }
         else
         {
+            Debug.Log(selectedCell.FarmLevel);
             selectedFigure.transform.position = selectedCell.transform.position;
             hexGrid.GetCell(selectedFigure.transform.position).Walled = true;
             hexGrid.GetCell(selectedFigure.transform.position).isWallCapsule = true;
             currentCell = selectedCell;
             playerOwnershipManager.UpdateStatus();
             player.Supplies--;
+            player.Supplies += selectedCell.FarmLevel;
+
         }
     }
 }
