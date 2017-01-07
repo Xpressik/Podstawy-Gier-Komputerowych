@@ -19,7 +19,7 @@ namespace Assets
         void Start()
         {
             progressBar = GameObject.Find("ProgressBarLabelInside").GetComponent<ProgressBarBehaviour>();
-            text.text = ("Walls: (0) 50 : 50 (0) :Plants");
+            text.text = ("Walls: (0) 50% : 50% (0) :Plants");
             progressBar.Value = 50;
         }
 
@@ -48,7 +48,7 @@ namespace Assets
             {
                 walledOwnershipPercentage++;
             }
-            text.text = ("Walls: (" + walledCounter + ") " + walledOwnershipPercentage + " : " + plantOwnershipPercentage + " (" + plantCounter + ") :Plants");
+            text.text = ("Walls: (" + walledCounter + ") " + walledOwnershipPercentage + "% : " + plantOwnershipPercentage + "% (" + plantCounter + ") :Plants");
             progressBar.Value = walledOwnershipPercentage;
         }
 

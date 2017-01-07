@@ -21,6 +21,9 @@ public class FirstPlayerTargetingManager : MonoBehaviour
     public GameObject figure;
 
     private HexCell selectedCell;
+
+    private PlayerOwnershipManager playerOwnershipManager;
+
     // Use this for initialization
     void Start()
     {
@@ -36,6 +39,8 @@ public class FirstPlayerTargetingManager : MonoBehaviour
         go.AddComponent<MeshRenderer>();
         selectedFigure = go.GetComponent<Figure>();
         selectedCell = currentCell;
+        playerOwnershipManager = GetComponent<PlayerOwnershipManager>();
+        playerOwnershipManager.UpdateStatus();
     }
 
     // Update is called once per frame
@@ -144,6 +149,7 @@ public class FirstPlayerTargetingManager : MonoBehaviour
         {
             selectedFigure.transform.position = selectedCell.transform.position;
             currentCell = selectedCell;
+            playerOwnershipManager.UpdateStatus();
         }
         else
         {
@@ -151,6 +157,7 @@ public class FirstPlayerTargetingManager : MonoBehaviour
             hexGrid.GetCell(selectedFigure.transform.position).Walled = true;
             hexGrid.GetCell(selectedFigure.transform.position).isWallCapsule = true;
             currentCell = selectedCell;
+            playerOwnershipManager.UpdateStatus();
         }
     }
 }
