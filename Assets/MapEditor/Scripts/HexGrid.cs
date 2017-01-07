@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using ProgressBar;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
@@ -20,6 +21,32 @@ public class HexGrid : MonoBehaviour {
 
 	HexGridChunk[] chunks;
 	HexCell[] cells;
+
+    private ProgressBarBehaviour timerBar;
+    private float timer;
+
+    private Text timerText;
+
+    void Start()
+    {
+        timer = 300.0f;
+        timerBar = GameObject.Find("Timer Bar").GetComponent<ProgressBarBehaviour>();
+        timerText = GameObject.Find("Timer Label").GetComponent<Text>();
+      }
+
+
+    string timeLeft;
+    void Update()
+    {
+        timer -= Time.deltaTime;
+        timerBar.Value = (int)(timer * 100 / 300);
+
+        int minutes = (int)(timer / 60);
+        int seconds = (int)(timer - minutes * 60);
+        timeLeft = minutes.ToString() + ":" + seconds.ToString();
+        timerText.text = timeLeft;
+
+    }
 
     public HexCell[] Cells
     {
