@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections;
 using Assets;
 using UnityEditor;
+using ProgressBar;
 
 public class FirstPlayerTargetingManager : MonoBehaviour
 {
@@ -24,6 +25,10 @@ public class FirstPlayerTargetingManager : MonoBehaviour
 
     private PlayerOwnershipManager playerOwnershipManager;
 
+    private Player player;
+
+    private ProgressBarBehaviour firstPlayerTimerbar;
+
     // Use this for initialization
     void Start()
     {
@@ -41,6 +46,10 @@ public class FirstPlayerTargetingManager : MonoBehaviour
         selectedCell = currentCell;
         playerOwnershipManager = GetComponent<PlayerOwnershipManager>();
         playerOwnershipManager.UpdateStatus();
+        player = new Player();
+        firstPlayerTimerbar = GameObject.Find("First Player Timer Bar").GetComponent<ProgressBarBehaviour>();
+        InvokeRepeating("HandleSupplies", 2.0f, 5.0f);
+        UpdateBar();
     }
 
     // Update is called once per frame
@@ -99,12 +108,24 @@ public class FirstPlayerTargetingManager : MonoBehaviour
 
         if (Input.GetButtonDown("AButton"))
         {
-            if (selectedCell != null)
+            if (selectedCell != null && player.Supplies > 0)
             {
                 selectedCell.Color = selectedCellColor;
                 MoveFigure(selectedCell);
+                UpdateBar();
             }
         }
+    }        
+
+    void UpdateBar()
+    {
+        firstPlayerTimerbar.Value = player.Supplies;
+    }
+
+    void HandleSupplies()
+    {
+        player.Supplies += 2;
+        UpdateBar();
     }
 
     public void Wait(float seconds, Action action)
@@ -150,6 +171,7 @@ public class FirstPlayerTargetingManager : MonoBehaviour
             selectedFigure.transform.position = selectedCell.transform.position;
             currentCell = selectedCell;
             playerOwnershipManager.UpdateStatus();
+            player.Supplies--;
         }
         else
         {
@@ -158,6 +180,7 @@ public class FirstPlayerTargetingManager : MonoBehaviour
             hexGrid.GetCell(selectedFigure.transform.position).isWallCapsule = true;
             currentCell = selectedCell;
             playerOwnershipManager.UpdateStatus();
+            player.Supplies--;
         }
     }
 }

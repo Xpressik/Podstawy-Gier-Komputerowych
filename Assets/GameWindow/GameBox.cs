@@ -44,14 +44,14 @@ public class GameBox : MonoBehaviour
         this.stage.text = stage;
     }
 
-    public void setActivePlayer(Player player)
-    {
-        this.player.text = player.getName();
-    }
+    //public void setActivePlayer(Player player)
+    //{
+    //    this.player.text = player.getName();
+    //}
 
     public void SetActivePLayer(int i)
     {
-        this.player.text = game.listOfPlayers[i].getName();
+        //this.player.text = game.listOfPlayers[i].getName();
     }
 
     public void setGame(Game game)

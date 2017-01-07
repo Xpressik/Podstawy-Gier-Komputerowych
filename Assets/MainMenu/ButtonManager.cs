@@ -71,7 +71,7 @@ public class ButtonManager : MonoBehaviour {
         name2 = inputField2.text.ToString();
         Console.Out.WriteLine(name1);
         this.game = new Game();
-        this.game.Initialize(name1, name2);
+        //this.game.Initialize(name1, name2);
         SceneManager.LoadScene(mapChoser);
     }
 

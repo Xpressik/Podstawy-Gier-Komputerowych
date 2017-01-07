@@ -9,7 +9,7 @@ public class Field {
     public int garrison;
     //public Castle castle;
     //public Army army;
-    public Player owner;
+    //public Player owner;
     public HexCell hex;
     public int ownerInt;
     public bool camp;
