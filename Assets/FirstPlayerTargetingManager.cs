@@ -50,6 +50,16 @@ public class FirstPlayerTargetingManager : MonoBehaviour
         firstPlayerTimerbar = GameObject.Find("First Player Timer Bar").GetComponent<ProgressBarBehaviour>();
         InvokeRepeating("HandleSupplies", 2.0f, 5.0f);
         UpdateBar();
+        selectedCellColor = currentCell.color;
+    }
+
+    void HandleCellSelection(HexCell cell)//  ogarnąć to!
+    {
+        selectedCell.color = selectedCellColor;
+        selectedCellColor = cell.color;
+        selectedCell = cell;
+        cell.color = Color.red;
+        cell.Refresh();
     }
 
     // Update is called once per frame
@@ -60,50 +70,32 @@ public class FirstPlayerTargetingManager : MonoBehaviour
 
         if (vAxis > 0.15 && vAxis < 0.88 && hAxis > 0.15 && hAxis < 0.88) //prawa góra
         {
-            Debug.Log("Prawa góra");
-            selectedCellColor = currentCell.neighbors[0].color;
-            selectedCell = currentCell.neighbors[0];
-            currentCell.neighbors[0].color = Color.red;
+            HandleCellSelection(currentCell.neighbors[0]);
         }
 
         else if (vAxis > 0.15 && vAxis < 0.85 && hAxis > -0.85 && hAxis  < -0.15) //lewa góra
         {
-            Debug.Log("Lewa góra");
-            selectedCellColor = currentCell.neighbors[5].color;
-            selectedCell = currentCell.neighbors[5];
-            currentCell.neighbors[5].color = Color.red;
+            HandleCellSelection(currentCell.neighbors[5]);
         }
 
         else if (vAxis <= 0.15 && vAxis >= -0.15 && hAxis >= 0.85) //prawa
         {
-            Debug.Log("Prawa");
-            selectedCellColor = currentCell.neighbors[1].color;
-            selectedCell = currentCell.neighbors[1];
-            currentCell.neighbors[1].color = Color.red;
+            HandleCellSelection(currentCell.neighbors[1]);
         }
 
         else if (vAxis <= 0.25 && vAxis >= -0.25 && hAxis <= -0.85) //lewa
         {
-            Debug.Log("Lewa");
-            selectedCellColor = currentCell.neighbors[4].color;
-            selectedCell = currentCell.neighbors[4];
-            currentCell.neighbors[4].color = Color.red;
+            HandleCellSelection(currentCell.neighbors[4]);
         }
 
         else if (vAxis < -0.15 && vAxis > -0.85 && hAxis > 0.15  &&  hAxis < 0.85) //prawy dół
         {
-            Debug.Log("Prawy dół");
-            selectedCellColor = currentCell.neighbors[2].color;
-            selectedCell = currentCell.neighbors[2];
-            currentCell.neighbors[2].color = Color.red;
+            HandleCellSelection(currentCell.neighbors[2]);
         }
 
         else if (vAxis < -0.15 && vAxis > -0.85 && hAxis < -0.15 && hAxis > -0.92) //lewy dół
         {
-            Debug.Log("Lewy dół");
-            selectedCellColor = currentCell.neighbors[3].color;
-            selectedCell = currentCell.neighbors[3];
-            currentCell.neighbors[3].color = Color.red;
+            HandleCellSelection(currentCell.neighbors[3]);
         }
 
         if (Input.GetButtonDown("AButton"))
@@ -168,20 +160,20 @@ public class FirstPlayerTargetingManager : MonoBehaviour
         }
         else if (selectedCell.isWallCapsule)
         {
-            Debug.Log(selectedCell.FarmLevel);
             selectedFigure.transform.position = selectedCell.transform.position;
             currentCell = selectedCell;
+            currentCell.color = selectedCellColor;
             playerOwnershipManager.UpdateStatus();
             player.Supplies--;
             
         }
         else
         {
-            Debug.Log(selectedCell.FarmLevel);
             selectedFigure.transform.position = selectedCell.transform.position;
             hexGrid.GetCell(selectedFigure.transform.position).Walled = true;
             hexGrid.GetCell(selectedFigure.transform.position).isWallCapsule = true;
             currentCell = selectedCell;
+            currentCell.color = selectedCellColor;
             playerOwnershipManager.UpdateStatus();
             player.Supplies--;
             player.Supplies += selectedCell.FarmLevel;
