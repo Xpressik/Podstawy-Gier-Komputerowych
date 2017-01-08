@@ -1,57 +1,114 @@
 ﻿using UnityEngine;
-using System.Collections;
 using Assets;
-using System;
+using ProgressBar;
 
 public class SecondPlayerTargetingManager : MonoBehaviour
-{
+{ 
+    private HexGrid hexGrid;
 
-    private Rigidbody rg;
-    private float speed = 18;
-
-    public HexGrid hexGrid;
-
-    public Figure selectedFigure;
+    private Figure selectedFigure;
 
     private Color selectedCellColor;
 
-    private float movementTime = 10f;
+    private HexCell currentCell;
+
+    public GameObject figure;
+
+    private HexCell selectedCell;
+
+    private PlayerOwnershipManager playerOwnershipManager;
+
+    private Player player;
+
+    private ProgressBarBehaviour secondPlayerTimerBar;
+
 
     // Use this for initialization
     void Start ()
     {
-        this.transform.position = new Vector3(147.2243f, 30f, 195.0f);
-        rg = GetComponent<Rigidbody>();
+        hexGrid = GetComponent<HexGrid>();
+        currentCell = hexGrid.GetCell(new Vector3(147.2243f, 0.8379046f, 195.0f));
+        currentCell.isWallNonCapsule = true;
+        currentCell.PlantLevel = 3;
+        GameObject go = (GameObject)Instantiate(figure, new Vector3(147.2243f, 0.8379046f, 195.0f), Quaternion.Euler(0, 180, 0));
+        go.transform.SetParent(transform);
+        go.AddComponent<MeshRenderer>();
+        selectedFigure = go.GetComponent<Figure>();
+        selectedCell = currentCell;
+        //playerOwnershipManager = GetComponent<PlayerOwnershipManager>();
+        //playerOwnershipManager.UpdateStatus();
+        player = new Player();
+        secondPlayerTimerBar = GameObject.Find("Second Player Timer Bar").GetComponent<ProgressBarBehaviour>();
+        InvokeRepeating("HandleSupplies", 2.0f, 5.0f);
+        UpdateBar();
+        selectedCellColor = currentCell.color;
     }
-	
-	// Update is called once per frame
-	void Update ()
+
+    void HandleCellSelection(HexCell cell)
+    {
+        selectedCell.color = selectedCellColor;
+        selectedCellColor = cell.color;
+        selectedCell = cell;
+        cell.color = Color.red;
+        cell.Refresh();
+    }
+
+        // Update is called once per frame
+    void Update ()
 	{
-	    float hAxis = Input.GetAxis("SecondLeftJoystickHorizontal");
-	    float vAxis = Input.GetAxis("SecondLeftJoystickVertical");
+	    float hAxis = Input.GetAxis("LeftJoystickHorizontal");
+	    float vAxis = Input.GetAxis("LeftJoystickVertical");
 
-	    Vector3 movement = transform.TransformDirection(new Vector3(hAxis, 0, vAxis)*speed*Time.deltaTime);
-
-        rg.MovePosition(transform.position + movement);
-	    selectedFigure = GameObject.Find("Trooper(Clone)").GetComponent<Figure>();
-
-        HexCell selectedCell = hexGrid.GetCell(this.transform.position);
-
-        if (Input.GetButtonDown("SecondAButton"))
+        if (vAxis > 0.15 && vAxis < 0.88 && hAxis > 0.15 && hAxis < 0.88) //prawa góra
         {
-            MoveFigure(selectedCell);
+            HandleCellSelection(currentCell.neighbors[0]);
+        }
+
+        else if (vAxis > 0.15 && vAxis < 0.85 && hAxis > -0.85 && hAxis < -0.15) //lewa góra
+        {
+            HandleCellSelection(currentCell.neighbors[5]);
+        }
+
+        else if (vAxis <= 0.15 && vAxis >= -0.15 && hAxis >= 0.85) //prawa
+        {
+            HandleCellSelection(currentCell.neighbors[1]);
+        }
+
+        else if (vAxis <= 0.25 && vAxis >= -0.25 && hAxis <= -0.85) //lewa
+        {
+            HandleCellSelection(currentCell.neighbors[4]);
+        }
+
+        else if (vAxis < -0.15 && vAxis > -0.85 && hAxis > 0.15 && hAxis < 0.85) //prawy dół
+        {
+            HandleCellSelection(currentCell.neighbors[2]);
+        }
+
+        else if (vAxis < -0.15 && vAxis > -0.85 && hAxis < -0.15 && hAxis > -0.92) //lewy dół
+        {
+            HandleCellSelection(currentCell.neighbors[3]);
+        }
+
+        if (Input.GetButtonDown("AButton"))
+        {
+            if (selectedCell != null && player.Supplies > 0)
+            {
+                selectedCell.Color = selectedCellColor;
+                MoveFigure(selectedCell);
+                UpdateBar();
+            }
         }
     }
 
-    public void Wait(float seconds, Action action)
+    void UpdateBar()
     {
-        StartCoroutine(_wait(seconds, action));
+        secondPlayerTimerBar.Value = player.Supplies;
     }
 
-    IEnumerator _wait(float time, Action callback)
+    void HandleSupplies()
     {
-        yield return new WaitForSeconds(time);
-        callback();
+        player.Supplies += 2;
+        UpdateBar();
     }
 
     private void MoveFigure(HexCell selectedCell)
@@ -83,17 +140,23 @@ public class SecondPlayerTargetingManager : MonoBehaviour
         }
         else if (selectedCell.isWallNonCapsule)
         {
-            Wait(1, () => { selectedFigure.transform.position = selectedCell.transform.position; });
-            
+            selectedFigure.transform.position = selectedCell.transform.position;
+            currentCell = selectedCell;
+            currentCell.color = selectedCellColor;
+            //playerOwnershipManager.UpdateStatus();
+            player.Supplies--;
+
         }
         else
         {
-            Wait(1, () => {
-                selectedFigure.transform.position = selectedCell.transform.position;
-                hexGrid.GetCell(selectedFigure.transform.position).PlantLevel = 3;
-                hexGrid.GetCell(selectedFigure.transform.position).isWallNonCapsule = true;
-            });
-            
+            selectedFigure.transform.position = selectedCell.transform.position;
+            hexGrid.GetCell(selectedFigure.transform.position).PlantLevel = 3;
+            hexGrid.GetCell(selectedFigure.transform.position).isWallNonCapsule = true;
+            currentCell = selectedCell;
+            currentCell.color = selectedCellColor;
+            //playerOwnershipManager.UpdateStatus();
+            player.Supplies--;
+            player.Supplies += selectedCell.FarmLevel;
         }
     }
 }

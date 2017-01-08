@@ -1,21 +1,14 @@
-﻿using System;
-using UnityEngine;
-using System.Collections;
+﻿using UnityEngine;
 using Assets;
-using UnityEditor;
 using ProgressBar;
 
 public class FirstPlayerTargetingManager : MonoBehaviour
 {
-    private float speed = 18;
-
     private HexGrid hexGrid;
 
     private Figure selectedFigure;
 
     private Color selectedCellColor;
-
-    private float movementTime = 10f;
 
     private HexCell currentCell;
 
@@ -32,9 +25,6 @@ public class FirstPlayerTargetingManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        //        this.transform.position = new Vector3(155.8846f, 30f, 30.0f);
-        //	    rg = GetComponent<Rigidbody>();
-        //          selectedFigure = GameObject.Find("MECH(Clone)").GetComponent<Figure>();
         hexGrid = GetComponent<HexGrid>();
         currentCell = hexGrid.GetCell(new Vector3(155.8846f, 30f, 30.0f));
         currentCell.isWallCapsule = true;
@@ -53,7 +43,7 @@ public class FirstPlayerTargetingManager : MonoBehaviour
         selectedCellColor = currentCell.color;
     }
 
-    void HandleCellSelection(HexCell cell)//  ogarnąć to!
+    void HandleCellSelection(HexCell cell)
     {
         selectedCell.color = selectedCellColor;
         selectedCellColor = cell.color;
@@ -118,17 +108,6 @@ public class FirstPlayerTargetingManager : MonoBehaviour
     {
         player.Supplies += 2;
         UpdateBar();
-    }
-
-    public void Wait(float seconds, Action action)
-    {
-        StartCoroutine(_wait(seconds, action));
-    }
-
-    IEnumerator _wait(float time, Action callback)
-    {
-        yield return new WaitForSeconds(time);
-        callback();
     }
 
     private void MoveFigure(HexCell selectedCell)
