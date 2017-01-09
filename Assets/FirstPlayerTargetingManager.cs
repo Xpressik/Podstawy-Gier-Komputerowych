@@ -60,6 +60,16 @@ public class FirstPlayerTargetingManager : MonoBehaviour
 
         if (vAxis > 0.15 && vAxis < 0.88 && hAxis > 0.15 && hAxis < 0.88) //prawa góra
         {
+            if (currentCell.coordinates.X == 19 && currentCell.coordinates.Z == 1
+                || currentCell.coordinates.X == 18 && currentCell.coordinates.Z == 3
+                || currentCell.coordinates.X == 17 && currentCell.coordinates.Z == 5
+                || currentCell.coordinates.X == 16 && currentCell.coordinates.Z == 7
+                || currentCell.coordinates.X == 15 && currentCell.coordinates.Z == 9
+                || currentCell.coordinates.X == 14 && currentCell.coordinates.Z == 11
+                || currentCell.coordinates.X == 13 && currentCell.coordinates.Z == 13)
+            {
+                return;
+            }
             if (currentCell.coordinates.Z == 14)
             {
                 return;
@@ -67,9 +77,13 @@ public class FirstPlayerTargetingManager : MonoBehaviour
             HandleCellSelection(currentCell.neighbors[0]);
         }
 
-        else if (vAxis > 0.15 && vAxis < 0.85 && hAxis > -0.85 && hAxis  < -0.15) //lewa góra
+        else if (vAxis > 0.15 && vAxis < 0.85 && hAxis > -0.85 && hAxis < -0.15) //lewa góra
         {
-            if (currentCell.coordinates.Z == 14 || (currentCell.coordinates.X == 0 && currentCell.coordinates.Z % 2 == 0))
+            if (currentCell.coordinates.Z == currentCell.coordinates.X * -2) // to powinno mieć sens!
+            {
+                return;
+            }
+            if (currentCell.coordinates.Z == 14)
             {
                 return;
             }
@@ -78,12 +92,38 @@ public class FirstPlayerTargetingManager : MonoBehaviour
 
         else if (vAxis <= 0.15 && vAxis >= -0.15 && hAxis >= 0.85) //prawa
         {
+            if (currentCell.coordinates.X == 12 && currentCell.coordinates.Z == 14
+                || currentCell.coordinates.X == 19 && currentCell.coordinates.Z == 1
+                || currentCell.coordinates.X == 18 && currentCell.coordinates.Z == 3
+                || currentCell.coordinates.X == 17 && currentCell.coordinates.Z == 5
+                || currentCell.coordinates.X == 16 && currentCell.coordinates.Z == 7
+                || currentCell.coordinates.X == 15 && currentCell.coordinates.Z == 9
+                || currentCell.coordinates.X == 14 && currentCell.coordinates.Z == 11
+                || currentCell.coordinates.X == 13 && currentCell.coordinates.Z == 13
+                || currentCell.coordinates.X == 12 && currentCell.coordinates.Z == 14
+
+
+                || currentCell.coordinates.X == 13 && currentCell.coordinates.Z == 12
+                || currentCell.coordinates.X == 14 && currentCell.coordinates.Z == 10
+                || currentCell.coordinates.X == 15 && currentCell.coordinates.Z == 8
+                || currentCell.coordinates.X == 16 && currentCell.coordinates.Z == 6
+                || currentCell.coordinates.X == 17 && currentCell.coordinates.Z == 4
+                || currentCell.coordinates.X == 18 && currentCell.coordinates.Z == 2
+                || currentCell.coordinates.X == 19 && currentCell.coordinates.Z == 0
+                )
+            {
+                return;
+            }
             HandleCellSelection(currentCell.neighbors[1]);
         }
 
         else if (vAxis <= 0.25 && vAxis >= -0.25 && hAxis <= -0.85) //lewa
         {
-            if (currentCell.coordinates.X == 0 && currentCell.coordinates.Z % 2 == 0)
+            if (currentCell.coordinates.Z == (currentCell.coordinates.X * (-2) + 1))
+            {
+                return;
+            }
+            if (currentCell.coordinates.Z == currentCell.coordinates.X * -2) // to powinno mieć sens! //  niestety nie ma 
             {
                 return;
             }
@@ -92,6 +132,17 @@ public class FirstPlayerTargetingManager : MonoBehaviour
 
         else if (vAxis < -0.15 && vAxis > -0.85 && hAxis > 0.15  &&  hAxis < 0.85) //prawy dół
         {
+            if (currentCell.coordinates.X == 19 && currentCell.coordinates.Z == 1
+                || currentCell.coordinates.X == 18 && currentCell.coordinates.Z == 3
+                || currentCell.coordinates.X == 17 && currentCell.coordinates.Z == 5
+                || currentCell.coordinates.X == 16 && currentCell.coordinates.Z == 7
+                || currentCell.coordinates.X == 15 && currentCell.coordinates.Z == 9
+                || currentCell.coordinates.X == 14 && currentCell.coordinates.Z == 11
+                || currentCell.coordinates.X == 13 && currentCell.coordinates.Z == 13
+                || currentCell.coordinates.X == 19 && currentCell.coordinates.Z == 0)
+            {
+                return;
+            }
             if (currentCell.coordinates.Z == 0)
             {
                 return;
@@ -101,7 +152,7 @@ public class FirstPlayerTargetingManager : MonoBehaviour
 
         else if (vAxis < -0.15 && vAxis > -0.85 && hAxis < -0.15 && hAxis > -0.92) //lewy dół
         {
-            if (currentCell.coordinates.Z == Mathf.Abs(currentCell.coordinates.X * 2)) // to powinno mieć sens!
+            if (currentCell.coordinates.Z == currentCell.coordinates.X * -2) // to powinno mieć sens!
             {
                 return;  
             }
