@@ -35,8 +35,7 @@ public class SecondPlayerTargetingManager : MonoBehaviour
         go.AddComponent<MeshRenderer>();
         selectedFigure = go.GetComponent<Figure>();
         selectedCell = currentCell;
-        //playerOwnershipManager = GetComponent<PlayerOwnershipManager>();
-        //playerOwnershipManager.UpdateStatus();
+        playerOwnershipManager = GetComponent<PlayerOwnershipManager>();
         player = new Player();
         secondPlayerTimerBar = GameObject.Find("Second Player Timer Bar").GetComponent<ProgressBarBehaviour>();
         InvokeRepeating("HandleSupplies", 2.0f, 5.0f);
@@ -56,8 +55,8 @@ public class SecondPlayerTargetingManager : MonoBehaviour
         // Update is called once per frame
     void Update ()
 	{
-	    float hAxis = Input.GetAxis("LeftJoystickHorizontal");
-	    float vAxis = Input.GetAxis("LeftJoystickVertical");
+	    float hAxis = Input.GetAxis("SecondLeftJoystickHorizontal");
+	    float vAxis = Input.GetAxis("SecondLeftJoystickVertical");
 
         if (vAxis > 0.15 && vAxis < 0.88 && hAxis > 0.15 && hAxis < 0.88) //prawa góra
         {
@@ -89,7 +88,7 @@ public class SecondPlayerTargetingManager : MonoBehaviour
             HandleCellSelection(currentCell.neighbors[3]);
         }
 
-        if (Input.GetButtonDown("AButton"))
+        if (Input.GetButtonDown("SecondAButton"))
         {
             if (selectedCell != null && player.Supplies > 0)
             {
@@ -143,7 +142,7 @@ public class SecondPlayerTargetingManager : MonoBehaviour
             selectedFigure.transform.position = selectedCell.transform.position;
             currentCell = selectedCell;
             currentCell.color = selectedCellColor;
-            //playerOwnershipManager.UpdateStatus();
+            playerOwnershipManager.UpdateStatus();
             player.Supplies--;
 
         }
@@ -154,7 +153,7 @@ public class SecondPlayerTargetingManager : MonoBehaviour
             hexGrid.GetCell(selectedFigure.transform.position).isWallNonCapsule = true;
             currentCell = selectedCell;
             currentCell.color = selectedCellColor;
-            //playerOwnershipManager.UpdateStatus();
+            playerOwnershipManager.UpdateStatus();
             player.Supplies--;
             player.Supplies += selectedCell.FarmLevel;
         }
