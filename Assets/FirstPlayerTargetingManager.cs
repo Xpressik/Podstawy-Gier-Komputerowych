@@ -152,7 +152,7 @@ public class FirstPlayerTargetingManager : MonoBehaviour
 
         else if (vAxis < -0.15 && vAxis > -0.85 && hAxis < -0.15 && hAxis > -0.92) //lewy dół
         {
-            if (currentCell.coordinates.Z == currentCell.coordinates.X * -2) // to powinno mieć sens!
+            if (currentCell.coordinates.Z == currentCell.coordinates.X * -2)
             {
                 return;  
             }
@@ -161,10 +161,6 @@ public class FirstPlayerTargetingManager : MonoBehaviour
                 return;
             }
             HandleCellSelection(currentCell.neighbors[3]);
-        }
-        if (Input.GetButtonDown("BButton"))
-        {
-            Debug.Log(currentCell.coordinates.X + " " + currentCell.coordinates.Y + " " + currentCell.coordinates.Z);
         }
         if (Input.GetButtonDown("AButton"))
         {
