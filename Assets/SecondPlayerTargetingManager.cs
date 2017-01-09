@@ -133,6 +133,10 @@ public class SecondPlayerTargetingManager : MonoBehaviour
         {
             return;
         }
+        if (selectedCell.IsUnderwater)
+        {
+            return;
+        }
         else if (selectedCell.isWallCapsule)
         {
             return;

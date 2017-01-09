@@ -241,10 +241,10 @@ public class HexGrid : MonoBehaviour {
 
         Text label = Instantiate(cellLabelPrefab);
         label.rectTransform.anchoredPosition = new Vector2(position.x, position.z);
-   //     if (!isGame)
- //       {
-            //label.text = cell.coordinates.ToStringOnSeparateLines();
-//        }
+        if (!isGame)
+        {
+            label.text = cell.coordinates.ToStringOnSeparateLines();
+        }
         cell.uiRect = label.rectTransform;
         cell.Elevation = 0;
 

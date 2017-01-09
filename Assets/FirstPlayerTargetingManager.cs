@@ -60,11 +60,19 @@ public class FirstPlayerTargetingManager : MonoBehaviour
 
         if (vAxis > 0.15 && vAxis < 0.88 && hAxis > 0.15 && hAxis < 0.88) //prawa góra
         {
+            if (currentCell.coordinates.Z == 14)
+            {
+                return;
+            }
             HandleCellSelection(currentCell.neighbors[0]);
         }
 
         else if (vAxis > 0.15 && vAxis < 0.85 && hAxis > -0.85 && hAxis  < -0.15) //lewa góra
         {
+            if (currentCell.coordinates.Z == 14 || (currentCell.coordinates.X == 0 && currentCell.coordinates.Z % 2 == 0))
+            {
+                return;
+            }
             HandleCellSelection(currentCell.neighbors[5]);
         }
 
@@ -75,19 +83,38 @@ public class FirstPlayerTargetingManager : MonoBehaviour
 
         else if (vAxis <= 0.25 && vAxis >= -0.25 && hAxis <= -0.85) //lewa
         {
+            if (currentCell.coordinates.X == 0 && currentCell.coordinates.Z % 2 == 0)
+            {
+                return;
+            }
             HandleCellSelection(currentCell.neighbors[4]);
         }
 
         else if (vAxis < -0.15 && vAxis > -0.85 && hAxis > 0.15  &&  hAxis < 0.85) //prawy dół
         {
+            if (currentCell.coordinates.Z == 0)
+            {
+                return;
+            }
             HandleCellSelection(currentCell.neighbors[2]);
         }
 
         else if (vAxis < -0.15 && vAxis > -0.85 && hAxis < -0.15 && hAxis > -0.92) //lewy dół
         {
+            if (currentCell.coordinates.Z == Mathf.Abs(currentCell.coordinates.X * 2)) // to powinno mieć sens!
+            {
+                return;  
+            }
+            if (currentCell.coordinates.Z == 0)
+            {
+                return;
+            }
             HandleCellSelection(currentCell.neighbors[3]);
         }
-
+        if (Input.GetButtonDown("BButton"))
+        {
+            Debug.Log(currentCell.coordinates.X + " " + currentCell.coordinates.Y + " " + currentCell.coordinates.Z);
+        }
         if (Input.GetButtonDown("AButton"))
         {
             if (selectedCell != null && player.Supplies > 0)
@@ -130,6 +157,10 @@ public class FirstPlayerTargetingManager : MonoBehaviour
             return;
         }
         if (selectedCell.HasRiver)
+        {
+            return;
+        }
+        if (selectedCell.IsUnderwater)
         {
             return;
         }
