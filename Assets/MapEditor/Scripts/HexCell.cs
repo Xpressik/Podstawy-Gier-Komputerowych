@@ -19,47 +19,15 @@ public class HexCell : MonoBehaviour {
     public BoxCollider bc;
 
     public HexCellInfo info;
-    
-    // DO OKIENKA Z INFORMACJAMI O ZASOBACH NA POLU
-    public string myString;
-    public Text myText;
-    public float fadeTime;
-    
- //   public Canvas fieldEditor;
-    public Button player1Button;
-    public Button player2Button;
-    public Button player0Button;
-    public InputField supplyInput;
-    public InputField contrabandInput;
-    public Button S0;
-    public Button S1;
-    public Button S2;
-
-    public Button C0;
-    public Button C1;
-    public Button C2;
-
-    public Toggle campToggle;
-    public Button quitButton;
-    
-    Canvas sth;
-    public Field field;
-    public int owner;
-    public Boolean camp;
-    public int supply;
-    public int contraband;
-
-    public Canvas fieldInfo;
-    public Text supplyOutput;
-
-    //public FieldInfoScript fieldInfo;
-
+   
     bool isGame;
     private Color cellColor;
 
     public bool isWallCapsule = false;
 
     public bool isWallNonCapsule = false;
+
+    private int specialIndex;
 
     public void SaveInfo()
     {
@@ -83,203 +51,12 @@ public class HexCell : MonoBehaviour {
 
         bc = gameObject.AddComponent<BoxCollider>();
         bc.size = new Vector3(17, 17);
-
-        // DO OKIENKA Z INFORMACJAMI O ZASOBACH NA POLU
-        myString = "On Field";
-        fadeTime = 1;
-        var hexGridCanvas = GameObject.Find("Hex Grid Canvas").GetComponent<Canvas>();
-        myText = GameObject.Find("Text").GetComponent<Text>();
-        myText.transform.SetParent(hexGridCanvas.transform, false);
-        myText.supportRichText = false;
-
-        if (!isGame)
-        {
-            //sth = GameObject.Find("FieldEditor").GetComponent<Canvas>();
-            sth.transform.SetParent(hexGridCanvas.transform, false);
-            sth.enabled = false;
-            sth.transform.Rotate(new Vector3(-0.15f, 0, 0));
-            sth.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
-            //fieldEditor = gameObject.GetComponentInParent<Canvas>();
-            //fieldEditor = fieldEditor.GetComponent<Canvas>();
-            player1Button = GameObject.Find("Player1Button").GetComponent<Button>();
-            player2Button = GameObject.Find("Player2Button").GetComponent<Button>();
-            player0Button = GameObject.Find("Player0Button").GetComponent<Button>();
-            //supplyInput = GameObject.Find("SupplyInput").GetComponent<InputField>();
-            //contrabandInput = GameObject.Find("ContrabandInput").GetComponent<InputField>();
-            S0 = GameObject.Find("S0").GetComponent<Button>();
-            //S0.image.color = Color.red;
-            S1 = GameObject.Find("S1").GetComponent<Button>();
-            S2 = GameObject.Find("S2").GetComponent<Button>();
-
-            C0 = GameObject.Find("C0").GetComponent<Button>();
-            C1 = GameObject.Find("C1").GetComponent<Button>();
-            //C1.image.color = Color.red;
-            C2 = GameObject.Find("C2").GetComponent<Button>();
-            campToggle = GameObject.Find("CampToggle").GetComponent<Toggle>();
-            //Console.WriteLine(GameObject.Find("CampToggle").ToString());
-            //Debug.Log(GameObject.Find("CampToggle").ToString());
-            //campToggle.transform.SetParent(sth.transform, false);
-            //campToggle = campToggle.GetComponent<Toggle>();
-            quitButton = GameObject.Find("QuitButton").GetComponent<Button>();
-            //  fieldEditor.enabled = false;
-
-            //Transform caretGO = supplyInput.transform.FindChild(supplyInput.transform.name + " Input Caret");
-            //caretGO.GetComponent<CanvasRenderer>().SetMaterial(Graphic.defaultGraphicMaterial, Texture2D.whiteTexture);
-            //caretGO = contrabandInput.transform.FindChild(supplyInput.transform.name + " Input Caret");
-            //caretGO.GetComponent<CanvasRenderer>().SetMaterial(Graphic.defaultGraphicMaterial, Texture2D.whiteTexture);
-
-
-            //supplyInput.ActivateInputField();
-            //contrabandInput.ActivateInputField();
-            //fieldInfo = GameObject.Find("FieldInfo").GetComponent<Canvas>();
-            //fieldInfo = fieldInfo.GetComponent<Canvas>();
-            //supplyOutput = supplyOutput.GetComponent<Text>();
-            //supplyOutput.text = "test";
-            //fieldInfo.enabled = false;
-        }
-        this.field = new Field(this);
-        this.field.camp = false;
-        this.field.supply = 2;
-        this.field.contraband = 1;
-        this.field.garrison = 0;
-        this.field.playerInt = 2;    
     }
 
     void Update()
     {
-        if (!isGame)
-        {
-            if (Input.GetMouseButtonDown(1))
-            {
-                sth.enabled = true;
-                HandleInput();
-                if (this.field.contraband == 0)
-                {
-                    this.C0.image.color = Color.red;
-                    this.C1.image.color = Color.white;
-                    this.C2.image.color = Color.white;
-                }
-                else if (this.field.contraband == 1)
-                {
-                    this.C0.image.color = Color.white;
-                    this.C1.image.color = Color.red;
-                    this.C0.image.color = Color.white;
-                }
-                else if (this.field.contraband == 2)
-                {
-                    this.C0.image.color = Color.white;
-                    this.C2.image.color = Color.white;
-                    this.C0.image.color = Color.red;
-                }
-
-                if (this.field.supply == 0)
-                {
-                    this.S0.image.color = Color.red;
-                    this.S1.image.color = Color.white;
-                    this.S2.image.color = Color.white;
-                }
-                else if (this.field.supply == 1)
-                {
-                    this.S0.image.color = Color.white;
-                    this.S1.image.color = Color.red;
-                    this.S2.image.color = Color.white;
-                }
-                else if (this.field.supply == 2)
-                {
-                    this.S0.image.color = Color.white;
-                    this.S1.image.color = Color.white;
-                    this.S2.image.color = Color.red;
-                }
-
-                if (this.field.playerInt == 0)
-                {
-                    this.player0Button.image.color = Color.red;
-                    this.player1Button.image.color = Color.white;
-                    this.player2Button.image.color = Color.white;
-                }
-                else if (this.field.playerInt == 1)
-                {
-                    this.player0Button.image.color = Color.white;
-                    this.player1Button.image.color = Color.red;
-                    this.player2Button.image.color = Color.white;
-                }
-                else if (this.field.playerInt == 2)
-                {
-                    this.player0Button.image.color = Color.white;
-                    this.player1Button.image.color = Color.white;
-                    this.player2Button.image.color = Color.red;
-                }
-
-                if (this.field.camp == true)
-                {
-                    this.campToggle.isOn = true;
-                }
-                else if (this.field.camp == false)
-                {
-                    this.campToggle.isOn = false;
-                }
-
-            }
-        }
-
-        
-            if (isGame)
-        {
-            if (Input.GetMouseButtonDown(1))
-            {
-                this.fieldInfo.enabled = true;
-            }
-        }
+      
     }
-
-    void HandleInput()
-    {
-        Ray inputRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        if (Physics.Raycast(inputRay, out hit))
-        {
-            sth.transform.position = new Vector3(hit.point.x, hit.point.y + 10, hit.point.z);
-        }
-        else
-        {
-
-        }
-    }
-
-    //void OnMouseOver()
-    //{
-    //    //myText.rectTransform.anchoredPosition = uiRect.anchoredPosition;
-    //    var tmp = transform.position;
-    //    float offset = 0;
-    //    if (neighbors[5] != null && neighbors[4] != null)
-    //    {
-    //        float fifthNeighborYPosition = neighbors[5].transform.position.y;
-    //        float fourthNeighborYPosition = neighbors[4].transform.position.y;
-    //        if (fifthNeighborYPosition > tmp.y || fourthNeighborYPosition > tmp.y)
-    //        {
-    //            if (fifthNeighborYPosition > fourthNeighborYPosition)
-    //            {
-    //                offset = fifthNeighborYPosition - tmp.y;
-    //            }
-    //            else
-    //            {
-    //                offset = fourthNeighborYPosition - tmp.y;
-    //            }
-    //        }
-    //    }
-    //    myText.transform.rotation = Camera.main.transform.rotation;
-    //    myText.transform.position = new Vector3(tmp.x, tmp.y + 0.5f + offset, tmp.z);
-    //    myText.color = Color.black; // Color.Lerp(myText.color, Color.black, fadeTime * Time.deltaTime);
-    //    if (HasRiver)
-    //    {
-    //        myText.text = "River!";
-    //    }
-    //    else 
-    //    {
-    //        myText.text = myString;
-    //    }
-
-    //}
 
     void OnMouseEnter()
     {
@@ -290,7 +67,6 @@ public class HexCell : MonoBehaviour {
     void OnMouseExit()
     {
         this.Color = cellColor;
-        myText.color = Color.clear;//Color.Lerp(myText.color, Color.clear, fadeTime * Time.deltaTime);
     }
 
     public Color Color
@@ -500,12 +276,16 @@ public class HexCell : MonoBehaviour {
 		}
 		hasOutgoingRiver = true;
 		outgoingRiver = direction;
-		RefreshSelfOnly();
+        specialIndex = 0;
+
+        RefreshSelfOnly();
 
 		neighbor.RemoveIncomingRiver();
 		neighbor.hasIncomingRiver = true;
 		neighbor.incomingRiver = direction.Opposite();
-		neighbor.RefreshSelfOnly();
+        neighbor.specialIndex = 0;
+
+        neighbor.RefreshSelfOnly();
 	}
 
 	public void Refresh ()
@@ -528,104 +308,6 @@ public class HexCell : MonoBehaviour {
     {
 		chunk.Refresh();
 	}
-
-    public void QuitFieldEditor()
-    {
-        //SaveFieldInfo();
-        sth.enabled = false;
-    }
-
-    public void SaveFieldInfo()
-    {
-        this.field.supply = supply;
-        this.field.contraband = contraband;
-        this.field.ownerInt = this.owner;
-        this.field.camp = this.camp;
-    }
-
-    public void Player1ButtonClicked()
-    {
-        this.field.playerInt = 1;
-        player1Button.image.color = Color.red;
-        player2Button.image.color = Color.white;
-        player0Button.image.color = Color.white;
-    }
-
-    public void Player2ButtonClicked()
-    {
-        this.field.playerInt = 2;
-        player2Button.image.color = Color.red;
-        player1Button.image.color = Color.white;
-        player0Button.image.color = Color.white;
-    }
-
-    public void Player0ButtonClicked()
-    {
-        this.field.playerInt = 0;
-        player2Button.image.color = Color.white;
-        player1Button.image.color = Color.white;
-        player0Button.image.color = Color.red;
-    }
-
-    public void ToggleChanged()
-    {
-        if (campToggle.IsActive())
-        {
-            this.field.camp = true;
-        }
-        else
-        {
-            this.field.camp = false;
-        }
-    }
-
-    public void S0Press()
-    {
-        this.field.supply = 0;
-        S0.image.color = Color.red;
-        S1.image.color = Color.white;
-        S2.image.color = Color.white;
-    }
-
-    public void S1Press()
-    {
-        this.field.supply = 1;
-        S0.image.color = Color.white;
-        S1.image.color = Color.red;
-        S2.image.color = Color.white;
-    }
-
-    public void S2Press()
-    {
-        this.field.supply = 2;
-        S0.image.color = Color.white;
-        S1.image.color = Color.white;
-        S2.image.color = Color.red;
-    }
-
-    public void C0Press()
-    {
-        this.field.contraband = 0;
-        C0.image.color = Color.red;
-        C1.image.color = Color.white;
-        C2.image.color = Color.white;
-    }
-
-    public void C1Press()
-    {
-        this.field.contraband = 1;
-        C0.image.color = Color.white;
-        C1.image.color = Color.red;
-        C2.image.color = Color.white;
-    }
-
-    public void C2Press()
-    {
-        this.field.contraband = 2;
-        C0.image.color = Color.white;
-        C1.image.color = Color.white;
-        C2.image.color = Color.red;
-    }
 
     public int UrbanLevel
     {
@@ -774,6 +456,30 @@ public class HexCell : MonoBehaviour {
         )
         {
             RemoveIncomingRiver();
+        }
+    }
+
+    public int SpecialIndex
+    {
+        get
+        {
+            return specialIndex;
+        }
+        set
+        {
+            if (specialIndex != value && !HasRiver)
+            {
+                specialIndex = value;
+                RefreshSelfOnly();
+            }
+        }
+    }
+
+    public bool IsSpecial
+    {
+        get
+        {
+            return specialIndex > 0;
         }
     }
 }

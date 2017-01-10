@@ -178,6 +178,14 @@ public class FirstPlayerTargetingManager : MonoBehaviour
                 soundsHanlder.PlayNotEnoughSuppliesSound();
             }
         }
+        if (Input.GetButtonDown("BButton"))
+        {
+            currentCell.SpecialIndex = 1;
+        }
+        if (Input.GetButtonDown("XButton"))
+        {
+            currentCell.SpecialIndex = 2;
+        }
     }        
 
     void UpdateBar()
@@ -237,6 +245,7 @@ public class FirstPlayerTargetingManager : MonoBehaviour
             playerOwnershipManager.UpdateStatus();
             player.Supplies--;
             soundsHanlder.PlayMoveSound();
+
         }
         else
         {
@@ -257,5 +266,10 @@ public class FirstPlayerTargetingManager : MonoBehaviour
                 soundsHanlder.PlayMoveSound();
             }
         }
+    }
+
+    private void BuildFeature(HexCell selectedCell, int buildingIndex)
+    {
+        selectedCell.SpecialIndex = buildingIndex;
     }
 }
