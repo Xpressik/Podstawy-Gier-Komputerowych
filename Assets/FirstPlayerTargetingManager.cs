@@ -22,6 +22,8 @@ public class FirstPlayerTargetingManager : MonoBehaviour
 
     private ProgressBarBehaviour firstPlayerTimerbar;
 
+    private SoundsHandler soundsHanlder;
+
     // Use this for initialization
     void Start()
     {
@@ -29,7 +31,7 @@ public class FirstPlayerTargetingManager : MonoBehaviour
         currentCell = hexGrid.GetCell(new Vector3(155.8846f, 30f, 30.0f));
         currentCell.isWallCapsule = true;
         currentCell.Walled = true;
-        GameObject go = (GameObject)Instantiate(figure, new Vector3(155.8846f, -0.4045f, 30.0f), Quaternion.Euler(0, 0, 0));
+        GameObject go = (GameObject)Instantiate(figure, currentCell.transform.position /*new Vector3(155.8846f, -0.4045f, 30.0f)*/, Quaternion.Euler(0, 0, 0));
         go.transform.SetParent(transform);
         go.AddComponent<MeshRenderer>();
         selectedFigure = go.GetComponent<Figure>();
@@ -41,6 +43,7 @@ public class FirstPlayerTargetingManager : MonoBehaviour
         InvokeRepeating("HandleSupplies", 2.0f, 5.0f);
         UpdateBar();
         selectedCellColor = currentCell.color;
+        soundsHanlder = GetComponent<SoundsHandler>();
     }
 
     void HandleCellSelection(HexCell cell)
@@ -79,7 +82,7 @@ public class FirstPlayerTargetingManager : MonoBehaviour
 
         else if (vAxis > 0.15 && vAxis < 0.85 && hAxis > -0.85 && hAxis < -0.15) //lewa góra
         {
-            if (currentCell.coordinates.Z == currentCell.coordinates.X * -2) // to powinno mieć sens!
+            if (currentCell.coordinates.Z == currentCell.coordinates.X * -2)
             {
                 return;
             }
@@ -123,7 +126,7 @@ public class FirstPlayerTargetingManager : MonoBehaviour
             {
                 return;
             }
-            if (currentCell.coordinates.Z == currentCell.coordinates.X * -2) // to powinno mieć sens! //  niestety nie ma 
+            if (currentCell.coordinates.Z == currentCell.coordinates.X * -2) 
             {
                 return;
             }
@@ -170,6 +173,10 @@ public class FirstPlayerTargetingManager : MonoBehaviour
                 MoveFigure(selectedCell);
                 UpdateBar();
             }
+            else
+            {
+                soundsHanlder.PlayNotEnoughSuppliesSound();
+            }
         }
     }        
 
@@ -180,6 +187,7 @@ public class FirstPlayerTargetingManager : MonoBehaviour
 
     void HandleSupplies()
     {
+        soundsHanlder.PlaySuppliesSound();
         player.Supplies += 2;
         UpdateBar();
     }
@@ -191,28 +199,34 @@ public class FirstPlayerTargetingManager : MonoBehaviour
                 || Mathf.Abs(hexGrid.GetCell(selectedFigure.transform.position).coordinates.Z - selectedCell.coordinates.Z) > 1
                 || Mathf.Abs(hexGrid.GetCell(selectedFigure.transform.position).Elevation - selectedCell.Elevation) > 1)
         {
+            soundsHanlder.PlayIncorrectMoveSound();
             return;
         }
 
         if (hexGrid.GetCell(selectedFigure.transform.position).coordinates.X == selectedCell.coordinates.X
             && hexGrid.GetCell(selectedFigure.transform.position).coordinates.Y == selectedCell.coordinates.Y)
         {
+            soundsHanlder.PlayIncorrectMoveSound();
             return;
         }
         if (hexGrid.GetCell(this.transform.position).isWallNonCapsule)
         {
+            soundsHanlder.PlayIncorrectMoveSound();
             return;
         }
         if (selectedCell.HasRiver)
         {
+            soundsHanlder.PlayIncorrectMoveSound();
             return;
         }
         if (selectedCell.IsUnderwater)
         {
+            soundsHanlder.PlayIncorrectMoveSound();
             return;
         }
         else if (selectedCell.isWallNonCapsule)
         {
+            soundsHanlder.PlayIncorrectMoveSound();
             return;
         }
         else if (selectedCell.isWallCapsule)
@@ -222,7 +236,7 @@ public class FirstPlayerTargetingManager : MonoBehaviour
             currentCell.color = selectedCellColor;
             playerOwnershipManager.UpdateStatus();
             player.Supplies--;
-            
+            soundsHanlder.PlayMoveSound();
         }
         else
         {
@@ -233,8 +247,15 @@ public class FirstPlayerTargetingManager : MonoBehaviour
             currentCell.color = selectedCellColor;
             playerOwnershipManager.UpdateStatus();
             player.Supplies--;
-            player.Supplies += selectedCell.FarmLevel;
-
+            if (selectedCell.FarmLevel > 0)
+            {
+                soundsHanlder.PlaySuppliesSound();
+                player.Supplies += selectedCell.FarmLevel;
+            }
+            else
+            {
+                soundsHanlder.PlayMoveSound();
+            }
         }
     }
 }
