@@ -22,7 +22,7 @@ public class FirstPlayerTargetingManager : MonoBehaviour
 
     private ProgressBarBehaviour firstPlayerTimerbar;
 
-    private SoundsHandler soundsHanlder;
+    private SoundsHandler soundsHandler;
 
     // Use this for initialization
     void Start()
@@ -43,7 +43,7 @@ public class FirstPlayerTargetingManager : MonoBehaviour
         InvokeRepeating("HandleSupplies", 2.0f, 5.0f);
         UpdateBar();
         selectedCellColor = currentCell.color;
-        soundsHanlder = GetComponent<SoundsHandler>();
+        soundsHandler = GetComponent<SoundsHandler>();
     }
 
     void HandleCellSelection(HexCell cell)
@@ -165,6 +165,16 @@ public class FirstPlayerTargetingManager : MonoBehaviour
             }
             HandleCellSelection(currentCell.neighbors[3]);
         }
+        //else                                              // Powoduje, że pole jest zaznaczane tylko gdy trzymamy analog w danej pozycji !
+        //{
+        //    HandleCellSelection(currentCell);
+        //}
+
+        if (Input.GetButtonDown("LeftJoystickClick"))
+        {
+            HandleCellSelection(currentCell);
+        }
+
         if (Input.GetButtonDown("AButton"))
         {
             if (selectedCell != null && player.Supplies > 0)
@@ -175,32 +185,26 @@ public class FirstPlayerTargetingManager : MonoBehaviour
             }
             else
             {
-                soundsHanlder.PlayNotEnoughSuppliesSound();
+                soundsHandler.PlayNotEnoughSuppliesSound();
             }
         }
-        if (Input.GetButtonDown("BButton"))
-        {
-            if (currentCell.UrbanLevel == 0 && currentCell.FarmLevel == 0 && currentCell.SpecialIndex == 0)
-            {
-                currentCell.SpecialIndex = 1;
-                soundsHanlder.PlayBuildingPlacement();
-            }
-            else
-            {
-                soundsHanlder.PlayIncorrectMoveSound();
-            }
-        }
+      
         if (Input.GetButtonDown("XButton"))
         {
             if (currentCell.UrbanLevel == 0 && currentCell.FarmLevel == 0 && currentCell.SpecialIndex == 0)
             {
-                currentCell.SpecialIndex = 2;
-                soundsHanlder.PlayBuildingPlacement();
+                currentCell.SpecialIndex = 1;
+                soundsHandler.PlayBuildingPlacement();
             }
             else
             {
-                soundsHanlder.PlayIncorrectMoveSound();
+                soundsHandler.PlayIncorrectMoveSound();
             }
+        }
+
+        if (Input.GetButtonDown("YButton"))
+        {
+            
         }
     }        
 
@@ -211,7 +215,7 @@ public class FirstPlayerTargetingManager : MonoBehaviour
 
     void HandleSupplies()
     {
-        soundsHanlder.PlaySuppliesSound();
+        soundsHandler.PlaySuppliesSound();
         player.Supplies += 2;
         UpdateBar();
     }
@@ -223,34 +227,34 @@ public class FirstPlayerTargetingManager : MonoBehaviour
                 || Mathf.Abs(hexGrid.GetCell(selectedFigure.transform.position).coordinates.Z - selectedCell.coordinates.Z) > 1
                 || Mathf.Abs(hexGrid.GetCell(selectedFigure.transform.position).Elevation - selectedCell.Elevation) > 1)
         {
-            soundsHanlder.PlayIncorrectMoveSound();
+            soundsHandler.PlayIncorrectMoveSound();
             return;
         }
 
         if (hexGrid.GetCell(selectedFigure.transform.position).coordinates.X == selectedCell.coordinates.X
             && hexGrid.GetCell(selectedFigure.transform.position).coordinates.Y == selectedCell.coordinates.Y)
         {
-            soundsHanlder.PlayIncorrectMoveSound();
+            soundsHandler.PlayIncorrectMoveSound();
             return;
         }
         if (hexGrid.GetCell(this.transform.position).isWallNonCapsule)
         {
-            soundsHanlder.PlayIncorrectMoveSound();
+            soundsHandler.PlayIncorrectMoveSound();
             return;
         }
         if (selectedCell.HasRiver)
         {
-            soundsHanlder.PlayIncorrectMoveSound();
+            soundsHandler.PlayIncorrectMoveSound();
             return;
         }
         if (selectedCell.IsUnderwater)
         {
-            soundsHanlder.PlayIncorrectMoveSound();
+            soundsHandler.PlayIncorrectMoveSound();
             return;
         }
         else if (selectedCell.isWallNonCapsule)
         {
-            soundsHanlder.PlayIncorrectMoveSound();
+            soundsHandler.PlayIncorrectMoveSound();
             return;
         }
         else if (selectedCell.isWallCapsule)
@@ -260,7 +264,7 @@ public class FirstPlayerTargetingManager : MonoBehaviour
             currentCell.color = selectedCellColor;
             playerOwnershipManager.UpdateStatus();
             player.Supplies--;
-            soundsHanlder.PlayMoveSound();
+            soundsHandler.PlayMoveSound();
 
         }
         else
@@ -274,18 +278,13 @@ public class FirstPlayerTargetingManager : MonoBehaviour
             player.Supplies--;
             if (selectedCell.FarmLevel > 0)
             {
-                soundsHanlder.PlaySuppliesSound();
+                soundsHandler.PlaySuppliesSound();
                 player.Supplies += selectedCell.FarmLevel;
             }
             else
             {
-                soundsHanlder.PlayMoveSound();
+                soundsHandler.PlayMoveSound();
             }
         }
-    }
-
-    private void BuildFeature(HexCell selectedCell, int buildingIndex)
-    {
-        selectedCell.SpecialIndex = buildingIndex;
     }
 }

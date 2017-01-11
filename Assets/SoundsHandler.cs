@@ -13,6 +13,8 @@ public class SoundsHandler : MonoBehaviour {
 
     public AudioClip buildingPlacement;
 
+    public AudioClip destruction;
+
     private AudioSource source;
 
 	void Awake()
@@ -43,5 +45,10 @@ public class SoundsHandler : MonoBehaviour {
     public void PlayBuildingPlacement()
     {
         source.PlayOneShot(buildingPlacement);
+    }
+
+    public void PlayDestructionSound()
+    {
+        source.PlayOneShot(destruction);
     }
 }

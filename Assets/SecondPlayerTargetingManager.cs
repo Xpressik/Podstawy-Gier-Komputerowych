@@ -24,6 +24,7 @@ public class SecondPlayerTargetingManager : MonoBehaviour
 
     private SoundsHandler soundsHandler;
 
+    public ParticleSystem explosion;
 
     // Use this for initialization
     void Start ()
@@ -58,8 +59,8 @@ public class SecondPlayerTargetingManager : MonoBehaviour
         // Update is called once per frame
     void Update ()
 	{
-	    float hAxis = Input.GetAxis("SecondLeftJoystickHorizontal");
-	    float vAxis = Input.GetAxis("SecondLeftJoystickVertical");
+	    float hAxis = Input.GetAxis("LeftJoystickHorizontal");
+	    float vAxis = Input.GetAxis("LeftJoystickVertical");
 
         if (vAxis > 0.15 && vAxis < 0.88 && hAxis > 0.15 && hAxis < 0.88) //prawa góra
         {
@@ -166,7 +167,13 @@ public class SecondPlayerTargetingManager : MonoBehaviour
             HandleCellSelection(currentCell.neighbors[3]);
         }
 
-        if (Input.GetButtonDown("SecondAButton"))
+        if (Input.GetButtonDown("LeftJoystickClick"))
+        {
+            HandleCellSelection(currentCell);
+
+        }
+
+        if (Input.GetButtonDown("AButton"))
         {
             if (selectedCell != null && player.Supplies > 0)
             {
@@ -177,6 +184,37 @@ public class SecondPlayerTargetingManager : MonoBehaviour
             else
             {
                 soundsHandler.PlayNotEnoughSuppliesSound();
+            }
+        }
+
+        if (Input.GetButtonDown("XButton"))
+        {
+            if (currentCell.UrbanLevel == 0 && currentCell.FarmLevel == 0 && currentCell.SpecialIndex == 0)
+            {
+                currentCell.SpecialIndex = 2;
+                soundsHandler.PlayBuildingPlacement();
+            }
+            else
+            {
+                soundsHandler.PlayIncorrectMoveSound();
+            }
+        }
+
+        if (Input.GetButtonDown("BButton")) // Niszczenie murów przeciwnika
+        {
+            if (selectedCell.isWallCapsule)
+            {
+                selectedCell.isWallCapsule = false;
+                selectedCell.Walled = false;
+                
+                explosion.transform.position = selectedCell.transform.position;
+                explosion.Play();
+                soundsHandler.PlayDestructionSound();
+
+            }
+            else
+            {
+                soundsHandler.PlayIncorrectMoveSound();
             }
         }
     }
