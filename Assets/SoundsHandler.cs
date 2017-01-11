@@ -11,6 +11,8 @@ public class SoundsHandler : MonoBehaviour {
 
     public AudioClip notEnoughSupplies;
 
+    public AudioClip buildingPlacement;
+
     private AudioSource source;
 
 	void Awake()
@@ -36,5 +38,10 @@ public class SoundsHandler : MonoBehaviour {
     public void PlayNotEnoughSuppliesSound()
     {
         source.PlayOneShot(notEnoughSupplies);
+    }
+
+    public void PlayBuildingPlacement()
+    {
+        source.PlayOneShot(buildingPlacement);
     }
 }

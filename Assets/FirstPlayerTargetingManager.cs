@@ -180,11 +180,27 @@ public class FirstPlayerTargetingManager : MonoBehaviour
         }
         if (Input.GetButtonDown("BButton"))
         {
-            currentCell.SpecialIndex = 1;
+            if (currentCell.UrbanLevel == 0 && currentCell.FarmLevel == 0 && currentCell.SpecialIndex == 0)
+            {
+                currentCell.SpecialIndex = 1;
+                soundsHanlder.PlayBuildingPlacement();
+            }
+            else
+            {
+                soundsHanlder.PlayIncorrectMoveSound();
+            }
         }
         if (Input.GetButtonDown("XButton"))
         {
-            currentCell.SpecialIndex = 2;
+            if (currentCell.UrbanLevel == 0 && currentCell.FarmLevel == 0 && currentCell.SpecialIndex == 0)
+            {
+                currentCell.SpecialIndex = 2;
+                soundsHanlder.PlayBuildingPlacement();
+            }
+            else
+            {
+                soundsHanlder.PlayIncorrectMoveSound();
+            }
         }
     }        
 
