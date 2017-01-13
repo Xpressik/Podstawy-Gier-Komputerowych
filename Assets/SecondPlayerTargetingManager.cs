@@ -33,7 +33,7 @@ public class SecondPlayerTargetingManager : MonoBehaviour
         currentCell = hexGrid.GetCell(new Vector3(147.2243f, 0.8379046f, 195.0f));
         currentCell.isWallNonCapsule = true;
         currentCell.PlantLevel = 3;
-        GameObject go = (GameObject)Instantiate(figure, new Vector3(147.2243f, 0.8379046f, 195.0f), Quaternion.Euler(0, 180, 0));
+        GameObject go = (GameObject)Instantiate(figure, currentCell.transform.position, Quaternion.Euler(0, 180, 0));
         go.transform.SetParent(transform);
         go.AddComponent<MeshRenderer>();
         selectedFigure = go.GetComponent<Figure>();
@@ -191,8 +191,17 @@ public class SecondPlayerTargetingManager : MonoBehaviour
         {
             if (currentCell.UrbanLevel == 0 && currentCell.FarmLevel == 0 && currentCell.SpecialIndex == 0)
             {
-                currentCell.SpecialIndex = 2;
-                soundsHandler.PlayBuildingPlacement();
+                if (player.Supplies > 2) // koszt budowy "fortecy" 3 
+                {
+                    currentCell.SpecialIndex = 2;
+                    soundsHandler.PlayBuildingPlacement();
+                    player.Supplies -= 3;
+                    UpdateBar();
+                }
+                else
+                {
+                    soundsHandler.PlayNotEnoughSuppliesSound();
+                }
             }
             else
             {
@@ -200,17 +209,25 @@ public class SecondPlayerTargetingManager : MonoBehaviour
             }
         }
 
-        if (Input.GetButtonDown("BButton")) // Niszczenie murów przeciwnika
+        if (Input.GetButtonDown("BButton")) // Niszczenie murów przeciwnika // NIE MOŻNA NISZCZYć MURÓW NA POLACH, NA KTÓRYCH STOJĄ "FORTECE".
         {
-            if (selectedCell.isWallCapsule)
+            if (selectedCell.isWallCapsule && selectedCell.SpecialIndex != 1)
             {
-                selectedCell.isWallCapsule = false;
-                selectedCell.Walled = false;
-                
-                explosion.transform.position = selectedCell.transform.position;
-                explosion.Play();
-                soundsHandler.PlayDestructionSound();
-
+                if (player.Supplies >= 5) // koszt niszczenia murów 5 
+                {
+                    selectedCell.isWallCapsule = false;
+                    selectedCell.Walled = false;
+                    explosion.transform.position = selectedCell.transform.position;
+                    explosion.Play();
+                    soundsHandler.PlayDestructionSound();
+                    player.Supplies -= 5;
+                    playerOwnershipManager.UpdateStatus();
+                    UpdateBar();
+                }
+                else
+                {
+                    soundsHandler.PlayNotEnoughSuppliesSound();
+                }
             }
             else
             {

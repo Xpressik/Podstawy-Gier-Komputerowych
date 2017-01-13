@@ -193,8 +193,17 @@ public class FirstPlayerTargetingManager : MonoBehaviour
         {
             if (currentCell.UrbanLevel == 0 && currentCell.FarmLevel == 0 && currentCell.SpecialIndex == 0)
             {
-                currentCell.SpecialIndex = 1;
-                soundsHandler.PlayBuildingPlacement();
+                if (player.Supplies > 2)
+                {
+                    currentCell.SpecialIndex = 1;
+                    soundsHandler.PlayBuildingPlacement();
+                    player.Supplies -= 3;
+                    UpdateBar();
+                }
+                else
+                {
+                    soundsHandler.PlayNotEnoughSuppliesSound();
+                }
             }
             else
             {
