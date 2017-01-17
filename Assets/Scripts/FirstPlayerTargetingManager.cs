@@ -30,6 +30,8 @@ namespace Assets
 
         private Animator anim;
 
+        public ParticleSystem explosion;
+
         // Use this for initialization
         void Start()
         {
@@ -223,6 +225,32 @@ namespace Assets
             {
                 Debug.Log(FirstPlayerTargetingManager.Player.SuperPower.ToString() + " " + SecondPlayerTargetingManager.Player.SuperPower.ToString());
             }
+
+            if (Input.GetButtonDown("BButton"))
+            {
+                if (selectedCell.isWallNonCapsule && selectedCell.SpecialIndex != 1)
+                {
+                    if (player.Supplies >= 5) // koszt niszczenia murów 5 
+                    {
+                        selectedCell.isWallNonCapsule = false;
+                        selectedCell.PlantLevel = 0;
+                        explosion.transform.position = selectedCell.transform.position;
+                        explosion.Play();
+                        soundsHandler.PlayDestructionSound();
+                        player.Supplies -= 5;
+                        playerOwnershipManager.UpdateStatus();
+                        UpdateBar();
+                    }
+                    else
+                    {
+                        soundsHandler.PlayNotEnoughSuppliesSound();
+                    }
+                }
+                else
+                {
+                    soundsHandler.PlayIncorrectMoveSound();
+                }
+            }
         }
 
         void UpdateBar()
@@ -278,7 +306,6 @@ namespace Assets
             {
                 if (player.SuperPower != Power.water)
                 {
-                    Debug.Log("2");
                     soundsHandler.PlayIncorrectMoveSound();
                     return;
                 }

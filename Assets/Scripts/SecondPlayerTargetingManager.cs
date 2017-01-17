@@ -61,8 +61,8 @@ public class SecondPlayerTargetingManager : MonoBehaviour
         // Update is called once per frame
     void Update ()
 	{
-	    float hAxis = Input.GetAxis("LeftJoystickHorizontal");
-	    float vAxis = Input.GetAxis("LeftJoystickVertical");
+	    float hAxis = Input.GetAxis("SecondLeftJoystickHorizontal");
+	    float vAxis = Input.GetAxis("SecondLeftJoystickVertical");
 
         if (vAxis > 0.15 && vAxis < 0.88 && hAxis > 0.15 && hAxis < 0.88) //prawa góra
         {
@@ -169,13 +169,13 @@ public class SecondPlayerTargetingManager : MonoBehaviour
             HandleCellSelection(currentCell.neighbors[3]);
         }
 
-        if (Input.GetButtonDown("LeftJoystickClick"))
+        if (Input.GetButtonDown("SecondLeftJoystickClick"))
         {
             HandleCellSelection(currentCell);
 
         }
 
-        if (Input.GetButtonDown("AButton"))
+        if (Input.GetButtonDown("SecondAButton"))
         {
             if (selectedCell != null && player.Supplies > 0)
             {
@@ -189,7 +189,7 @@ public class SecondPlayerTargetingManager : MonoBehaviour
             }
         }
 
-        if (Input.GetButtonDown("XButton"))
+        if (Input.GetButtonDown("SecondXButton"))
         {
             if (currentCell.UrbanLevel == 0 && currentCell.FarmLevel == 0 && currentCell.SpecialIndex == 0)
             {
@@ -211,7 +211,7 @@ public class SecondPlayerTargetingManager : MonoBehaviour
             }
         }
 
-        if (Input.GetButtonDown("BButton")) // Niszczenie murów przeciwnika // NIE MOŻNA NISZCZYć MURÓW NA POLACH, NA KTÓRYCH STOJĄ "FORTECE".
+        if (Input.GetButtonDown("SecondBButton")) // Niszczenie murów przeciwnika // NIE MOŻNA NISZCZYć MURÓW NA POLACH, NA KTÓRYCH STOJĄ "FORTECE".
         {
             if (selectedCell.isWallCapsule && selectedCell.SpecialIndex != 1)
             {

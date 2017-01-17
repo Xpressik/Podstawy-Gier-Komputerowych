@@ -38,7 +38,7 @@ namespace Assets.Scripts
         }
         void Update()
         {
-            if ((int)TimerManager.Timer % 90 == 0 || (int)TimerManager.Timer == 300)
+            if ((int)TimerManager.Timer % 90 == 0 || (int)TimerManager.Timer == 300 || (int) TimerManager.Timer == 299)
             {
                 FirstPlayerTargetingManager.Player.SuperPower = (Power)Random.Range(1, 4);
                 SecondPlayerTargetingManager.Player.SuperPower = (Power)Random.Range(1, 4);
