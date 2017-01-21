@@ -127,7 +127,7 @@ public class HexGrid : MonoBehaviour {
             cellsInfo.Add(cells[i].info);
         }
         BinaryFormatter bf = new BinaryFormatter();
-        if(File.Exists(Application.dataPath + "/savedCells.gd"))
+        if (File.Exists(Application.dataPath + "/savedCells.gd")) ;//bez menu wszystkie
         {
             File.Delete(Application.dataPath + "/savedCells.gd");
         }

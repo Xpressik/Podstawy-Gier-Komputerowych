@@ -20,7 +20,6 @@ public class HexCell : MonoBehaviour {
 
     public HexCellInfo info;
    
-    bool isGame;
     private Color cellColor;
 
     public bool isWallCapsule = false;
@@ -47,7 +46,7 @@ public class HexCell : MonoBehaviour {
 
     void Start()
     {
-        isGame = GameObject.Find("Hex Grid").GetComponent<HexGrid>().isGame;
+    //    isGame = GameObject.Find("Hex Grid").GetComponent<HexGrid>().isGame;
 
         bc = gameObject.AddComponent<BoxCollider>();
         bc.size = new Vector3(17, 17);

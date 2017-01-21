@@ -64,7 +64,7 @@ public class SecondPlayerTargetingManager : MonoBehaviour
 	    float hAxis = Input.GetAxis("SecondLeftJoystickHorizontal");
 	    float vAxis = Input.GetAxis("SecondLeftJoystickVertical");
 
-        if (vAxis > 0.15 && vAxis < 0.88 && hAxis > 0.15 && hAxis < 0.88) //prawa góra
+        if (vAxis < -0.15 && vAxis > -0.85 && hAxis < -0.15 && hAxis > -0.92) //prawa góra
         {
             if (currentCell.coordinates.X == 19 && currentCell.coordinates.Z == 1
                 || currentCell.coordinates.X == 18 && currentCell.coordinates.Z == 3
@@ -83,7 +83,7 @@ public class SecondPlayerTargetingManager : MonoBehaviour
             HandleCellSelection(currentCell.neighbors[0]);
         }
 
-        else if (vAxis > 0.15 && vAxis < 0.85 && hAxis > -0.85 && hAxis < -0.15) //lewa góra
+        else if (vAxis < -0.15 && vAxis > -0.85 && hAxis > 0.15 && hAxis < 0.85) //lewa góra
         {
             if (currentCell.coordinates.Z == currentCell.coordinates.X * -2) 
             {
@@ -96,7 +96,7 @@ public class SecondPlayerTargetingManager : MonoBehaviour
             HandleCellSelection(currentCell.neighbors[5]);
         }
 
-        else if (vAxis <= 0.15 && vAxis >= -0.15 && hAxis >= 0.85) //prawa
+        else if (vAxis <= 0.25 && vAxis >= -0.25 && hAxis <= -0.85) //prawa
         {
             if (currentCell.coordinates.X == 12 && currentCell.coordinates.Z == 14
                 || currentCell.coordinates.X == 19 && currentCell.coordinates.Z == 1
@@ -123,7 +123,7 @@ public class SecondPlayerTargetingManager : MonoBehaviour
             HandleCellSelection(currentCell.neighbors[1]);
         }
 
-        else if (vAxis <= 0.25 && vAxis >= -0.25 && hAxis <= -0.85) //lewa
+        else if (vAxis <= 0.15 && vAxis >= -0.15 && hAxis >= 0.85) //lewa
         {
             if (currentCell.coordinates.Z == (currentCell.coordinates.X * (-2) + 1))
             {
@@ -136,7 +136,7 @@ public class SecondPlayerTargetingManager : MonoBehaviour
             HandleCellSelection(currentCell.neighbors[4]);
         }
 
-        else if (vAxis < -0.15 && vAxis > -0.85 && hAxis > 0.15 && hAxis < 0.85) //prawy dół
+        else if (vAxis > 0.15 && vAxis < 0.85 && hAxis > -0.85 && hAxis < -0.15) //prawy dół
         {
             if (currentCell.coordinates.X == 19 && currentCell.coordinates.Z == 1
                 || currentCell.coordinates.X == 18 && currentCell.coordinates.Z == 3
@@ -156,7 +156,7 @@ public class SecondPlayerTargetingManager : MonoBehaviour
             HandleCellSelection(currentCell.neighbors[2]);
         }
 
-        else if (vAxis < -0.15 && vAxis > -0.85 && hAxis < -0.15 && hAxis > -0.92) //lewy dół
+        else if (vAxis > 0.15 && vAxis < 0.88 && hAxis > 0.15 && hAxis < 0.88)  //lewy dół
         {
             if (currentCell.coordinates.Z == currentCell.coordinates.X * -2)
             {
