@@ -27,20 +27,20 @@ public class HexMapCamera : MonoBehaviour
 
     void Update()
     {
-        float zoomDelta = Input.GetAxis("Mouse ScrollWheel");
+        float zoomDelta = Input.GetAxis("Joystick3rdAxis");
         if (zoomDelta != 0f)
         {
             AdjustZoom(zoomDelta);
         }
 
-        float rotationDelta = Input.GetAxis("Rotation");
+        float rotationDelta = Input.GetAxis("JoystickRotation");
         if (rotationDelta != 0f)
         {
             AdjustRotation(rotationDelta);
         }
 
-        float xDelta = Input.GetAxis("Horizontal");
-        float zDelta = Input.GetAxis("Vertical");
+        float xDelta = Input.GetAxis("RightJoystickHorizontal");
+        float zDelta = Input.GetAxis("RightJoystickVertical");
         if (xDelta != 0f || zDelta != 0f)
         {
             AdjustPosition(xDelta, zDelta);
@@ -83,26 +83,6 @@ public class HexMapCamera : MonoBehaviour
         Vector3 position = transform.localPosition;
         position += direction * distance;
         transform.localPosition = ClampPosition(position);
-    }
-
-    public void FirstPlayerMovePosition()
-    {
-        zoom = 1f;
-        rotationAngle = 0;
-        transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
-        transform.localPosition = new Vector3(162.4f, 0f, -15.8f);
-        stick.localPosition = new Vector3(0f, 0f, -75.74f);
-        swivel.localRotation = Quaternion.Euler(51.74f, 0f, 0f);
-    }
-
-    public void SecondPlayerMovePositon()
-    {
-        rotationAngle = 180;
-        zoom = 1f;
-        transform.localRotation = Quaternion.Euler(0f, 180f, 0f);
-        transform.localPosition = new Vector3(159.4f, 0f, 180f);
-        stick.localPosition = new Vector3(0f, 0f, -75.74f);
-        swivel.localRotation = Quaternion.Euler(51.74f, 0f, 0f);
     }
 
     Vector3 ClampPosition(Vector3 position)

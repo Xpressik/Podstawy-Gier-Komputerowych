@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class GameCamera : MonoBehaviour
+public class HexMapUpperCamera : MonoBehaviour
 {
 
     public float stickMinZoom, stickMaxZoom;
@@ -18,6 +18,34 @@ public class GameCamera : MonoBehaviour
     float zoom = 1f;
 
     float rotationAngle;
+
+    void Awake()
+    {
+        swivel = transform.GetChild(0);
+        stick = swivel.GetChild(0);
+    }
+
+    void Update()
+    {
+        float zoomDelta = Input.GetAxis("SecondJoystick3rdAxis");
+        if (zoomDelta != 0f)
+        {
+            AdjustZoom(zoomDelta);
+        }
+
+        float rotationDelta = Input.GetAxis("SecondJoystickRotation");
+        if (rotationDelta != 0f)
+        {
+            AdjustRotation(rotationDelta);
+        }
+
+        float xDelta = Input.GetAxis("SecondRightJoystickHorizontal");
+        float zDelta = Input.GetAxis("SecondRightJoystickVertical");
+        if (xDelta != 0f || zDelta != 0f)
+        {
+            AdjustPosition(xDelta, zDelta);
+        }
+    }
 
     void AdjustZoom(float delta)
     {
@@ -56,10 +84,6 @@ public class GameCamera : MonoBehaviour
         position += direction * distance;
         transform.localPosition = ClampPosition(position);
     }
-
-
-
-
 
     Vector3 ClampPosition(Vector3 position)
     {

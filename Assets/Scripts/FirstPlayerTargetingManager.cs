@@ -277,7 +277,6 @@ namespace Assets
                 }
                 else if (player.SuperPower != Power.climbing)
                 {
-                    Debug.Log("1");
                     soundsHandler.PlayIncorrectMoveSound();
                     return;
                 }
