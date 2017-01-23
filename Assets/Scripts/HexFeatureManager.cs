@@ -282,5 +282,9 @@ public class HexFeatureManager : MonoBehaviour
         HexHash hash = HexMetrics.SampleHashGrid(position);
         instance.localRotation = Quaternion.Euler(0f, 360f * hash.e, 0f);
         instance.SetParent(container, false);
+        if (cell.SpecialIndex == 2)
+        {
+            instance.transform.Translate(0, 3, 0);
+        }
     }
 }

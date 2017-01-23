@@ -15,8 +15,8 @@ namespace Assets
         private ProgressBarBehaviour progressBarLower;
         private ProgressBarBehaviour progressBarUpper;
 
-        int walledCounter = 0;
-        int plantCounter = 0;
+        static int walledCounter = 0;
+        static int plantCounter = 0;
 
         void Start()
         {
@@ -46,10 +46,12 @@ namespace Assets
             }
         }
 
+        static int walledOwnershipPercentage;
+        static int plantOwnershipPercentage;
         private void SetText()
         {
-            int walledOwnershipPercentage = walledCounter * 100 / (walledCounter + plantCounter);
-            int plantOwnershipPercentage = plantCounter * 100 / (walledCounter + plantCounter);
+            walledOwnershipPercentage = walledCounter * 100 / (walledCounter + plantCounter);
+            plantOwnershipPercentage = plantCounter * 100 / (walledCounter + plantCounter);
             if(walledOwnershipPercentage + plantOwnershipPercentage < 100)
             {
                 walledOwnershipPercentage++;
@@ -64,6 +66,12 @@ namespace Assets
         {
             countFieldsPossession();
             SetText();
+        }
+
+        public static void GameOverStatus()
+        {
+            GameObject.Find("GameOverBar").GetComponent<ProgressBarBehaviour>().Value = walledOwnershipPercentage;
+            GameObject.Find("Game Over Stats Text").GetComponent<Text>().text = ("Walls: (" + walledCounter + ") " + walledOwnershipPercentage + "% : " + plantOwnershipPercentage + "% (" + plantCounter + ") :Plants");
         }
     }
 }

@@ -15,6 +15,8 @@ public class SoundsHandler : MonoBehaviour {
 
     public AudioClip destruction;
 
+    public AudioClip superPower;
+
     private AudioSource source;
 
 	void Awake()
@@ -50,5 +52,10 @@ public class SoundsHandler : MonoBehaviour {
     public void PlayDestructionSound()
     {
         source.PlayOneShot(destruction);
+    }
+
+    public void PlaySuperPowerSound()
+    {
+        source.PlayOneShot(superPower);
     }
 }

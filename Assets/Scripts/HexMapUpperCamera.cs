@@ -15,18 +15,19 @@ public class HexMapUpperCamera : MonoBehaviour
 
     public HexGrid grid;
 
-    float zoom = 1f;
+    float zoom = 0.9f;
 
-    float rotationAngle;
+    float rotationAngle = 180;
 
     void Awake()
     {
         swivel = transform.GetChild(0);
         stick = swivel.GetChild(0);
+        AdjustZoom(0);
     }
 
     void Update()
-    {
+    {      
         float zoomDelta = Input.GetAxis("SecondJoystick3rdAxis");
         if (zoomDelta != 0f)
         {

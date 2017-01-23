@@ -15,7 +15,7 @@ public class HexMapCamera : MonoBehaviour
 
     public HexGrid grid;
 
-    float zoom = 1f;
+    float zoom = 0.9f;
 
     float rotationAngle;
 
@@ -23,6 +23,7 @@ public class HexMapCamera : MonoBehaviour
     {
         swivel = transform.GetChild(0);
         stick = swivel.GetChild(0);
+        AdjustZoom(0);
     }
 
     void Update()

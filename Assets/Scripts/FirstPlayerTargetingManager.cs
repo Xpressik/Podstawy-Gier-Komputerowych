@@ -221,14 +221,9 @@ namespace Assets
                 }
             }
 
-            if (Input.GetButtonDown("YButton"))
-            {
-                Debug.Log(FirstPlayerTargetingManager.Player.SuperPower.ToString() + " " + SecondPlayerTargetingManager.Player.SuperPower.ToString());
-            }
-
             if (Input.GetButtonDown("BButton"))
             {
-                if (selectedCell.isWallNonCapsule && selectedCell.SpecialIndex != 1)
+                if (selectedCell.isWallNonCapsule && selectedCell.SpecialIndex != 2)
                 {
                     if (player.Supplies >= 5) // koszt niszczenia murów 5 
                     {
@@ -293,14 +288,8 @@ namespace Assets
                 soundsHandler.PlayIncorrectMoveSound();
                 return;
             }
-            if (selectedCell.HasRiver)
-            {
-                if (player.SuperPower != Power.rivers)
-                {
-                    soundsHandler.PlayIncorrectMoveSound();
-                    return;
-                }
-            }
+            
+            bool flag = false;
             if (selectedCell.IsUnderwater)
             {
                 if (player.SuperPower != Power.water)
@@ -308,13 +297,26 @@ namespace Assets
                     soundsHandler.PlayIncorrectMoveSound();
                     return;
                 }
+                flag = true;
             }
-             if (selectedCell.isWallNonCapsule)//
+            if (selectedCell.HasRiver)
+            {
+                if (flag)
+                {
+
+                }
+                else if (player.SuperPower != Power.rivers)
+                {
+                    soundsHandler.PlayIncorrectMoveSound();
+                    return;
+                }
+            }
+            if (selectedCell.isWallNonCapsule)//
             {
                 soundsHandler.PlayIncorrectMoveSound();
                 return;
             }
-             if (selectedCell.isWallCapsule)//
+            if (selectedCell.isWallCapsule)//
             {
                 selectedFigure.transform.position = selectedCell.transform.position;
                 currentCell = selectedCell;

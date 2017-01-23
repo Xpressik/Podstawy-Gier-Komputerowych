@@ -16,6 +16,8 @@ namespace Assets.Scripts
         private RawImage sp3;
         private RawImage sp4;
 
+        private SoundsHandler soundsHandler;
+
         void Start()
         {
             fp1 = GameObject.Find("First Player Power 1").GetComponent<RawImage>();
@@ -35,6 +37,8 @@ namespace Assets.Scripts
             LoadImage("1not.png", ref sp1);
             LoadImage("2not.png", ref sp2);
             LoadImage("3not.png", ref sp3);
+
+            soundsHandler = GetComponent<SoundsHandler>();
         }
         void Update()
         {
@@ -42,6 +46,7 @@ namespace Assets.Scripts
             {
                 FirstPlayerTargetingManager.Player.SuperPower = (Power)Random.Range(1, 4);
                 SecondPlayerTargetingManager.Player.SuperPower = (Power)Random.Range(1, 4);
+                soundsHandler.PlaySuperPowerSound();
                 switch (FirstPlayerTargetingManager.Player.SuperPower)
                 {
                     case Power.rivers:

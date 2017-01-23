@@ -279,28 +279,36 @@ public class SecondPlayerTargetingManager : MonoBehaviour
             soundsHandler.PlayIncorrectMoveSound();
             return;
         }
-        if (selectedCell.HasRiver)
-        {
-            if (player.SuperPower != Power.rivers)
-            {
-                soundsHandler.PlayIncorrectMoveSound();
-                return;
-            }
-        }
-        if (selectedCell.IsUnderwater)
+
+        bool flag = false;
+        if (selectedCell.IsUnderwater) // to wrzucilem wyzej
         {
             if (player.SuperPower != Power.water)
             {
                 soundsHandler.PlayIncorrectMoveSound();
                 return;
             }
+            flag = true;
         }
-         if (selectedCell.isWallCapsule)//
+        if (selectedCell.HasRiver)
+        {
+            if (flag)
+            {
+
+            }
+            else if (player.SuperPower != Power.rivers)
+            {
+                soundsHandler.PlayIncorrectMoveSound();
+                return;
+            }
+        }
+        
+        if (selectedCell.isWallCapsule)//
         {
             soundsHandler.PlayIncorrectMoveSound();
             return;
         }
-         if (selectedCell.isWallNonCapsule)//
+        if (selectedCell.isWallNonCapsule)//
         {
             selectedFigure.transform.position = selectedCell.transform.position;
             currentCell = selectedCell;
