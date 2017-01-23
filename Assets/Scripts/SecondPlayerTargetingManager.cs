@@ -26,6 +26,8 @@ public class SecondPlayerTargetingManager : MonoBehaviour
 
     private SoundsHandler soundsHandler;
 
+    private Animator anim;
+
     public ParticleSystem explosion;
 
     // Use this for initialization
@@ -47,6 +49,8 @@ public class SecondPlayerTargetingManager : MonoBehaviour
         UpdateBar();
         selectedCellColor = currentCell.color;
         soundsHandler = GetComponent<SoundsHandler>();
+        anim = go.GetComponent<Animator>();
+        anim.Play("idle");
     }
 
     void HandleCellSelection(HexCell cell)

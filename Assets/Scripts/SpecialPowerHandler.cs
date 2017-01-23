@@ -93,7 +93,7 @@ namespace Assets.Scripts
 
         private void LoadImage(string FileName,ref RawImage rawImage)
         {
-            byte[] bytes = File.ReadAllBytes("Assets/Resources/SuperPower Icons/" + FileName);
+            byte[] bytes = File.ReadAllBytes(Application.dataPath + "/Resources/SuperPower Icons/" + FileName);
             Texture2D texture = new Texture2D(100, 100);
             texture.LoadImage(bytes);
             rawImage.texture = texture;
