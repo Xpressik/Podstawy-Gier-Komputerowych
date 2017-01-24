@@ -4,6 +4,7 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class HexGrid : MonoBehaviour {
 
@@ -260,5 +261,9 @@ public class HexGrid : MonoBehaviour {
 		int localX = x - chunkX * HexMetrics.chunkSizeX;
 		int localZ = z - chunkZ * HexMetrics.chunkSizeZ;
 		chunk.AddCell(localX + localZ * HexMetrics.chunkSizeX, cell);
+	}
+
+	public void Quit(){
+		SceneManager.LoadScene(0);
 	}
 }
