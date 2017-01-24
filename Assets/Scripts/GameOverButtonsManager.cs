@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts
 {
@@ -13,7 +14,7 @@ namespace Assets.Scripts
 
             if (Input.GetButtonDown("SecondAButton") || Input.GetButtonDown("AButton"))
             {
-                // załaduj menu główne! 
+                SceneManager.LoadScene(0);
             }
         }
     }
