@@ -21,15 +21,19 @@ namespace Assets
 
         public static float Timer { get { return timer; } }
 
+        FirstPlayerTargetingManager fptm;
+        SecondPlayerTargetingManager sptm;
+
         void Start()
         {
             canvasGUI.enabled = false;
             canvasGameOver.enabled = false;
-
-            FirstPlayerTargetingManager fptm = GetComponent<FirstPlayerTargetingManager>();
+            canvasGameOver.GetComponent<GameOverButtonsManager>().enabled = false;
+            
+            fptm = GetComponent<FirstPlayerTargetingManager>();
+            sptm = GetComponent<SecondPlayerTargetingManager>();
             fptm.CancelInvoke();
             fptm.enabled = false;
-            SecondPlayerTargetingManager sptm = GetComponent<SecondPlayerTargetingManager>();
             sptm.CancelInvoke();
             sptm.enabled = false;
 
@@ -44,12 +48,13 @@ namespace Assets
             canvasIntro.enabled = false;
             isIntro = false;
 
-            FirstPlayerTargetingManager fptm = GetComponent<FirstPlayerTargetingManager>();
-            
+            fptm = GetComponent<FirstPlayerTargetingManager>();
             fptm.enabled = true;
-            SecondPlayerTargetingManager sptm = GetComponent<SecondPlayerTargetingManager>();
-            
+            fptm.InvokeRepeating("HandleSupplies", 2.0f, 5.0f);
+            sptm = GetComponent<SecondPlayerTargetingManager>();
             sptm.enabled = true;
+            sptm.InvokeRepeating("HandleSupplies", 2.0f, 5.0f);
+
             timer = 300.0f;
         }
 

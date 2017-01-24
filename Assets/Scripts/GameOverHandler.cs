@@ -12,6 +12,7 @@ namespace Assets.Scripts
             canvasGUI.enabled = false;
             canvasGameOver.enabled = true;
             PlayerOwnershipManager.GameOverStatus();
+            canvasGameOver.GetComponent<GameOverButtonsManager>().enabled = true;
         }
     }
 }
